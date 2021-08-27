@@ -2,22 +2,22 @@
 export function validateRequired (rule, value, callback) {
     const reg = /^\s*$/;
     if (!value || reg.test(value)) {
-        callback(new Error('必填项'));
+        Promise.reject('必填项');
     } else {
-        callback();
+        Promise.resolve();
     }
 }
 
 /* 是否合法IP地址 */
 export function validateIP (rule, value, callback) {
     if (value === '' || value === 'undefined' || value === null) {
-        callback();
+        Promise.resolve();
     } else {
         const reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
         if ((!reg.test(value)) && value !== '') {
-            callback(new Error('请输入正确的IP地址'));
+            Promise.reject('请输入正确的IP地址');
         } else {
-            callback();
+            Promise.resolve();
         }
     }
 }
@@ -26,12 +26,12 @@ export function validateIP (rule, value, callback) {
 export function validatePhoneTwo (rule, value, callback) {
     const reg = /^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/;
     if (value === '' || value === 'undefined' || value === null) {
-        callback();
+        Promise.resolve();
     } else {
         if ((!reg.test(value)) && value !== '') {
-            callback(new Error('请输入正确的电话号码或者固话号码'));
+            Promise.reject('请输入正确的电话号码或者固话号码');
         } else {
-            callback();
+            Promise.resolve();
         }
     }
 }
@@ -39,25 +39,25 @@ export function validatePhoneTwo (rule, value, callback) {
 export function validateTelphone (rule, value, callback) {
     const reg = /0\d{2}-\d{7,8}/;
     if (value === '' || value === 'undefined' || value === null) {
-        callback();
+        Promise.resolve();
     } else {
         if ((!reg.test(value)) && value !== '') {
-            callback(new Error('请输入正确的固话（格式：区号+号码,如010-1234567）'));
+            Promise.reject('请输入正确的固话（格式：区号+号码,如010-1234567）');
         } else {
-            callback();
+            Promise.resolve();
         }
     }
 }
 /*  是否手机号码 */
 export function validatePhone (rule, value, callback) {
     const reg = /^[1][3,4,5,7,8][0-9]{9}$/;
-    if (value === '' || value === 'undefined' || value === null) {
-        callback();
+    if (value === '' || value === undefined || value === null) {
+        return Promise.resolve();
     } else {
         if ((!reg.test(value)) && value !== '') {
-            callback(new Error('请输入正确的电话号码'));
+            return Promise.reject('请输入正确的电话号码');
         } else {
-            callback();
+            return Promise.resolve();
         }
     }
 }
@@ -65,12 +65,12 @@ export function validatePhone (rule, value, callback) {
 export function validateIdNo (rule, value, callback) {
     const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
     if (value === '' || value === 'undefined' || value === null) {
-        callback();
+        Promise.resolve();
     } else {
         if ((!reg.test(value)) && value !== '') {
-            callback(new Error('请输入正确的身份证号码'));
+            Promise.reject('请输入正确的身份证号码');
         } else {
-            callback();
+            Promise.resolve();
         }
     }
 }
@@ -78,12 +78,12 @@ export function validateIdNo (rule, value, callback) {
 export function validateEMail (rule, value, callback) {
     const reg = /^([a-zA-Z0-9]+[-_.]?)+@[a-zA-Z0-9]+.[a-z]+$/;
     if (value === '' || value === 'undefined' || value === null) {
-        callback();
+        Promise.resolve();
     } else {
         if (!reg.test(value)) {
-            callback(new Error('请输入正确的邮箱地址'));
+            Promise.reject('请输入正确的邮箱地址');
         } else {
-            callback();
+            Promise.resolve();
         }
     }
 }
@@ -97,12 +97,12 @@ export function validateURL (textval) {
 export function isPassword (rule, value, callback) {
     const reg = /^[_a-zA-Z0-9]+$/;
     if (value === '' || value === 'undefined' || value === null) {
-        callback();
+        Promise.resolve();
     } else {
         if (!reg.test(value)) {
-            callback(new Error('密码仅由英文字母，数字以及下划线组成'));
+            Promise.reject('密码仅由英文字母，数字以及下划线组成');
         } else {
-            callback();
+            Promise.resolve();
         }
     }
 }
@@ -112,41 +112,41 @@ export function checkMaxNumber (rule, value, callback) {
     const re = /^[1-9][0-9]{0,1}$/;
     const rsCheck = re.test(value);
     if (value === '' || value === 'undefined' || value === null) {
-        callback();
+        Promise.resolve();
     } else if (rule.isInteger && !rsCheck) {
-        callback(new Error(`请输入[${rule.min}, ${rule.max}]之间的正整数`));
+        Promise.reject(`请输入[${rule.min}, ${rule.max}]之间的正整数`);
     } else if (!Number(value)) {
-        callback(new Error(`请输入[${rule.min}, ${rule.max}]之间的数字`));
+        Promise.reject(`请输入[${rule.min}, ${rule.max}]之间的数字`);
     } else if (value < rule.min || value > rule.max) {
-        callback(new Error(`请输入[${rule.min}, ${rule.max}]之间的数字`));
+        Promise.reject(`请输入[${rule.min}, ${rule.max}]之间的数字`);
     } else {
-        callback();
+        Promise.resolve();
     }
 }
 
 // 验证数字输入框最大数值,32767
 export function checkMaxVal (rule, value, callback) {
     if (value < 0 || value > 32767) {
-        callback(new Error('请输入[0,32767]之间的数字'));
+        Promise.reject('请输入[0,32767]之间的数字');
     } else {
-        callback();
+        Promise.resolve();
     }
 }
 // 验证是否1-99之间
 export function isOneToNinetyNine (rule, value, callback) {
     if (!value) {
-        return callback(new Error('输入不可以为空'));
+        return Promise.reject('输入不可以为空');
     }
     setTimeout(() => {
         if (!Number(value)) {
-            callback(new Error('请输入正整数'));
+            Promise.reject('请输入正整数');
         } else {
             const re = /^[1-9][0-9]{0,1}$/;
             const rsCheck = re.test(value);
             if (!rsCheck) {
-                callback(new Error('请输入正整数，值为【1,99】'));
+                Promise.reject('请输入正整数，值为【1,99】');
             } else {
-                callback();
+                Promise.resolve();
             }
         }
     }, 0);
@@ -155,18 +155,18 @@ export function isOneToNinetyNine (rule, value, callback) {
 //  验证是否整数
 export function isInteger (rule, value, callback) {
     if (!value) {
-        return callback(new Error('输入不可以为空'));
+        return Promise.reject('输入不可以为空');
     }
     setTimeout(() => {
         if (!Number(value)) {
-            callback(new Error('请输入正整数'));
+            Promise.reject('请输入正整数');
         } else {
             const re = /^[0-9]*[1-9][0-9]*$/;
             const rsCheck = re.test(value);
             if (!rsCheck) {
-                callback(new Error('请输入正整数'));
+                Promise.reject('请输入正整数');
             } else {
-                callback();
+                Promise.resolve();
             }
         }
     }, 0);
@@ -174,18 +174,18 @@ export function isInteger (rule, value, callback) {
 //  验证是否整数,非必填
 export function isIntegerNotMust (rule, value, callback) {
     if (!value) {
-        callback();
+        Promise.resolve();
     }
     setTimeout(() => {
         if (!Number(value)) {
-            callback(new Error('请输入正整数'));
+            Promise.reject('请输入正整数');
         } else {
             const re = /^[0-9]*[1-9][0-9]*$/;
             const rsCheck = re.test(value);
             if (!rsCheck) {
-                callback(new Error('请输入正整数'));
+                Promise.reject('请输入正整数');
             } else {
-                callback();
+                Promise.resolve();
             }
         }
     }, 1000);
@@ -194,16 +194,16 @@ export function isIntegerNotMust (rule, value, callback) {
 //  验证是否是[0-1]的小数
 export function isDecimal (rule, value, callback) {
     if (!value) {
-        return callback(new Error('输入不可以为空'));
+        return Promise.reject('输入不可以为空');
     }
     setTimeout(() => {
         if (!Number(value)) {
-            callback(new Error('请输入[0,1]之间的数字'));
+            Promise.reject('请输入[0,1]之间的数字');
         } else {
             if (value < 0 || value > 1) {
-                callback(new Error('请输入[0,1]之间的数字'));
+                Promise.reject('请输入[0,1]之间的数字');
             } else {
-                callback();
+                Promise.resolve();
             }
         }
     }, 100);
@@ -212,16 +212,16 @@ export function isDecimal (rule, value, callback) {
 //  验证是否是[1-10]的小数,即不可以等于0
 export function isBtnOneToTen (rule, value, callback) {
     if (typeof value === 'undefined') {
-        return callback(new Error('输入不可以为空'));
+        return Promise.reject('输入不可以为空');
     }
     setTimeout(() => {
         if (!Number(value)) {
-            callback(new Error('请输入正整数，值为[1,10]'));
+            Promise.reject('请输入正整数，值为[1,10]');
         } else {
             if (!(value === '1' || value === '2' || value === '3' || value === '4' || value === '5' || value === '6' || value === '7' || value === '8' || value === '9' || value === '10')) {
-                callback(new Error('请输入正整数，值为[1,10]'));
+                Promise.reject('请输入正整数，值为[1,10]');
             } else {
-                callback();
+                Promise.resolve();
             }
         }
     }, 100);
@@ -229,16 +229,16 @@ export function isBtnOneToTen (rule, value, callback) {
 //  验证是否是[1-100]的小数,即不可以等于0
 export function isBtnOneToHundred (rule, value, callback) {
     if (!value) {
-        return callback(new Error('输入不可以为空'));
+        return Promise.reject('输入不可以为空');
     }
     setTimeout(() => {
         if (!Number(value)) {
-            callback(new Error('请输入整数，值为[1,100]'));
+            Promise.reject('请输入整数，值为[1,100]');
         } else {
             if (value < 1 || value > 100) {
-                callback(new Error('请输入整数，值为[1,100]'));
+                Promise.reject('请输入整数，值为[1,100]');
             } else {
-                callback();
+                Promise.resolve();
             }
         }
     }, 100);
@@ -246,16 +246,16 @@ export function isBtnOneToHundred (rule, value, callback) {
 //  验证是否是[0-100]的小数
 export function isBtnZeroToHundred (rule, value, callback) {
     if (!value) {
-        return callback(new Error('输入不可以为空'));
+        return Promise.reject('输入不可以为空');
     }
     setTimeout(() => {
         if (!Number(value)) {
-            callback(new Error('请输入[1,100]之间的数字'));
+            Promise.reject('请输入[1,100]之间的数字');
         } else {
             if (value < 0 || value > 100) {
-                callback(new Error('请输入[1,100]之间的数字'));
+                Promise.reject('请输入[1,100]之间的数字');
             } else {
-                callback();
+                Promise.resolve();
             }
         }
     }, 100);
@@ -264,18 +264,18 @@ export function isBtnZeroToHundred (rule, value, callback) {
 //  验证端口是否在[0,65535]之间
 export function isPort (rule, value, callback) {
     if (!value) {
-        return callback(new Error('输入不可以为空'));
+        return Promise.reject('输入不可以为空');
     }
     setTimeout(() => {
         if (value === '' || typeof (value) === 'undefined') {
-            callback(new Error('请输入端口值'));
+            Promise.reject('请输入端口值');
         } else {
             const re = /^([0-9]|[1-9]\d|[1-9]\d{2}|[1-9]\d{3}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$/;
             const rsCheck = re.test(value);
             if (!rsCheck) {
-                callback(new Error('请输入在[0-65535]之间的端口值'));
+                Promise.reject('请输入在[0-65535]之间的端口值');
             } else {
-                callback();
+                Promise.resolve();
             }
         }
     }, 100);
@@ -283,18 +283,18 @@ export function isPort (rule, value, callback) {
 //  验证端口是否在[0,65535]之间，非必填,isMust表示是否必填
 export function isCheckPort (rule, value, callback) {
     if (!value) {
-        callback();
+        Promise.resolve();
     }
     setTimeout(() => {
         if (value === '' || typeof (value) === 'undefined') {
-            //  callback(new Error('请输入端口值'));
+            //  Promise.reject('请输入端口值');
         } else {
             const re = /^([0-9]|[1-9]\d|[1-9]\d{2}|[1-9]\d{3}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$/;
             const rsCheck = re.test(value);
             if (!rsCheck) {
-                callback(new Error('请输入在[0-65535]之间的端口值'));
+                Promise.reject('请输入在[0-65535]之间的端口值');
             } else {
-                callback();
+                Promise.resolve();
             }
         }
     }, 100);
@@ -331,8 +331,8 @@ export function validatAlphabets (str) {
 export function validatAlphabetsNumber (rule, value, callback) {
     const reg = /^[A-Za-z0-9]+$/;
     if (value && !reg.test(value)) {
-        callback(new Error('请输入字母或数字'));
+        Promise.reject('请输入字母或数字');
     } else {
-        callback();
+        Promise.resolve();
     }
 }

@@ -5,19 +5,19 @@
 				<a-col v-for="(item, i) in dataModel" :key="i" :span="8" :style="{ display: i < count ? 'block' : 'none' }">
 					<a-form-item :label="item.label" :rules="item.rules" :name="item.name">
                         <a-range-picker @change="item.onChange || (() => {})" v-if="item.type==='date'" />
-						<a-select :placeholder="item.placeholder" v-model:value="form[item.name]" v-else-if="item.type === 'select'">
+						<a-select :placeholder="item.placeholder || ''" v-model:value="form[item.name]" v-else-if="item.type === 'select'">
                             <a-select-option value="">全部</a-select-option>
                             <template v-for="({value, label}, i) in item.options" :key="i">
                                 <a-select-option :value="value">{{label}}</a-select-option>
                             </template>
                         </a-select>
-						<a-input :placeholder="item.placeholder" v-model:value="form[item.name]" v-else/>
+						<a-input v-else :placeholder="item.placeholder || ''" :allowClear="typeof item.allowClear === 'boolean'? item.allowClear : true" v-model:value="form[item.name]"/>
 					</a-form-item>
 				</a-col>
 			</a-row>
 			<a-row>
 				<a-col :span="24" :style="{ textAlign: 'right' }">
-					<a-button type="primary" html-type="submit">
+					<a-button type="primary" @click="onSearch">
 						搜索
 					</a-button>
 					<a-button :style="{ marginLeft: '8px' }" @click="onReset">
@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed, toRefs } from 'vue'
 import {
     UpOutlined,
     DownOutlined
@@ -60,10 +60,12 @@ export default {
         const searchRef = ref()
 
         // 表单内容
-        const form = reactive({})
+        const state = reactive({
+            form: {}
+        })
 
         // 搜索
-        const onSearch = (e: any) => {
+        const onSearch = async (e: any) => {
             searchRef.value.validate().then(() => {
                 console.log('ok')
             }).catch ((error: any) => {
@@ -72,7 +74,10 @@ export default {
         }
 
         // 重置
-        const onReset = () => {}
+        const onReset = () => {
+            searchRef.value.resetFields()
+            console.log('state.form :>> ', state.form);
+        }
 
         // 打开关闭更多搜索
         const expand = ref(false)
@@ -86,7 +91,7 @@ export default {
         })
 
         return {
-            form,
+            ...toRefs(state),
             expand,
             onSearch,
             onReset,
