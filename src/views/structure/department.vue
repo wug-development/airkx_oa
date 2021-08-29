@@ -3,7 +3,6 @@
         <div class="list-header">
             <a-button type="primary" @click="edit">添加部门</a-button>
         </div>
-        <!-- <QueryForm></QueryForm> -->
         <DataList :dataApi="getSource" :detaModel="DataModel">
             <template #action="record">
                 <a-button type="primary" @click="edit(record)">编辑</a-button>
@@ -14,17 +13,13 @@
 </template>
 
 <script lang="ts">
-// import QueryForm from '@/components/queryFrom.vue'
-import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import DataList from '@/components/dataList.vue'
 import DataModel from './models/departments'
 import { useRouter } from 'vue-router'
-import { createVNode } from 'vue'
-import { Modal } from 'ant-design-vue';
+import { confirm } from '../../utils/bll/bll'
 
 export default {
     components: {
-        // QueryForm,
         DataList
     },
     setup () {
@@ -46,19 +41,11 @@ export default {
         // 删除部门
         const del = (row: any) => {
             console.log('row :>> ', row);
-            Modal.confirm({
+            confirm({
                 title: '确定要删除该部门吗?',
-                icon: createVNode(ExclamationCircleOutlined),
-                okText: '确定',
-                okType: 'danger',
-                cancelText: '取消',
-                closable: true,
-                onOk() {
+                callback () {
                     console.log('OK');
-                },
-                onCancel() {
-                    console.log('Cancel');
-                },
+                }
             });
         } 
 
@@ -76,7 +63,7 @@ export default {
                     id
                 }
             })
-        } 
+        }
 
         return {
             DataModel,

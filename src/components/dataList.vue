@@ -5,7 +5,7 @@
         :pagination="false"
         @change="onChange"
         rowKey="key"
-        :scroll="{ x: 1000 }">
+        :scroll="scroll">
 		<template #action="record">
 			<slot name="action" :data="record"></slot>
 		</template>
@@ -21,13 +21,16 @@ export default defineComponent({
             required: true
         },
         detaModel: {
-            type: [],
+            type: Array,
             default: () => ([])
         },
         pageConfig: {
-            type: Object || Boolean,
+            type: Object || Boolean
+        },
+        scroll: {
+            type: Object,
             default: () => {
-                return false
+                return {x: 1300}
             }
         }
     },
@@ -49,3 +52,8 @@ export default defineComponent({
 	},
 });
 </script>
+<style lang="scss" scoped>
+::v-deep(.ant-btn){
+    margin: 0 5px;
+}
+</style>

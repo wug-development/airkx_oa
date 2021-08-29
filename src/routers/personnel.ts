@@ -27,6 +27,24 @@ export default {
                 hasChildren: false
             },
             component: () => import('../views/personnel/userEdit.vue')
+        },
+        {
+            path: '/wages',
+            name: '工资设置',
+            meta: {
+                title: '工资设置',
+                hasChildren: false
+            },
+            component: () => import('../views/personnel/wages.vue')
+        },
+        {
+            path: '/permission',
+            name: '权限设置',
+            meta: {
+                title: '权限设置',
+                hasChildren: false
+            },
+            component: () => import('../views/personnel/permissions.vue')
         }
     ]
 }

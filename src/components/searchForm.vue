@@ -23,7 +23,7 @@
 					<a-button :style="{ marginLeft: '8px' }" @click="onReset">
 						重置
 					</a-button>
-					<a class="query-form-box-toggle" @click="toggle">
+					<a class="query-form-box-toggle" v-if="maxShow !== 0" @click="toggle">
 						{{expand? '收起' : '高级搜索'}}
                         <UpOutlined v-if="expand" />
                         <DownOutlined v-else />
@@ -107,6 +107,7 @@ export default {
 .query-form-box {
 	background-color: #fff;
     padding: 25px;
+    margin-bottom: 25px;
     &-toggle{
         margin-left: 8px;
         font-size: 14px;

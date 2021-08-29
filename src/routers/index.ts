@@ -27,13 +27,26 @@ const routes = [
             }
         ]
     },
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('../views/login.vue'),
+        meta: {
+            title: '登录',
+            hidden: true,
+            hasChildren: false
+        },
+        children: []
+    },
     // 公司架构
     structure,
     // 人员管理
     personnel,
+    // 修改密码
     {
         path: '/editpwd',
         name: 'editpwd',
+        redirect: '/pwd',
         component: Layout,
         meta: {
             title: '修改密码',
@@ -42,11 +55,10 @@ const routes = [
         },
         children: [
             {
-                path: '/',
+                path: '/pwd',
                 name: 'pwd',
                 meta: {
                     title: '修改密码',
-                    hidden: true,
                     hasChildren: false
                 },
                 component: () => import('../views/editpwd.vue')
@@ -59,8 +71,18 @@ const router = createRouter({
     // history: createWebHistory(), // history mode
     routes
 })
+// 设置网站地图
 router.beforeEach((to, from, next) => {
     store.dispatch('setBreadcrumb', to)
     next()
+})
+// 页面跳转回到头部
+router.afterEach(() => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    const _content = document.getElementById('layout-content')
+    if (_content) {
+        _content.scrollTop = 0;
+    }
 })
 export default router

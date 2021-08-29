@@ -39,14 +39,14 @@
 					<a class="ant-dropdown-link" @click.prevent>周科 <DownOutlined /></a>
 					<template #overlay>
 						<a-menu>
-							<a-menu-item key="0">修改密码</a-menu-item>
+							<a-menu-item key="0" @click="toPage({path: 'editpwd'})">修改密码</a-menu-item>
 							<a-menu-divider />
 							<a-menu-item key="1">退出登录</a-menu-item>
 						</a-menu>
 					</template>
 				</a-dropdown>
 			</a-layout-header>
-			<a-layout-content class="ant-layout-content">
+			<a-layout-content class="ant-layout-content" id="layout-content">
 				<router-view></router-view>
 			</a-layout-content>
 		</a-layout>
@@ -65,16 +65,8 @@ export default defineComponent({
 	},
 	setup() {
 		const router = useRouter();
-		// const state = reactive({
-		// 	menuList: router.options.routes,
-		// });
 		console.log('router :>> ', router.options.routes);
 		// 菜单数据
-		// const menuData = computed(() => {
-		// 	return router.options.routes.filter(item => {
-		// 		return item.meta && !item.meta.hidden
-		// 	})
-		// });
 		const menuData = router.options.routes
 		const filterMenu = (arr: _RouteRecordBase[]) => {
 			return arr.filter(item => item.meta && !item.meta.hidden)
@@ -157,6 +149,7 @@ $header-height: 64px;
 			width: 100%;
 			background-color: #fff;
 			padding: 0;
+			box-shadow: 0 1px 3px #eee;
 			&-trigger {
 				position: absolute;
 				left: 0;
@@ -190,6 +183,7 @@ $header-height: 64px;
 		.ant-layout-content {
 			padding: 24px 16px;
 			min-height: 100%;
+			overflow-y: auto;
 		}
 	}
 }

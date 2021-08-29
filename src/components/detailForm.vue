@@ -1,27 +1,34 @@
 <template>
     <Pannel :title="title">
-        <a-form ref="formRef" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
-			<template v-for="item of formModel">
-                <template v-if="item.children">
-                    <template v-for="sub of item.children">
-                        <a-form-item :label="sub.label" :rules="sub.rules" :name="[item.name, sub.name]">
-                            <a-input v-model:value="form[item.name][sub.name]" />
-                        </a-form-item>
+        <a-form ref="formRef" :model="form" :label-col="labelCol" :layout="layout" :wrapper-col="wrapperCol">
+            <a-row>
+                <template v-for="item of formModel">
+                    <template v-if="item.children">
+                        <template v-for="sub of item.children">
+                            <!-- :name="[item.name, sub.name]" -->
+                            <a-col :span="item.col || 24">
+                                <ItemForm :item="sub" v-model:value="form[item.name][sub.name]" :disabled="disabled || sub.disabled"></ItemForm>
+                            </a-col>
+                        </template>
+                    </template>
+                    <template v-else>
+                        <a-col :span="item.col || 24">
+                            <ItemForm :item="item" v-model:value="form[item.name]" :disabled="disabled || item.disabled"></ItemForm>
+                        </a-col>
                     </template>
                 </template>
-                <template v-else>
-                    <a-form-item :label="item.label" :rules="item.rules" :name="item.name">
-                        <a-input v-model:value="form[item.name]" />
-                    </a-form-item>
-                </template>
-            </template>
+            </a-row>
             <slot></slot>
 		</a-form>
+        <template #subtitle>
+            <slot name="subtitle"></slot>
+        </template>
     </Pannel>
 </template>
 
 <script>
 import Pannel from '@/components/pannel.vue'
+import ItemForm from '@/components/itemForm.vue'
 import { ref } from 'vue'
 export default {
     props: {
@@ -37,6 +44,10 @@ export default {
             type: Object,
             default: () => {}
         },
+        layout: {
+            type: String,
+            default: 'horizontal'
+        },
         labelCol: {
             type: Object,
             default: () => {
@@ -48,10 +59,15 @@ export default {
             default: () => {
                 return { span: 14 }
             }
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
     components: {
-        Pannel
+        Pannel,
+        ItemForm
     },
     setup () {
         const formRef = ref()
@@ -85,16 +101,19 @@ export default {
     .ant-form-item-explain {
         min-height: 32px;
     }
-    .ant-btn {
-        padding: 0 50px;
-    }
-    .ant-input{
-        height: 40px;
-        line-height: 40px;
-    }
-    .ant-form-item-label label{
-        height: 40px;
-        line-height: 40px;
+    // .ant-input, .ant-select, .ant-select-selector, .ant-select-selection-item{
+    //     height: 40px;
+    //     line-height: 40px;
+    // }
+    // .ant-form-item-label label{
+    //     height: 40px;
+    //     line-height: 40px;
+    // }
+    // .ant-select-selection-item:nth-child(1){
+    //     color: #111;
+    // }
+    .ant-calendar-picker{
+        width: 100%;
     }
 }
 </style>

@@ -127,12 +127,12 @@ export default {
                 }
             }
             &-account:first-child{
-                background: url('@/assets/images/icon-account.png') no-repeat left center;
+                background: url('@/assets/icon/icon-account.png') no-repeat left center;
                 background-size: 26px;
                 background-position-x: 10px;
             }
             &-password:first-child{
-                background: url('@/assets/images/icon-password.png') no-repeat left center;
+                background: url('@/assets/icon/icon-password.png') no-repeat left center;
                 background-size: 26px;
                 background-position-x: 10px;
             }
