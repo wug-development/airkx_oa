@@ -125,7 +125,7 @@ $header-height: 64px;
 		}
 		.menu-icon-home {
 			background: url('@/assets/icon/icon-home.png') no-repeat left center;
-			background-size: 16px auto;
+			background-size: 18px auto;
 		}
 		.menu-icon-structure {
 			background: url('@/assets/icon/icon-jg.png') no-repeat left center;
@@ -133,6 +133,11 @@ $header-height: 64px;
 		}
 		.menu-icon-personnel {
 			background: url('@/assets/icon/icon-personnel.png') no-repeat left center;
+			background-size: 20px auto;
+			background-position-x: -2px;
+		}
+		.menu-icon-stats {
+			background: url('@/assets/icon/icon-stats.png') no-repeat left center;
 			background-size: 18px auto;
 		}
 	}

@@ -4,6 +4,7 @@ import Home from '../views/home.vue'
 import store from '../store/index'
 import structure from './structure'
 import personnel from './personnel'
+import stats from './stats'
 const routes = [
     {
         path: '/',
@@ -42,6 +43,8 @@ const routes = [
     structure,
     // 人员管理
     personnel,
+    // 统计管理
+    stats,
     // 修改密码
     {
         path: '/editpwd',
