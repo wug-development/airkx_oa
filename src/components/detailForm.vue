@@ -7,13 +7,21 @@
                         <template v-for="sub of item.children">
                             <!-- :name="[item.name, sub.name]" -->
                             <a-col :span="item.col || 24">
-                                <ItemForm :item="sub" v-model:value="form[item.name][sub.name]" :disabled="disabled || sub.disabled"></ItemForm>
+                                <ItemForm :item="sub" v-model:value="form[item.name][sub.name]" :disabled="disabled || sub.disabled">
+                                    <template #item="item">
+                                        <slot :item="item"></slot>
+                                    </template>
+                                </ItemForm>
                             </a-col>
                         </template>
                     </template>
                     <template v-else>
                         <a-col :span="item.col || 24">
-                            <ItemForm :item="item" v-model:value="form[item.name]" :disabled="disabled || item.disabled"></ItemForm>
+                            <ItemForm :item="item" v-model:value="form[item.name]" :disabled="disabled || item.disabled">
+                                <template #item="item">
+                                    <slot name="item" :item="item.item"></slot>
+                                </template>
+                            </ItemForm>
                         </a-col>
                     </template>
                 </template>

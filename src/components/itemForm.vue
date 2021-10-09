@@ -9,6 +9,9 @@
         <a-date-picker v-else-if="item.type === 'date'" v-model:value="modelValue" :placeholder="item.placeholder || '请选择日期'" :disabled="disabled" size="large" />
         <div v-else-if="item.type === 'text'">{{modelValue}}</div>
         <div v-else-if="item.type === 'br'" class="item-br"></div>
+        <template v-else-if="item.type === 'custom'">
+            <slot name="item" :item="item"></slot>
+        </template>
         <a-input v-else v-model:value="modelValue" :maxlength="item.maxlength || 50" :disabled="disabled" size="large" allowClear="ture" />
     </a-form-item>
 </template>
