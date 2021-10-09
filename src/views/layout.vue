@@ -133,12 +133,23 @@ $header-height: 64px;
 		}
 		.menu-icon-personnel {
 			background: url('@/assets/icon/icon-personnel.png') no-repeat left center;
-			background-size: 20px auto;
+			background-size: 22px auto;
+			background-position-x: -4px;
+		}
+		.menu-icon-customer {
+			background: url('@/assets/icon/icon-customer.png') no-repeat left center;
+			background-size: 18px auto;
+			background-position-x: -3px;
+		}
+		.menu-icon-ticket {
+			background: url('@/assets/icon/icon-ticket-station.png') no-repeat left center;
+			background-size: 18px auto;
 			background-position-x: -2px;
 		}
 		.menu-icon-stats {
 			background: url('@/assets/icon/icon-stats.png') no-repeat left center;
-			background-size: 18px auto;
+			background-size: 20px auto;
+			background-position-x: -2px;
 		}
 	}
 	.ant-layout-right {

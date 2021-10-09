@@ -4,6 +4,8 @@ import Home from '../views/home.vue'
 import store from '../store/index'
 import structure from './structure'
 import personnel from './personnel'
+import customer from './customer'
+import ticketStation from './ticketStation'
 import stats from './stats'
 const routes = [
     {
@@ -43,6 +45,10 @@ const routes = [
     structure,
     // 人员管理
     personnel,
+    // 客户管理
+    customer,
+    // 出票点管理
+    ticketStation,
     // 统计管理
     stats,
     // 修改密码
