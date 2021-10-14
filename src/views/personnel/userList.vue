@@ -1,6 +1,6 @@
 <template>
     <div>
-        <searchForm :dataModel="searchModel"></searchForm>
+        <searchForm :dataModel="searchModel" :btnCol="8"></searchForm>
         <DataList :dataApi="getSource" :detaModel="listModel" :scroll="{x: 1400}">
             <template #action="record">
                 <a-button type="primary" @click="edit(record)">编辑</a-button>
