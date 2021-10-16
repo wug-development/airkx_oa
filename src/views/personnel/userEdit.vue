@@ -7,7 +7,7 @@
                         <a-button type="primary" @click="onSubmit" size="large">保存</a-button>
                         <a-button @click="back" size="large">返回列表</a-button>
                         <a-button @click="toPage('permission')" class="ant-btn-warning" size="large">权限设置</a-button>
-                        <a-button @click="toPage('wages')" class="ant-btn-info" size="large">工资设置</a-button>
+                        <a-button @click="toPage('wages')" class="ant-btn-info" size="large">工资管理</a-button>
                     </a-form-item>
                 </a-col>
             </template>

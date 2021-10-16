@@ -5,8 +5,12 @@
             <a-checkbox-group v-model:value="proCheckedList" :options="programModel" />
         </div>
         <div class="sys-check-box">
-            <span class="sys-check-box-label">系统权限：</span>
+            <span class="sys-check-box-label">OA系统权限：</span>
             <a-tree checkable :tree-data="treeModel" :selectable="false" v-model:checkedKeys="sysCheckedList"></a-tree>
+        </div>
+        <div class="sys-check-box">
+            <span class="sys-check-box-label">国际/国内出票权限：</span>
+            <a-tree checkable :tree-data="outTicketModel" :selectable="false" v-model:checkedKeys="ticketCheckedList"></a-tree>
         </div>
 		<div class="sys-btns">
 			<a-button type="primary" @click="onSubmit" size="large">保存</a-button>
@@ -17,7 +21,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
-import { programModel, treeModel } from './models/permissioninfo';
+import { programModel, treeModel, outTicketModel } from './models/permissioninfo';
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
@@ -28,6 +32,9 @@ export default defineComponent({
 
 		// 系统默认权限
 		const sysCheckedList = ref<string[]>();
+
+		// 国际/国内出票默认权限
+		const ticketCheckedList = ref<string[]>();
 
 		// 保存
 		const onSubmit = async () => {
@@ -42,8 +49,10 @@ export default defineComponent({
 		return {
             programModel,
             treeModel,
+            outTicketModel,
 			proCheckedList,
             sysCheckedList,
+            ticketCheckedList,
 			onSubmit,
 			onBack
 		};
@@ -59,7 +68,7 @@ export default defineComponent({
         padding: 25px 0;
         display: flex;
         &-label{
-            width: 100px;
+            width: 150px;
             text-align: right;
             margin-right: 10px;
         }
