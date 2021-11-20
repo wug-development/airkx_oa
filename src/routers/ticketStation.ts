@@ -1,4 +1,6 @@
 import Layout from '../views/layout.vue'
+import TicketList from '../views/ticket_station/ticketList.vue'
+import TicketEdit from '../views/ticket_station/ticketEdit.vue'
 export default {
     path: '/ticket',
     redirect: '/ticketlist',
@@ -17,7 +19,7 @@ export default {
                 title: '出票点列表',
                 hasChildren: false
             },
-            component: () => import('../views/ticket_station/ticketList.vue')
+            component: () => TicketList
         },
         {
             path: '/ticketinfo',
@@ -26,7 +28,7 @@ export default {
                 title: '出票点信息',
                 hasChildren: false
             },
-            component: () => import('../views/ticket_station/ticketEdit.vue')
+            component: () => TicketEdit
         },
     ]
 }

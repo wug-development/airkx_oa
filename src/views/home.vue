@@ -27,7 +27,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+// import { Card, CardMeta } from 'ant-design-vue/es'
 export default defineComponent({
+    // components: {
+    //     Card,
+    //     CardMeta
+    // },
 	setup() {
         const toPage = (v: number) => {
             let _url = ''

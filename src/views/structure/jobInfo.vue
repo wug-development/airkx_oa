@@ -16,10 +16,13 @@ import { defineComponent, reactive, ref } from 'vue';
 import DetailForm from '@/components/detailForm.vue'
 import { dataModel } from './models/jobinfo'
 import { useRouter } from 'vue-router'
+import { Button, FormItem } from 'ant-design-vue'
 
 export default defineComponent({
     components: {
-        DetailForm
+        DetailForm,
+        FormItem,
+        Button
     },
 	setup() {
         const router = useRouter()

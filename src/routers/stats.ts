@@ -1,4 +1,5 @@
 import Layout from '../views/layout.vue'
+import SaleStats from '../views/stats/saleStats.vue'
 export default {
     path: '/stats',
     redirect: '/salestats',
@@ -17,7 +18,7 @@ export default {
                 title: '销售统计',
                 hasChildren: false
             },
-            component: () => import('../views/stats/saleStats.vue')
+            component: () => SaleStats
         }
     ]
 }

@@ -13,8 +13,10 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
+import { Table } from 'ant-design-vue'
 
 export default defineComponent({
+    components: {Table},
     props: {
         dataApi: {
             type: Function,

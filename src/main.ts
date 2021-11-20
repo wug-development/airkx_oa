@@ -1,18 +1,18 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import Router from './routers'
-import Store from './store'
-import { VueCookieNext } from 'vue-cookie-next'
-import AntDesign from 'ant-design-vue'
+
+import antd from 'ant-design-vue'
+import router from './routers'
+import store from './store'
+
 import 'ant-design-vue/dist/antd.css'
 import 'moment/dist/locale/zh-cn';
 import './assets/scss/ant-global.scss'
 import './index.css'
 
 const app = createApp(App)
-.use(Router)
-.use(Store)
-.use(VueCookieNext)
-.use(AntDesign)
-// .use(Icon)
-.mount('#app')
+
+app.use(router)
+app.use(store)
+app.use(antd)
+app.mount('#app')

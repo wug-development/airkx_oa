@@ -18,5 +18,8 @@ export default defineConfig({
             additionalData: '@import "./src/assets/scss/ant-global.scss"'
         }
     },
-    plugins: [vue()]
+    plugins: [vue()],
+    server: {
+        host: 'test.airkx.cn'
+    }
 })

@@ -16,11 +16,13 @@ import searchForm from '@/components/searchForm.vue'
 import DataList from '@/components/dataList.vue'
 import { searchModel, listModel } from './models/userlist'
 import { useRouter } from 'vue-router'
-import { confirm } from '../../utils/bll/bll'
+import { confirm } from '@/utils/bll/bll'
+import { Button } from 'ant-design-vue'
 export default {
     components: {
         searchForm,
-        DataList
+        DataList,
+        Button
     },
     setup () {
         const router = useRouter()
@@ -79,7 +81,7 @@ export default {
                 id = row.data.record.id
             }
             router.push({
-                path: '/branchinfo',
+                path: '/permission',
                 query: {
                     name,
                     id

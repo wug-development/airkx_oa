@@ -1,4 +1,8 @@
 import Layout from '../views/layout.vue'
+import Department from '../views/structure/department.vue'
+import DepartmentInfo from '../views/structure/departmentInfo.vue'
+import JobList from '../views/structure/jobList.vue'
+import JobInfo from '../views/structure/jobInfo.vue'
 export default {
     path: '/structure',
     redirect: '/branchs',
@@ -17,7 +21,7 @@ export default {
                 title: '部门管理',
                 hasChildren: false
             },
-            component: () => import('../views/structure/department.vue')
+            component: () => Department
         },
         {
             path: '/branchinfo',
@@ -27,7 +31,7 @@ export default {
                 hidden: true,
                 hasChildren: false
             },
-            component: () => import('../views/structure/departmentInfo.vue')
+            component: () => DepartmentInfo
         },
         {
             path: '/jobs',
@@ -36,7 +40,7 @@ export default {
                 title: '职位管理',
                 hasChildren: false
             },
-            component: () => import('../views/structure/jobList.vue')
+            component: () => JobList
         },
         {
             path: '/jobinfo',
@@ -46,7 +50,7 @@ export default {
                 hidden: true,
                 hasChildren: false
             },
-            component: () => import('../views/structure/jobInfo.vue')
+            component: () => JobInfo
         }
     ]
 }

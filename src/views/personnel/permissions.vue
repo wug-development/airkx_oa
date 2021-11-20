@@ -13,33 +13,107 @@
             <a-tree checkable :tree-data="outTicketModel" :selectable="false" v-model:checkedKeys="ticketCheckedList"></a-tree>
         </div>
 		<div class="sys-btns">
-			<a-button type="primary" @click="onSubmit" size="large">保存</a-button>
+			<a-button type="primary" @click="onSubmit" size="large">保存 <LoadingOutlined v-if="loading" :style="{fontSize: '16px', color: '#fff'}" /></a-button>
 			<a-button style="margin-left: 10px" @click="onBack" size="large">返回</a-button>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import LoadingOutlined from '@ant-design/icons-vue/LoadingOutlined'
+import { defineComponent, ref, reactive, toRefs } from 'vue';
 import { programModel, treeModel, outTicketModel } from './models/permissioninfo';
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import { CheckboxGroup, Tree, Button, message } from 'ant-design-vue'
+import { apiSavePermission, apiGetPermission } from '@/apis/permission'
 
 export default defineComponent({
+    components: { CheckboxGroup, Tree, Button, LoadingOutlined },
 	setup() {
         const router = useRouter()
-		// 项目默认权限
-        const proCheckedList = ref<string[]>(['sysBack', 'sysBusiness'])
+        const route = useRoute()
+        const { id, name } = route.query
 
-		// 系统默认权限
-		const sysCheckedList = ref<string[]>();
+        const state = reactive({
+            // 项目默认权限
+            proCheckedList: ['sysBack', 'sysBusiness'],
+            // 系统默认权限
+            sysCheckedList: [],
+            // 国际/国内出票默认权限
+            ticketCheckedList: []
+        })
+        console.log('id :>> ', id);
 
-		// 国际/国内出票默认权限
-		const ticketCheckedList = ref<string[]>();
+        // 获取权限
+        apiGetPermission({
+            id: id
+        }).then(res => {
+            if (res.status === 1) {
+                const list = res.data
+                const len = list.length
+                const plist = [], sysList = [], tickerList = []
+                if (len > 0) {
+                    for(const item of list) {
+                        if (item.type === 0) {
+                            plist.push(item.promise)
+                        } else if (item.type === 1) {
+                            sysList.push(item.promise)
+                        } else if (item.type === 2) {
+                            tickerList.push(item.promise)
+                        }
+                    }
+                    if (plist.length > 0) {
+                        state.proCheckedList = plist
+                    }
+                    if (sysList.length > 0) {
+                        state.sysCheckedList = sysList
+                    }
+                    if (tickerList.length > 0) {
+                        state.ticketCheckedList = tickerList
+                    }
+                }
+            }
+        })
+
+		const loading = ref(false);
 
 		// 保存
 		const onSubmit = async () => {
-            console.log('isCheck :>> ', proCheckedList.value);
-            console.log('isCheck :>> ', sysCheckedList.value);
+            if (loading.value) return false;
+            let info = localStorage.getItem('user');
+            if (info) {
+                const user = JSON.parse(info);
+                loading.value = true;
+                apiSavePermission({
+                    userid: user.id,
+                    per: [
+                        {
+                            type: 0,
+                            name: state.proCheckedList
+                        },
+                        {
+                            type: 1,
+                            name: state.sysCheckedList
+                        },
+                        {
+                            type: 2,
+                            name: state.ticketCheckedList
+                        }
+                    ]
+                }).then(res => {
+                    if (res.status === 1) {
+                        message.success(`保存成功，请${name}重新登录！`)
+                    } else {
+                        message.error('保存失败，请重试')
+                    }
+                }).finally(() => {
+                    loading.value = false
+                })
+            } else {
+                router.push({
+                    path: '/'
+                })
+            }
 		};
 		// 返回
         const onBack = () => {
@@ -50,11 +124,10 @@ export default defineComponent({
             programModel,
             treeModel,
             outTicketModel,
-			proCheckedList,
-            sysCheckedList,
-            ticketCheckedList,
+            ...toRefs(state),
 			onSubmit,
-			onBack
+			onBack,
+            loading
 		};
 	},
 });

@@ -7,6 +7,8 @@ import personnel from './personnel'
 import customer from './customer'
 import ticketStation from './ticketStation'
 import stats from './stats'
+import Login from '../views/login.vue'
+import Editpwd from '../views/editpwd.vue'
 const routes = [
     {
         path: '/',
@@ -33,7 +35,7 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: () => import('../views/login.vue'),
+        component: () => Login,
         meta: {
             title: '登录',
             hidden: true,
@@ -70,7 +72,7 @@ const routes = [
                     title: '修改密码',
                     hasChildren: false
                 },
-                component: () => import('../views/editpwd.vue')
+                component: () => Editpwd
             }
         ]
     }
@@ -82,8 +84,20 @@ const router = createRouter({
 })
 // 设置网站地图
 router.beforeEach((to, from, next) => {
-    store.dispatch('setBreadcrumb', to)
-    next()
+    if (to.name !== 'login') {
+        const user = localStorage.getItem('user')
+        if (user) {
+            store.dispatch('setBreadcrumb', to)
+            next()
+        } else {
+            next({
+                path: '/login'
+            })
+        }
+    } else {
+        localStorage.removeItem('user')
+        next()
+    }
 })
 // 页面跳转回到头部
 router.afterEach(() => {

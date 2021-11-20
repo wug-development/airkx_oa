@@ -34,9 +34,10 @@
     </Pannel>
 </template>
 
-<script>
+<script lang="ts">
 import Pannel from '@/components/pannel.vue'
 import ItemForm from '@/components/itemForm.vue'
+import { Form, Row, Col } from 'ant-design-vue'
 import { ref } from 'vue'
 export default {
     props: {
@@ -75,7 +76,10 @@ export default {
     },
     components: {
         Pannel,
-        ItemForm
+        ItemForm,
+        Form,
+        Row,
+        Col
     },
     setup () {
         const formRef = ref()
@@ -84,7 +88,7 @@ export default {
                 formRef.value.validate().then(() => {
                     console.log('111 :>> ', 111);
                     resolve(true)
-                }).catch((error) => {
+                }).catch((error: any) => {
                     console.log('error', error);
                 });
             })

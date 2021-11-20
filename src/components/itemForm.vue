@@ -12,13 +12,15 @@
         <template v-else-if="item.type === 'custom'">
             <slot name="item" :item="item"></slot>
         </template>
-        <a-input v-else v-model:value="modelValue" :maxlength="item.maxlength || 50" :disabled="disabled" size="large" allowClear="ture" />
+        <a-input v-else v-model:value="modelValue" :maxlength="item.maxlength || 50" :disabled="disabled" size="large" allowClear />
     </a-form-item>
 </template>
 
 <script lang="ts">
 import { ref, watch, watchEffect } from 'vue'
+import { FormItem, Select, SelectOption, RadioGroup, Radio, DatePicker, Input } from 'ant-design-vue'
 export default {
+    components: { FormItem, Select, SelectOption, RadioGroup, Radio, DatePicker, Input },
     props: ['item', 'value', 'disabled'],
     emits: ['update:value'],
     setup (props, {emit}) {

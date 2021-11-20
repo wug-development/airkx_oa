@@ -6,7 +6,7 @@
                 <input type="text" v-model.trim="form.uname" class="login-waper-item-txt login-waper-item-account" placeholder="请输入账号" maxlength="20">
             </div>
             <div class="login-waper-item">
-                <input type="password" v-model.trim="form.upass" class="login-waper-item-txt login-waper-item-password" placeholder="请输入密码" maxlength="20">
+                <input type="password" v-model.trim="form.upass" @keydown.enter.native="onLogin" class="login-waper-item-txt login-waper-item-password" placeholder="请输入密码" maxlength="20">
             </div>
             <div class="login-waper-item">
                 <button class="login-waper-item-btn" @click="onLogin">登 录 <LoadingOutlined v-if="isLogining" :style="{fontSize: '16px', color: '#fff'}" /></button>
@@ -15,18 +15,19 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import LoadingOutlined from '@ant-design/icons-vue/LoadingOutlined'
 import { ref, reactive, toRefs, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
-import { debounce } from '../utils/tool/utils.js'
+import { debounce } from '@/utils/tool/utils'
+import { apiLogin } from '@/apis/user'
 export default {
     components: {
         LoadingOutlined
     },
     setup () {
-        const router = new useRouter()
+        const router = useRouter()
 
         // 登录表单
         const state = reactive({
@@ -57,13 +58,23 @@ export default {
             } else if (state.form.upass === '') {
                 message.warning('请输入密码');
             } else {
+                const { uname, upass } = state.form;
                 isLogining.value = true
-                setTimeout(() => {
+                apiLogin({
+                    uname,
+                    pwd: upass
+                }).then(res => {
+                    if (res.status === 1) {
+                        localStorage.setItem('user', JSON.stringify(res.data))
+                        router.push({
+                            path: '/'
+                        })
+                    } else {
+                        message.warning('账号或密码错误，请重新输入');
+                    }
+                }).finally(() => {
                     isLogining.value = false
-                    state.form.uname === state.form.upass && (router.push({
-                        path: '/'
-                    }))
-                }, 2000)
+                })
             }
         })
 

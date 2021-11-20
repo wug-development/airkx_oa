@@ -16,11 +16,13 @@
 import DataList from '@/components/dataList.vue'
 import DataModel from './models/departments'
 import { useRouter } from 'vue-router'
-import { confirm } from '../../utils/bll/bll'
+import { confirm } from '@/utils/bll/bll'
+import { Button } from 'ant-design-vue'
 
 export default {
     components: {
-        DataList
+        DataList,
+        Button
     },
     setup () {
         const router = useRouter()

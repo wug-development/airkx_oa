@@ -41,7 +41,7 @@
 						<a-menu>
 							<a-menu-item key="0" @click="toPage({path: 'editpwd'})">修改密码</a-menu-item>
 							<a-menu-divider />
-							<a-menu-item key="1">退出登录</a-menu-item>
+							<a-menu-item key="1" @click="loginOut">退出登录</a-menu-item>
 						</a-menu>
 					</template>
 				</a-dropdown>
@@ -51,26 +51,32 @@
 			</a-layout-content>
 		</a-layout>
 	</a-layout>
+	<div></div>
 </template>
 <script lang="ts">
-import { MenuUnfoldOutlined, MenuFoldOutlined, DownOutlined } from '@ant-design/icons-vue';
 import { defineComponent, ref, computed, reactive, toRefs } from 'vue';
-import { useRouter, _RouteRecordBase } from 'vue-router';
 import store from '../store/index';
+import { useRouter, _RouteRecordBase } from 'vue-router';
+import {
+	MenuUnfoldOutlined,
+	MenuFoldOutlined,
+	DownOutlined,
+} from '@ant-design/icons-vue';
+
 export default defineComponent({
 	components: {
 		MenuUnfoldOutlined,
 		MenuFoldOutlined,
-		DownOutlined
+		DownOutlined,
 	},
 	setup() {
 		const router = useRouter();
 		console.log('router :>> ', router.options.routes);
 		// 菜单数据
-		const menuData = router.options.routes
+		const menuData = router.options.routes;
 		const filterMenu = (arr: _RouteRecordBase[]) => {
-			return arr.filter(item => item.meta && !item.meta.hidden)
-		} 
+			return arr.filter((item) => item.meta && !item.meta.hidden);
+		};
 
 		// 网站地图
 		const breadcrumb = computed(() => {
@@ -78,9 +84,17 @@ export default defineComponent({
 		});
 		// 跳转页面
 		const toPage = (item: _RouteRecordBase) => {
-			const { path } = item
+			const { path } = item;
 			router.push({
-				path
+				path,
+			});
+		};
+
+		// 退出登录
+		const loginOut = () => {
+			localStorage.removeItem('user');
+			router.push({
+				path: '/login'
 			})
 		}
 
@@ -91,7 +105,8 @@ export default defineComponent({
 			filterMenu,
 			toPage,
 			menuData,
-			breadcrumb
+			breadcrumb,
+			loginOut
 		};
 	},
 });
@@ -132,22 +147,26 @@ $header-height: 64px;
 			background-size: 16px auto;
 		}
 		.menu-icon-personnel {
-			background: url('@/assets/icon/icon-personnel.png') no-repeat left center;
+			background: url('@/assets/icon/icon-personnel.png') no-repeat left
+				center;
 			background-size: 22px auto;
 			background-position-x: -4px;
 		}
 		.menu-icon-customer {
-			background: url('@/assets/icon/icon-customer.png') no-repeat left center;
+			background: url('@/assets/icon/icon-customer.png') no-repeat left
+				center;
 			background-size: 18px auto;
 			background-position-x: -3px;
 		}
 		.menu-icon-ticket {
-			background: url('@/assets/icon/icon-ticket-station.png') no-repeat left center;
+			background: url('@/assets/icon/icon-ticket-station.png') no-repeat
+				left center;
 			background-size: 18px auto;
 			background-position-x: -2px;
 		}
 		.menu-icon-stats {
-			background: url('@/assets/icon/icon-stats.png') no-repeat left center;
+			background: url('@/assets/icon/icon-stats.png') no-repeat left
+				center;
 			background-size: 20px auto;
 			background-position-x: -2px;
 		}
@@ -188,7 +207,7 @@ $header-height: 64px;
 				height: $header-height;
 				line-height: $header-height;
 			}
-			&-dropdown{
+			&-dropdown {
 				position: absolute;
 				right: 0px;
 				top: 0px;
@@ -203,7 +222,7 @@ $header-height: 64px;
 		}
 	}
 }
-::v-deep(.ant-dropdown-menu-item-active){
+::v-deep(.ant-dropdown-menu-item-active) {
 	background-color: #1890ff !important;
 	color: #fff;
 }

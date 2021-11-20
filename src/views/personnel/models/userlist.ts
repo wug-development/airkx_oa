@@ -1,4 +1,4 @@
-import { validatePhone } from '@/utils/tool/validator.js'
+import { validatePhone } from '@/utils/tool/validator'
 export const searchModel = [
     {
         label: '姓名',
@@ -46,7 +46,8 @@ export const listModel = [
         key: '1',
         dataIndex: 'phonenum',
         align: 'center',
-        customRender: ({record}) => {
+        customRender: (row: any) => {
+            const record: any = row.record
             if (record.tel && record.phone) {
                 return record.tel + '/' + record.phone 
             } else if (record.tel) {

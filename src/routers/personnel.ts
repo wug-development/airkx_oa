@@ -1,4 +1,9 @@
 import Layout from '../views/layout.vue'
+import Users from '../views/personnel/userList.vue'
+import UserEdit from '../views/personnel/userEdit.vue'
+import Wages from '../views/personnel/wages.vue'
+import Permissions from '../views/personnel/permissions.vue'
+
 export default {
     path: '/personnel',
     redirect: '/users',
@@ -17,7 +22,7 @@ export default {
                 title: '人员列表',
                 hasChildren: false
             },
-            component: () => import('../views/personnel/userList.vue')
+            component: () => Users
         },
         {
             path: '/userinfo',
@@ -26,7 +31,7 @@ export default {
                 title: '人员信息',
                 hasChildren: false
             },
-            component: () => import('../views/personnel/userEdit.vue')
+            component: () => UserEdit
         },
         {
             path: '/wages',
@@ -35,7 +40,7 @@ export default {
                 title: '工资设置',
                 hasChildren: false
             },
-            component: () => import('../views/personnel/wages.vue')
+            component: () => Wages
         },
         {
             path: '/permission',
@@ -44,7 +49,7 @@ export default {
                 title: '权限设置',
                 hasChildren: false
             },
-            component: () => import('../views/personnel/permissions.vue')
+            component: () => Permissions
         }
     ]
 }

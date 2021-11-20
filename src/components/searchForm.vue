@@ -39,6 +39,19 @@
 <script lang="ts">
 import { reactive, ref, computed, toRefs } from 'vue';
 import { UpOutlined, DownOutlined } from '@ant-design/icons-vue';
+import {
+	Form,
+	FormItem,
+	Row,
+	Col,
+	Button,
+	Input,
+	Select,
+	SelectOption,
+	DatePicker,
+	MonthPicker,
+	RangePicker,
+} from 'ant-design-vue';
 
 import bus from '../utils/bll/bus';
 
@@ -46,6 +59,17 @@ export default {
 	components: {
 		UpOutlined,
 		DownOutlined,
+		Form,
+		FormItem,
+		Row,
+		Col,
+		Button,
+		Input,
+		Select,
+		SelectOption,
+		DatePicker,
+		MonthPicker,
+		RangePicker,
 	},
 	props: {
 		dataModel: {

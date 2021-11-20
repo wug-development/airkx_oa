@@ -1,4 +1,6 @@
 import Layout from '../views/layout.vue'
+import Customerlist from '../views/customer/customerList.vue'
+import Customerinfo from '../views/customer/customerEdit.vue'
 export default {
     path: '/customer',
     redirect: '/customerlist',
@@ -17,7 +19,7 @@ export default {
                 title: '客户列表',
                 hasChildren: false
             },
-            component: () => import('../views/customer/customerList.vue')
+            component: () => Customerlist
         },
         {
             path: '/customerinfo',
@@ -26,7 +28,7 @@ export default {
                 title: '客户信息',
                 hasChildren: false
             },
-            component: () => import('../views/customer/customerEdit.vue')
+            component: () => Customerinfo
         },
     ]
 }
