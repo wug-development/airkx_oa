@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
+// ant-design-vue
 import antd from 'ant-design-vue'
 import router from './routers'
 import store from './store'
