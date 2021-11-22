@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
+import htmlTemplate from 'vite-plugin-html-mpa'
+import ViteHtmlPluginOption from './html-mpa'
 
-// https://vitejs.dev/config/
 export default defineConfig({
     resolve: {
         alias: {
@@ -18,8 +19,11 @@ export default defineConfig({
             additionalData: '@import "./src/assets/scss/ant-global.scss"'
         }
     },
-    plugins: [vue()],
+    plugins: [
+        vue(),
+        htmlTemplate(ViteHtmlPluginOption)
+    ],
     server: {
-        host: 'test.airkx.cn'
+        host: 't.airkx.cn'
     }
 })

@@ -17,6 +17,7 @@ const tsImportPluginFactory = require('ts-import-plugin')
 // Gzip
 const CompressionPlugin = require('compression-webpack-plugin')
 const webpack = require('webpack')
+const cdn = require('./cdn.cjs.js')
 
 function resolve(dir) {
     return path.join(__dirname, dir);
@@ -29,8 +30,8 @@ module.exports = (env, { mode }) => {
         mode, // 模式 
         entry: './src/main.ts', // 打包入口地址
         output: {
-            filename: './js/[name].js',
-            publicPath: "/",
+            filename: 'js/[name].js',
+            publicPath: "http://test.airkx.cn/",
             path: resolve('dist')
         },
         resolve: {
@@ -170,7 +171,10 @@ module.exports = (env, { mode }) => {
             new CleanWebpackPlugin(), // 清空dist目录
             new VueLoaderPlugin(),
             new HtmlWebpackPlugin({
-                template: './index.html'
+                template: './index.html',
+                title: 'OA管理系统',
+                inject: 'body',
+                cdn,
             }),
             new MiniCssExtractPlugin({
                 filename: 'css/[name].[hash:8].css'
@@ -236,7 +240,7 @@ module.exports = (env, { mode }) => {
         },
         externals: {
             'vue': 'Vue',
-            'vuex': 'vuex',
+            'vuex': 'Vuex',
             'vue-router': 'VueRouter',
             'ant-design-vue': 'antd'
         },
