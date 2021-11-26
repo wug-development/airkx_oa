@@ -1,4 +1,4 @@
-//请求模块
+//
 import $http from '@/config/request'
 
 // 获取列表
