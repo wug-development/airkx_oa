@@ -1,8 +1,8 @@
 import Layout from '../views/layout.vue'
-import Users from '../views/personnel/userList.vue'
-import UserEdit from '../views/personnel/userEdit.vue'
-import Wages from '../views/personnel/wages.vue'
-import Permissions from '../views/personnel/permissions.vue'
+const Users = () => import(/* webpackChunkName: "userList" */ '../views/personnel/userList.vue')
+const UserEdit = () => import(/* webpackChunkName: "UserEdit" */ '../views/personnel/userEdit.vue')
+const Wages = () => import(/* webpackChunkName: "wages" */ '../views/personnel/wages.vue')
+const Permissions = () => import(/* webpackChunkName: "permissions" */ '../views/personnel/permissions.vue')
 
 export default {
     path: '/personnel',
@@ -22,7 +22,7 @@ export default {
                 title: '人员列表',
                 hasChildren: false
             },
-            component: () => Users
+            component: Users
         },
         {
             path: '/userinfo',
@@ -31,7 +31,7 @@ export default {
                 title: '人员信息',
                 hasChildren: false
             },
-            component: () => UserEdit
+            component: UserEdit
         },
         {
             path: '/wages',
@@ -40,7 +40,7 @@ export default {
                 title: '工资设置',
                 hasChildren: false
             },
-            component: () => Wages
+            component: Wages
         },
         {
             path: '/permission',
@@ -49,7 +49,7 @@ export default {
                 title: '权限设置',
                 hasChildren: false
             },
-            component: () => Permissions
+            component: Permissions
         }
     ]
 }

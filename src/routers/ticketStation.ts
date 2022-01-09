@@ -1,6 +1,6 @@
 import Layout from '../views/layout.vue'
-import TicketList from '../views/ticket_station/ticketList.vue'
-import TicketEdit from '../views/ticket_station/ticketEdit.vue'
+const TicketList = () => import(/* webpackChunkName: "ticketList" */ '../views/ticket_station/ticketList.vue')
+const TicketEdit = () => import(/* webpackChunkName: "ticketEdit" */ '../views/ticket_station/ticketEdit.vue')
 export default {
     path: '/ticket',
     redirect: '/ticketlist',
@@ -19,7 +19,7 @@ export default {
                 title: '出票点列表',
                 hasChildren: false
             },
-            component: () => TicketList
+            component: TicketList
         },
         {
             path: '/ticketinfo',
@@ -28,7 +28,7 @@ export default {
                 title: '出票点信息',
                 hasChildren: false
             },
-            component: () => TicketEdit
+            component: TicketEdit
         },
     ]
 }

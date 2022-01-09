@@ -1,6 +1,9 @@
-import Layout from '../views/layout.vue'
-import Customerlist from '../views/customer/customerList.vue'
-import Customerinfo from '../views/customer/customerEdit.vue'
+// import Layout from '../views/layout.vue'
+// import Customerlist from '../views/customer/customerList.vue'
+// import Customerinfo from '../views/customer/customerEdit.vue'
+const Layout = () => import(/* webpackChunkName: "layout" */ '../views/layout.vue')
+const Customerlist = () => import(/* webpackChunkName: "layout" */ '../views/customer/customerList.vue')
+const Customerinfo = () => import(/* webpackChunkName: "layout" */ '../views/customer/customerEdit.vue')
 export default {
     path: '/customer',
     redirect: '/customerlist',
@@ -19,7 +22,7 @@ export default {
                 title: '客户列表',
                 hasChildren: false
             },
-            component: () => Customerlist
+            component: Customerlist
         },
         {
             path: '/customerinfo',
@@ -28,7 +31,7 @@ export default {
                 title: '客户信息',
                 hasChildren: false
             },
-            component: () => Customerinfo
+            component: Customerinfo
         },
     ]
 }

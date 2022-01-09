@@ -24,6 +24,6 @@ export default defineConfig({
         htmlTemplate(ViteHtmlPluginOption)
     ],
     server: {
-        host: 't.airkx.cn'
+        host: 'test.airkx.com'
     }
 })

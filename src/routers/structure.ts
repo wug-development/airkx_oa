@@ -1,8 +1,8 @@
 import Layout from '../views/layout.vue'
-import Department from '../views/structure/department.vue'
-import DepartmentInfo from '../views/structure/departmentInfo.vue'
-import JobList from '../views/structure/jobList.vue'
-import JobInfo from '../views/structure/jobInfo.vue'
+const Department = () => import(/* webpackChunkName: "department" */ '../views/structure/department.vue')
+const DepartmentInfo = () => import(/* webpackChunkName: "departmentInfo" */ '../views/structure/departmentInfo.vue')
+const JobList = () => import(/* webpackChunkName: "jobList" */ '../views/structure/jobList.vue')
+const JobInfo = () => import(/* webpackChunkName: "jobInfo" */ '../views/structure/jobInfo.vue')
 export default {
     path: '/structure',
     redirect: '/branchs',
@@ -21,7 +21,7 @@ export default {
                 title: '部门管理',
                 hasChildren: false
             },
-            component: () => Department
+            component: Department
         },
         {
             path: '/branchinfo',
@@ -31,7 +31,7 @@ export default {
                 hidden: true,
                 hasChildren: false
             },
-            component: () => DepartmentInfo
+            component: DepartmentInfo
         },
         {
             path: '/jobs',
@@ -40,7 +40,7 @@ export default {
                 title: '职位管理',
                 hasChildren: false
             },
-            component: () => JobList
+            component: JobList
         },
         {
             path: '/jobinfo',
@@ -50,7 +50,7 @@ export default {
                 hidden: true,
                 hasChildren: false
             },
-            component: () => JobInfo
+            component: JobInfo
         }
     ]
 }

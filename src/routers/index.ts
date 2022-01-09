@@ -1,6 +1,5 @@
 import { createWebHashHistory, createRouter, createWebHistory } from 'vue-router'
 import Layout from '../views/layout.vue'
-import Home from '../views/home.vue'
 import store from '../store/index'
 import structure from './structure'
 import personnel from './personnel'
@@ -8,7 +7,9 @@ import customer from './customer'
 import ticketStation from './ticketStation'
 import stats from './stats'
 import Login from '../views/login.vue'
-import Editpwd from '../views/editpwd.vue'
+// import Editpwd from '../views/editpwd.vue'
+const Editpwd = () => import(/* webpackChunkName: "editpwd" */ '../views/editpwd.vue')
+const Home = () => import(/* webpackChunkName: "home" */ '../views/home.vue')
 const routes = [
     {
         path: '/',
@@ -72,7 +73,7 @@ const routes = [
                     title: '修改密码',
                     hasChildren: false
                 },
-                component: () => Editpwd
+                component: Editpwd
             }
         ]
     }

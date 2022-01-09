@@ -11,7 +11,6 @@
 
 <script lang="ts">
 import { ref, defineComponent, onMounted, reactive, toRefs } from 'vue';
-// echarts
 import { use } from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
 import { PieChart, LineChart } from 'echarts/charts';
@@ -19,9 +18,8 @@ import {
 	TitleComponent,
 	TooltipComponent,
 	LegendComponent,
-    GridComponent,
     ToolboxComponent,
-    
+    GridComponent
 } from 'echarts/components';
 import VChart, { THEME_KEY } from 'vue-echarts';
 // Compontent
