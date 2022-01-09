@@ -69,12 +69,18 @@ module.exports = (env, { mode }) => {
                         // 输出文件位置以及文件名
                         filename: "css/[name][hash:8][ext]"
                     },
-                    use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+                    // loader: 
+                    use: [
+                        { loader: MiniCssExtractPlugin.loader },
+                        { loader: 'css-loader' },
+                        { loader: 'postcss-loader' },
+                        { loader: 'sass-loader' },
+                    ]
                 },
                 {
                     test: /\.less$/i,
                     use: [
-                        { loader: 'style-loader' },
+                        { loader: MiniCssExtractPlugin.loader },
                         { loader: 'css-loader' },
                         { loader: 'postcss-loader' },
                         {
@@ -203,6 +209,34 @@ module.exports = (env, { mode }) => {
             ],
             splitChunks: {
                 chunks: 'all', // 有效值为 `all`，`async` 和 `initial`
+                cacheGroups: { // 配置提取模块的方案
+                    default: false,
+                    styles: {
+                        name: 'styles',
+                        test: /\.(s?css|less|sass)$/,
+                        chunks: 'all',
+                        enforce: true,
+                        priority: 10,
+                    },
+                    // common: {
+                    //     name: 'chunk-common',
+                    //     chunks: 'all',
+                    //     minChunks: 1,
+                    //     maxInitialRequests: 5,
+                    //     minSize: 0,
+                    //     priority: 1,
+                    //     enforce: true,
+                    //     reuseExistingChunk: true,
+                    // },
+                    // vendors: {
+                    //     name: 'chunk-vendors',
+                    //     test: /[\\/]node_modules[\\/]/,
+                    //     chunks: 'all',
+                    //     priority: 2,
+                    //     enforce: true,
+                    //     reuseExistingChunk: true,
+                    // },
+                },
             },
         },
         externals: {
