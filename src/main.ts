@@ -6,7 +6,7 @@ import antd from 'ant-design-vue'
 import router from './routers'
 import store from './store'
 
-import 'ant-design-vue/dist/antd.css'
+// import 'ant-design-vue/dist/antd.css'
 import 'moment/dist/locale/zh-cn';
 import './assets/scss/ant-global.scss'
 import './index.css'

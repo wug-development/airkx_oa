@@ -7,7 +7,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // 清除用不到的css
-const PurgecssWebpackPlugin = require('purgecss-webpack-plugin')
+// const PurgecssWebpackPlugin = require('purgecss-webpack-plugin')
 const glob = require('glob'); // 文件匹配模式
 // 压缩JS
 const TerserPlugin = require('terser-webpack-plugin');
@@ -91,6 +91,14 @@ module.exports = (env, { mode }) => {
                                 }
                             }
                         },
+                    ],
+                },
+                {
+                    test: /\.css$/i,
+                    use: [
+                        { loader: MiniCssExtractPlugin.loader },
+                        { loader: 'css-loader' },
+                        { loader: 'postcss-loader' },
                     ],
                 },
                 {
@@ -196,9 +204,9 @@ module.exports = (env, { mode }) => {
                 },
             }),
             new CompressionPlugin(), // gzip
-            new PurgecssWebpackPlugin({
-                paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
-            }),
+            // new PurgecssWebpackPlugin({
+            //     paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
+            // }),
         ],
         optimization: {
             minimize: true,
