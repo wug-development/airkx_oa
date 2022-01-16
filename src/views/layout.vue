@@ -2,21 +2,23 @@
 	<a-layout class="ant-layout-box">
 		<a-layout-sider v-model:collapsed="collapsed" class="ant-layout-aside">
 			<div class="logo">凯行OA管理系统</div>
-			<a-menu theme="dark" mode="inline" v-model:selectedKeys="selectedKeys">
-				<template v-for="(item, index) in filterMenu(menuData)">
-					<template v-if="item.meta">
-						<template v-if="item.meta.hasChildren">
-							<a-sub-menu :key="index">
-								<template #title><span class="menu-icon" :class="'menu-icon-' + item.icon">{{item.meta.title}}</span></template>
-								<a-menu-item v-for="(sub, j) in filterMenu(item.children)" @click="toPage(sub)" :key="index + '-' + j">{{sub.meta.title}}</a-menu-item>
-							</a-sub-menu>
+			<div class="ant-layout-box-menu">
+				<a-menu theme="dark" mode="inline" v-model:selectedKeys="selectedKeys">
+					<template v-for="(item, index) in filterMenu(menuData)">
+						<template v-if="item.meta">
+							<template v-if="item.meta.hasChildren">
+								<a-sub-menu :key="index">
+									<template #title><span class="menu-icon" :class="'menu-icon-' + item.icon">{{item.meta.title}}</span></template>
+									<a-menu-item v-for="(sub, j) in filterMenu(item.children)" @click="toPage(sub)" :key="index + '-' + j">{{sub.meta.title}}</a-menu-item>
+								</a-sub-menu>
+							</template>
+							<a-menu-item v-else :key="index" @click="toPage(item)">
+								<span class="menu-icon" :class="'menu-icon-' + item.icon">{{item.meta.title}}</span>
+							</a-menu-item>
 						</template>
-						<a-menu-item v-else :key="index" @click="toPage(item)">
-							<span class="menu-icon" :class="'menu-icon-' + item.icon">{{item.meta.title}}</span>
-						</a-menu-item>
 					</template>
-				</template>
-			</a-menu>
+				</a-menu>
+			</div>
 		</a-layout-sider>
 		<a-layout class="ant-layout-right">
 			<a-layout-header class="ant-layout-right-header">
@@ -111,6 +113,3 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="scss" scoped>
-
-</style>

@@ -1,38 +1,35 @@
 <template>
 	<div class="home-box">
-		<div class="home-box-card">
-			<a-card hoverable class="home-box-card-item" @click="toPage(1)">
-				<img slot="cover" alt="example" src="@/assets/images/manage.png" />
-				<a-card-meta title="凯行网后台管理系统"></a-card-meta>
-			</a-card>
-			<a-card hoverable class="home-box-card-item" @click="toPage(2)">
-				<img slot="cover" alt="example" src="@/assets/images/cp.png" />
-				<a-card-meta title="企业预定后台"></a-card-meta>
-			</a-card>
-			<a-card hoverable class="home-box-card-item" @click="toPage(3)">
-				<img slot="cover" alt="example" src="@/assets/images/gj.png" />
-				<a-card-meta title="国际出票系统"></a-card-meta>
-			</a-card>
-			<a-card hoverable class="home-box-card-item" @click="toPage(4)">
-				<img slot="cover" alt="example" src="@/assets/images/gn.png" />
-				<a-card-meta title="国内出票系统"></a-card-meta>
-			</a-card>
-			<a-card hoverable class="home-box-card-item" @click="toPage(5)">
-				<img slot="cover" alt="example" src="@/assets/images/zc.jpg" />
-				<a-card-meta title="支出管理系统"></a-card-meta>
-			</a-card>
-		</div>
+        <div class="home-box-msgs">
+            <a-card>
+                <template #title>业务通告 <a href="#">more</a></template>
+                <template #extra><a href="#">发布</a></template>
+                <p class="home-box-msgs-item" v-for="item in businessList">
+                    <div class="home-box-msgs-item-sign">EK</div>
+                    <div class="home-box-msgs-item-content" :title="item.content">{{ item.content }}</div>
+                    <div class="home-box-msgs-item-date">2016-11-12</div>
+                </p>
+            </a-card>
+            <a-card>
+                <template #title>公司通知 <a href="#">more</a></template>
+                <template #extra><a href="#">发布</a></template>
+                <p class="home-box-msgs-item" v-for="item in compNoticeList">
+                    <div class="home-box-msgs-item-sign"></div>
+                    <div class="home-box-msgs-item-content" :title="item.content">{{ item.content }}</div>
+                    <div class="home-box-msgs-item-date">2016-11-12</div>
+                </p>
+            </a-card>
+        </div>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-// import { Card, CardMeta } from 'ant-design-vue/es'
+import { defineComponent, reactive } from 'vue';
+import SysCard from '@/components/sysCard.vue';
 export default defineComponent({
-    // components: {
-    //     Card,
-    //     CardMeta
-    // },
+    components: {
+        SysCard
+    },
 	setup() {
         const toPage = (v: number) => {
             let _url = ''
@@ -46,8 +43,29 @@ export default defineComponent({
             _url && window.open(_url)
         }
 
+        // 业务公共
+        const businessList = reactive([]);
+        // 公司通知
+        const compNoticeList = reactive([]);
+
+        const getList = () => {
+            businessList.push({
+                content: '广州发布运价提示广州发布运价提示',
+                creatTime: '2021-12-30'
+            })
+            compNoticeList.push({
+                content: '广州发布运价提示广州发布运价提示',
+                creatTime: '2021-12-30'
+            })
+        }
+        for(let i=0; i<20; i++) {
+            getList();
+        }
+
         return {
-            toPage
+            toPage,
+            businessList,
+            compNoticeList
         }
 	},
 });
@@ -57,22 +75,32 @@ export default defineComponent({
 .home-box {
 	min-height: 100%;
 	background-color: #fff;
-    &-card{
-        padding: 25px 0;
+    &-msgs {
         display: flex;
-        flex-wrap: wrap;
+        .ant-card {
+            width: 50%;
+        }
         &-item{
-            width: 240px;
-            margin: 0 0 25px 25px;
-            img{
-                display: block;
-                width: 190px;
-                height: 190px;
+            display: flex;
+            height: 30px;
+            line-height: 30px;
+            &-sign{
+                font-size: 28px;
+                margin-right: 5px;
+                color: #1890ff;
             }
-            .ant-card-meta{
-                margin: 0;
-                padding-top: 20px;
-                text-align: center;
+            &-content{
+                flex:1;
+                color: #1890ff;
+                margin-right: 10px;
+                overflow: hidden;
+                word-break: break-all;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            &-date{
+                width: 80px;
+                text-align: right;
             }
         }
     }
