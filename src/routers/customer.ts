@@ -1,9 +1,6 @@
-// import Layout from '../views/layout.vue'
-// import Customerlist from '../views/customer/customerList.vue'
-// import Customerinfo from '../views/customer/customerEdit.vue'
-const Layout = () => import(/* webpackChunkName: "layout" */ '../views/layout.vue')
-const Customerlist = () => import(/* webpackChunkName: "layout" */ '../views/customer/customerList.vue')
-const Customerinfo = () => import(/* webpackChunkName: "layout" */ '../views/customer/customerEdit.vue')
+import Layout from '../views/layout.vue'
+const Customerlist = () => import(/* webpackChunkName: "customerList" */ '../views/customer/customerList.vue')
+const Customerinfo = () => import(/* webpackChunkName: "customerEdit" */ '../views/customer/customerEdit.vue')
 export default {
     path: '/customer',
     redirect: '/customerlist',

@@ -9,7 +9,7 @@ import stats from './stats'
 import Login from '../views/login.vue'
 // import Editpwd from '../views/editpwd.vue'
 const Editpwd = () => import(/* webpackChunkName: "editpwd" */ '../views/editpwd.vue')
-const Home = () => import(/* webpackChunkName: "home" */ '../views/home.vue')
+const Home = () => import(/* webpackChunkName: "home" */ '../views/main/home.vue')
 const routes = [
     {
         path: '/',

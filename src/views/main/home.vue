@@ -30,7 +30,7 @@ export default defineComponent({
     components: {
         SysCard
     },
-	setup() {
+	  setup() {
         const toPage = (v: number) => {
             let _url = ''
             switch (v) {
@@ -67,7 +67,7 @@ export default defineComponent({
             businessList,
             compNoticeList
         }
-	},
+	  },
 });
 </script>
 
