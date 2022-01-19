@@ -2,8 +2,8 @@
 	<div class="home-box">
         <div class="home-box-msgs">
             <a-card>
-                <template #title>业务通告 <a href="#">more</a></template>
-                <template #extra><a href="#">发布</a></template>
+                <template #title>业务通告 <a @click="toPage('list', 1)">more</a></template>
+                <template #extra><a @click="toPage('sendNotice', 1)">发布</a></template>
                 <p class="home-box-msgs-item" v-for="item in businessList">
                     <div class="home-box-msgs-item-sign">EK</div>
                     <div class="home-box-msgs-item-content" :title="item.content">{{ item.content }}</div>
@@ -11,8 +11,8 @@
                 </p>
             </a-card>
             <a-card>
-                <template #title>公司通知 <a href="#">more</a></template>
-                <template #extra><a href="#">发布</a></template>
+                <template #title>公司通知 <a @click="toPage('list', 2)">more</a></template>
+                <template #extra><a @click="toPage('sendNotice', 2)">发布</a></template>
                 <p class="home-box-msgs-item" v-for="item in compNoticeList">
                     <div class="home-box-msgs-item-sign"></div>
                     <div class="home-box-msgs-item-content" :title="item.content">{{ item.content }}</div>
@@ -25,22 +25,21 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 import SysCard from '@/components/sysCard.vue';
 export default defineComponent({
     components: {
         SysCard
     },
-	  setup() {
-        const toPage = (v: number) => {
-            let _url = ''
-            switch (v) {
-                case 1: _url = 'http://www.airkx.com/manage/'; break;
-                case 2: _url = 'http://cp.airkx.cn/'; break;
-                case 3: _url = 'http://gj.airkx.cn/Main.aspx'; break;
-                case 4: _url = 'http://gn.airkx.cn/Main.aspx'; break;
-                case 5: _url = 'http://zc.airkx.cn/Main.aspx'; break;
-            }
-            _url && window.open(_url)
+    setup() {
+        const router = useRouter();
+        const toPage = (url: string, type: number) => {
+            router.push({
+                path: '/notices/' + url,
+                params: {
+                    type
+                }
+            })
         }
 
         // 业务公共
@@ -67,7 +66,7 @@ export default defineComponent({
             businessList,
             compNoticeList
         }
-	  },
+    },
 });
 </script>
 

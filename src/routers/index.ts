@@ -1,16 +1,29 @@
 import { createWebHashHistory, createRouter, createWebHistory } from 'vue-router'
 import Layout from '../views/layout.vue'
+import Login from '../views/login.vue'
 import store from '../store/index'
 import structure from './structure'
 import personnel from './personnel'
 import customer from './customer'
 import ticketStation from './ticketStation'
 import stats from './stats'
-import Login from '../views/login.vue'
+import notices from './notices'
 // import Editpwd from '../views/editpwd.vue'
 const Editpwd = () => import(/* webpackChunkName: "editpwd" */ '../views/editpwd.vue')
 const Home = () => import(/* webpackChunkName: "home" */ '../views/main/home.vue')
 const routes = [
+    // 公司架构
+    structure,
+    // 人员管理
+    personnel,
+    // 客户管理
+    customer,
+    // 出票点管理
+    ticketStation,
+    // 统计管理
+    stats,
+    // 通知管理
+    notices,
     {
         path: '/',
         name: 'index',
@@ -44,16 +57,6 @@ const routes = [
         },
         children: []
     },
-    // 公司架构
-    structure,
-    // 人员管理
-    personnel,
-    // 客户管理
-    customer,
-    // 出票点管理
-    ticketStation,
-    // 统计管理
-    stats,
     // 修改密码
     {
         path: '/editpwd',

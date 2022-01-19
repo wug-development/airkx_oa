@@ -9,7 +9,7 @@ export default {
     component: Layout,
     meta: {
         title: '通知管理',
-        hasChildren: false
+        hasChildren: true
     },
     children: [
         // {
