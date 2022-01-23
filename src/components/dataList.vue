@@ -1,61 +1,68 @@
 <template>
-	<a-table
-        :columns="detaModel" 
-        :data-source="dataList"
-        :pagination="false"
-        @change="onChange"
-        rowKey="key"
-        :scroll="scroll">
-		<template #action="record">
-			<slot name="action" :data="record"></slot>
-		</template>
-	</a-table>
+    <a-table :columns="detaModel" :data-source="dataList" :pagination="false" @change="onChange" :rowKey="rowKey" :scroll="scroll">
+        <template #action="record">
+            <slot name="action" :data="record"></slot>
+        </template>
+    </a-table>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
-import { Table } from 'ant-design-vue'
+import { defineComponent, reactive, toRefs, onMounted } from 'vue';
+import { Table } from 'ant-design-vue';
+import bus from '../utils/bll/bus';
 
 export default defineComponent({
-    components: {Table},
+    components: { Table },
     props: {
         dataApi: {
             type: Function,
-            required: true
+            required: true,
         },
         detaModel: {
             type: Array,
-            default: () => ([])
+            default: () => [],
         },
         pageConfig: {
-            type: Object || Boolean
+            type: Object || Boolean,
         },
         scroll: {
             type: Object,
             default: () => {
-                return {x: 1300}
-            }
-        }
+                return { x: 1300 };
+            },
+        },
+        rowKey: {
+            type: String,
+            default: 'key',
+        },
     },
-	setup(prop) {
+    setup(prop) {
         const state = reactive({
-            dataList: []
-        })
+            dataList: [{ id: '1', airCode: 'PK', content: '通知标题' }],
+        });
         const onChange = (page: object) => {
             console.log('page :>> ', page);
-        }
-        prop.dataApi().then((res: any)=> {
-            console.log('res :>> ', res);
-            state.dataList = res
-        })
-		return {
+        };
+        const getData = () => {
+            prop.dataApi().then((res: any) => {
+                console.log('res :>> ', res);
+                state.dataList = res;
+            });
+        };
+
+        onMounted(() => {
+            bus.$on('searchData', () => {
+                getData();
+            });
+        });
+        return {
             ...toRefs(state),
-            onChange
-		};
-	},
+            onChange,
+        };
+    },
 });
 </script>
 <style lang="scss" scoped>
-::v-deep(.ant-btn){
+::v-deep(.ant-btn) {
     margin: 0 5px;
 }
 </style>

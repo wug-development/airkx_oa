@@ -2,7 +2,7 @@
 	<div class="home-box">
         <div class="home-box-msgs">
             <a-card>
-                <template #title>业务通告 <a @click="toPage('list', 1)">more</a></template>
+                <template #title>业务通告 <a @click="toPage('noticeList', 1)">more</a></template>
                 <template #extra><a @click="toPage('sendNotice', 1)">发布</a></template>
                 <p class="home-box-msgs-item" v-for="item in businessList">
                     <div class="home-box-msgs-item-sign">EK</div>
@@ -11,7 +11,7 @@
                 </p>
             </a-card>
             <a-card>
-                <template #title>公司通知 <a @click="toPage('list', 2)">more</a></template>
+                <template #title>公司通知 <a @click="toPage('noticeList', 2)">more</a></template>
                 <template #extra><a @click="toPage('sendNotice', 2)">发布</a></template>
                 <p class="home-box-msgs-item" v-for="item in compNoticeList">
                     <div class="home-box-msgs-item-sign"></div>
@@ -35,8 +35,8 @@ export default defineComponent({
         const router = useRouter();
         const toPage = (url: string, type: number) => {
             router.push({
-                path: '/notices/' + url,
-                params: {
+                path: '/' + url,
+                query: {
                     type
                 }
             })

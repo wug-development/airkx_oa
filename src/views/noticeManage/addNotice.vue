@@ -2,40 +2,45 @@
     <div class="addnotice-box">
         <DetailForm ref="refDetail" title="添加通知" :formModel="infoNotice" :form="form">
             <template #item="row">
-                <div id="fwb"></div>
+                <div ref="refEditor"></div>
             </template>
         </DetailForm>
     </div>
 </template>
 
 <script lang="ts">
-import DetailForm from '@/components/detailForm.vue'
-import { defineComponent, reactive } from 'vue'
-import { infoNotice } from './model/notice'
-import Editor from 'wangeditor'
+import DetailForm from '@/components/detailForm.vue';
+import { defineComponent, reactive, ref, onMounted } from 'vue';
+import { infoNotice } from './model/notice';
+import Editor from 'wangeditor';
 export default defineComponent({
     components: {
-        DetailForm
+        DetailForm,
     },
     setup() {
         const form = reactive({});
+        const refEditor = ref('');
+        let editor: any = '';
 
-        
+        onMounted(() => {
+            console.log('refEditor.value :>> ', refEditor.value);
+
+            editor = new Editor(refEditor.value);
+            console.log('editor :>> ', editor);
+            editor.create();
+        });
 
         return {
             form,
-            infoNotice
-        }
+            infoNotice,
+            refEditor,
+        };
     },
-    onMounted() {
-        const editor = new Editor('#fwb');
-        editor.create();
-    },
-})
+});
 </script>
 
 <style lang="scss" scoped>
-.addnotice-box{
+.addnotice-box {
     min-height: 100%;
 }
 </style>

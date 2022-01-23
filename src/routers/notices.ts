@@ -1,34 +1,34 @@
-import Layout from '../views/layout.vue'
-const AddNotice = () => import(/* webpackChunkName: "addNotice" */ '../views/noticeManage/addNotice.vue')
-// const Customerinfo = () => import(/* webpackChunkName: "layout" */ '../views/noticeManage/customerEdit.vue')
+import Layout from '../views/layout.vue';
+const AddNotice = () => import(/* webpackChunkName: "addNotice" */ '../views/noticeManage/addNotice.vue');
+const noticeList = () => import(/* webpackChunkName: "noticeList" */ '../views/noticeManage/noticeList.vue');
 export default {
     path: '/notices',
     redirect: '/noticelist',
-    icon: 'notices',
     name: 'notices',
     component: Layout,
     meta: {
         title: '通知管理',
-        hasChildren: true
+        icon: 'notices',
+        hasChildren: true,
     },
     children: [
-        // {
-        //     path: '/customerlist',
-        //     name: 'customerlist',
-        //     meta: {
-        //         title: '客户列表',
-        //         hasChildren: false
-        //     },
-        //     component: Customerlist
-        // },
+        {
+            path: '/noticeList',
+            name: 'noticeList',
+            meta: {
+                title: '通知列表',
+                hasChildren: false,
+            },
+            component: noticeList,
+        },
         {
             path: '/sendNotice',
             name: 'sendNotice',
             meta: {
                 title: '发布通知',
-                hasChildren: false
+                hasChildren: false,
             },
-            component: AddNotice
+            component: AddNotice,
         },
-    ]
-}
+    ],
+};

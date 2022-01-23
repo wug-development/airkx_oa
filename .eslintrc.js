@@ -18,36 +18,36 @@ module.exports = {
     // 规则的细节请到ESLint官方网站查看http://eslint.org/docs/rules/
     rules: {
         "vue/max-attributes-per-line": [2, {
-        "singleline": 10,
-        "multiline": {
-            "max": 1,
-            "allowFirstLine": false
-        }
+            "singleline": 10,
+            "multiline": {
+                "max": 1,
+                "allowFirstLine": false
+            }
         }],
         "vue/require-v-for-key": 'off',
         "vue/name-property-casing": ["error", "PascalCase"],
         // 定义对象的set存取器属性时，强制定义get
         'accessor-pairs': 2,
         'arrow-spacing': [2, {
-        'before': true,
-        'after': true
+            'before': true,
+            'after': true
         }],
         // 禁止或强制在单行代码块中使用空格
         'block-spacing': [2, 'always'],
         // 强制使用一致的缩进 第二个参数为 "tab" 时，会使用tab
         'brace-style': [2, '1tbs', {
-        'allowSingleLine': true
+            'allowSingleLine': true
         }],
         // 双峰驼命名格式
         'camelcase': [0, {
-        'properties': 'always'
+            'properties': 'always'
         }],
         //  数组和对象键值对最后一个逗号， never参数：不能带末尾的逗号, always参数：必须带末尾的逗号
         'comma-dangle': [2, 'never'],
         // 控制逗号前后的空格
         'comma-spacing': [2, {
-        'before': false,
-        'after': true
+            'before': false,
+            'after': true
         }],
         // 控制逗号在行尾出现还是在行首出现 (默认行尾)
         'comma-style': [2, 'last'],
@@ -65,30 +65,30 @@ module.exports = {
         "eqeqeq": [2, "allow-null"],
         // 强制 generator 函数中 * 号周围使用一致的空格
         'generator-star-spacing': [2, {
-        'before': true,
-        'after': true
+            'before': true,
+            'after': true
         }],
         // 要求回调函数中有容错处理
         'handle-callback-err': [2, '^(err|error)$'],
         'indent': [2, 2, {
-        'SwitchCase': 1
+            'SwitchCase': 1
         }],
         // 强制在 JSX 属性中一致地使用双引号或单引号
         'jsx-quotes': [2, 'prefer-single'],
         // 强制在对象字面量的属性中键和值之间使用一致的间距
         'key-spacing': [2, {
-        'beforeColon': false,
-        'afterColon': true
+            'beforeColon': false,
+            'afterColon': true
         }],
         // 强制在关键字前后使用一致的空格
         'keyword-spacing': [2, {
-        'before': true,
-        'after': true
+            'before': true,
+            'after': true
         }],
         // 要求构造函数首字母大写
         'new-cap': [2, {
-        'newIsCap': true,
-        'capIsNew': false
+            'newIsCap': true,
+            'capIsNew': false
         }],
         // 要求调用无参构造函数时有圆括号
         'new-parens': 2,
@@ -154,20 +154,20 @@ module.exports = {
         'no-label-var': 2,
         // 禁用标签语句
         'no-labels': [2, {
-        'allowLoop': false,
-        'allowSwitch': false
+            'allowLoop': false,
+            'allowSwitch': false
         }],
         // 禁用不必要的嵌套块
         'no-lone-blocks': 2,
         // 不允许空格和 tab 混合缩进
-        'no-mixed-spaces-and-tabs': 2,
+        'no-mixed-spaces-and-tabs': 4,
         // 禁止使用多个空格
         'no-multi-spaces': 2,
         // 禁止使用多行字符串，在 JavaScript 中，可以在新行之前使用斜线创建多行字符串
         'no-multi-str': 2,
         // 不允许多个空行
         'no-multiple-empty-lines': [2, {
-        'max': 1
+            'max': 1
         }],
         // 禁止对原生对象赋值
         'no-native-reassign': 2,
@@ -225,15 +225,15 @@ module.exports = {
         'no-unmodified-loop-condition': 2,
         // 禁止可以在有更简单的可替代的表达式时使用三元操作符
         'no-unneeded-ternary': [2, {
-        'defaultAssignment': false
+            'defaultAssignment': false
         }],
         // 禁止在return、throw、continue 和 break语句之后出现不可达代码
         'no-unreachable': 2,
         'no-unsafe-finally': 2,
         // 禁止出现未使用过的变量
         'no-unused-vars': [2, {
-        'vars': 'all',
-        'args': 'none'
+            'vars': 'all',
+            'args': 'none'
         }],
         // 禁止不必要的 .call() 和 .apply()
         'no-useless-call': 2,
@@ -248,28 +248,28 @@ module.exports = {
         'no-with': 2,
         // 强制函数中的变量要么一起声明要么分开声明
         'one-var': [2, {
-        'initialized': 'never'
+            'initialized': 'never'
         }],
         // 强制操作符使用一致的换行符
         'operator-linebreak': [2, 'after', {
-        'overrides': {
-            '?': 'before',
-            ':': 'before'
-        }
+            'overrides': {
+                '?': 'before',
+                ':': 'before'
+            }
         }],
         // 要求或禁止块内填充
         'padded-blocks': [2, 'never'],
         // 强制使用一致的反勾号、双引号或单引号
         'quotes': [2, 'single', {
-        'avoidEscape': true,
-        'allowTemplateLiterals': true
+            'avoidEscape': true,
+            'allowTemplateLiterals': true
         }],
         // 要求或禁止使用分号而不是 ASI（这个才是控制行尾部分号的，）
         'semi': [2, 'never'],
         // 强制分号之前和之后使用一致的空格
         'semi-spacing': [2, {
-        'before': false,
-        'after': true
+            'before': false,
+            'after': true
         }],
         // 强制在块之前使用一致的空格
         'space-before-blocks': [2, 'always'],
@@ -281,12 +281,12 @@ module.exports = {
         'space-infix-ops': 2,
         // 强制在一元操作符前后使用一致的空格
         'space-unary-ops': [2, {
-        'words': true,
-        'nonwords': false
+            'words': true,
+            'nonwords': false
         }],
         // 强制在注释中 // 或 /* 使用一致的空格
         'spaced-comment': [2, 'always', {
-        'markers': ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ',']
+            'markers': ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ',']
         }],
         // 要求或禁止模板字符串中的嵌入表达式周围空格的使用
         'template-curly-spacing': [2, 'never'],
@@ -306,7 +306,7 @@ module.exports = {
         'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
         // 强制在花括号中使用一致的空格
         'object-curly-spacing': [2, 'always', {
-        objectsInObjects: false
+            objectsInObjects: false
         }],
         // 指定数组的元素之间要以空格隔开(, 后面)， never参数：[ 之前和 ] 之后不能带空格，always参数：[ 之前和 ] 之后必须带空格
         'array-bracket-spacing': [2, 'never']

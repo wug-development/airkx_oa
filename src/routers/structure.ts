@@ -1,16 +1,16 @@
-import Layout from '../views/layout.vue'
-const Department = () => import(/* webpackChunkName: "department" */ '../views/structure/department.vue')
-const DepartmentInfo = () => import(/* webpackChunkName: "departmentInfo" */ '../views/structure/departmentInfo.vue')
-const JobList = () => import(/* webpackChunkName: "jobList" */ '../views/structure/jobList.vue')
-const JobInfo = () => import(/* webpackChunkName: "jobInfo" */ '../views/structure/jobInfo.vue')
+import Layout from '../views/layout.vue';
+const Department = () => import(/* webpackChunkName: "department" */ '../views/structure/department.vue');
+const DepartmentInfo = () => import(/* webpackChunkName: "departmentInfo" */ '../views/structure/departmentInfo.vue');
+const JobList = () => import(/* webpackChunkName: "jobList" */ '../views/structure/jobList.vue');
+const JobInfo = () => import(/* webpackChunkName: "jobInfo" */ '../views/structure/jobInfo.vue');
 export default {
     path: '/structure',
     redirect: '/branchs',
-    icon: 'structure',
     name: 'structure',
     meta: {
         title: '公司架构',
-        hasChildren: true
+        icon: 'structure',
+        hasChildren: true,
     },
     component: Layout,
     children: [
@@ -19,9 +19,9 @@ export default {
             name: 'branchs',
             meta: {
                 title: '部门管理',
-                hasChildren: false
+                hasChildren: false,
             },
-            component: Department
+            component: Department,
         },
         {
             path: '/branchinfo',
@@ -29,18 +29,18 @@ export default {
             meta: {
                 title: '部门信息',
                 hidden: true,
-                hasChildren: false
+                hasChildren: false,
             },
-            component: DepartmentInfo
+            component: DepartmentInfo,
         },
         {
             path: '/jobs',
             name: 'jobs',
             meta: {
                 title: '职位管理',
-                hasChildren: false
+                hasChildren: false,
             },
-            component: JobList
+            component: JobList,
         },
         {
             path: '/jobinfo',
@@ -48,9 +48,9 @@ export default {
             meta: {
                 title: '职位信息',
                 hidden: true,
-                hasChildren: false
+                hasChildren: false,
             },
-            component: JobInfo
-        }
-    ]
-}
+            component: JobInfo,
+        },
+    ],
+};
