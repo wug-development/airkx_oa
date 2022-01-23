@@ -21,6 +21,11 @@ export const infoNotice = [
         label: '内容',
         type: 'custom',
     },
+    {
+        name: 'path',
+        label: '附件',
+        type: 'custom',
+    },
 ];
 
 export const searchModel = [

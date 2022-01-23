@@ -1,5 +1,6 @@
 <template>
 	<div class="home-box">
+        <a-button type="primary" @click="onUpload">上传</a-button>
         <div class="home-box-msgs">
             <a-card>
                 <template #title>业务通告 <a @click="toPage('noticeList', 1)">more</a></template>
@@ -27,6 +28,7 @@
 import { defineComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import SysCard from '@/components/sysCard.vue';
+import { apiUploadFile } from '@/apis/utils';
 export default defineComponent({
     components: {
         SysCard
@@ -61,10 +63,17 @@ export default defineComponent({
             getList();
         }
 
+        const onUpload = () => {
+            apiUploadFile().then(res => {
+                console.log('uploadres', res);
+            })
+        }
+
         return {
             toPage,
             businessList,
-            compNoticeList
+            compNoticeList,
+            onUpload
         }
     },
 });
