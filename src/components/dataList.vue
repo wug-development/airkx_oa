@@ -1,14 +1,18 @@
 <template>
-    <a-table :columns="detaModel" :data-source="dataList" :pagination="false" @change="onChange" :rowKey="rowKey" :scroll="scroll">
+    <a-table :columns="detaModel" :data-source="dataList" :pagination="pagination" @change="onChange" :rowKey="rowKey" :scroll="scroll">
         <template #action="record">
             <slot name="action" :data="record"></slot>
         </template>
     </a-table>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted } from 'vue';
+import { defineComponent, reactive, toRefs, onMounted, onBeforeUnmount } from 'vue';
 import { Table } from 'ant-design-vue';
 import bus from '../utils/bll/bus';
+type pageType = {
+    current;
+    pageSize;
+};
 
 export default defineComponent({
     components: { Table },
@@ -22,7 +26,12 @@ export default defineComponent({
             default: () => [],
         },
         pageConfig: {
-            type: Object || Boolean,
+            type: Boolean,
+            default: true,
+        },
+        defaultParams: {
+            type: Object,
+            default: () => ({}),
         },
         scroll: {
             type: Object,
@@ -36,27 +45,56 @@ export default defineComponent({
         },
     },
     setup(prop) {
-        const state = reactive({
-            dataList: [{ id: '1', airCode: 'PK', content: '通知标题' }],
+        const pagination = reactive({
+            current: 1,
+            pageSize: 10,
+            disabled: !prop.pageConfig,
+            total: 1,
         });
-        const onChange = (page: object) => {
-            console.log('page :>> ', page);
+        let params = {};
+        const state = reactive({
+            dataList: [],
+        });
+        const onChange = (page: pageType) => {
+            pagination.current = page.current;
+            pagination.pageSize = page.pageSize;
+            params = Object.assign({}, params, {
+                page: page.current,
+                pageNum: page.pageSize,
+            });
+            getData(params);
         };
-        const getData = () => {
-            prop.dataApi().then((res: any) => {
-                console.log('res :>> ', res);
-                state.dataList = res;
+        const getData = (_params: object) => {
+            prop.dataApi(_params).then((res: any) => {
+                state.dataList = res.data;
+                pagination.total = res.dataCount;
             });
         };
 
         onMounted(() => {
-            bus.$on('searchData', () => {
-                getData();
+            bus.$on('searchData', (_params) => {
+                params = Object.assign(
+                    {
+                        page: pagination.current,
+                        pageNum: pagination.pageSize,
+                    },
+                    prop.defaultParams,
+                    _params
+                );
+                getData(params);
             });
+            bus.$on('reloadData', () => {
+                getData(params);
+            });
+        });
+        onBeforeUnmount(() => {
+            bus.$off('searchData');
+            bus.$off('reloadData');
         });
         return {
             ...toRefs(state),
             onChange,
+            pagination,
         };
     },
 });

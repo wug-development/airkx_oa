@@ -23,7 +23,7 @@ import DetailForm from '@/components/detailForm.vue';
 import { defineComponent, reactive, ref, onMounted } from 'vue';
 import { infoNotice } from './model/notice';
 import Editor from 'wangeditor';
-import { apiUploadUri } from '@/apis/utils';
+import { apiUploadUri, apiUploadFile } from '@/apis/utils';
 export default defineComponent({
     components: {
         DetailForm,
@@ -42,12 +42,19 @@ export default defineComponent({
             editor.create();
         });
 
+        // const onUpload = () => {
+        //     apiUploadFile().then((res) => {
+        //         console.log('uploadres', res);
+        //     });
+        // };
+
         return {
             form,
             infoNotice,
             refEditor,
             fileList,
             apiUploadUri,
+            // onUpload,
         };
     },
 });

@@ -25,7 +25,13 @@ const instance = Axios.create({
 // 响应拦截
 instance.interceptors.response.use(
     (response) => {
-        return response.data;
+        console.log('response.data :>> ', response.data);
+        if (response.data.status === 1) {
+            return response.data.data;
+        } else {
+            message.warning(response.data.msg);
+            return Promise.reject(0);
+        }
     },
     (error) => {
         message.warning('请求失败，网络错误');

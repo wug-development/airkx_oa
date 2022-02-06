@@ -34,6 +34,7 @@
                     <div class="btns">
                         <a-button type="primary" @click="onSearch"> 搜索 </a-button>
                         <a-button :style="{ marginLeft: '8px' }" @click="onReset"> 重置 </a-button>
+                        <slot name="btn"></slot>
                         <a class="query-form-box-toggle" v-if="maxShow !== 0" @click="toggle">
                             {{ expand ? '收起' : '高级搜索' }}
                             <UpOutlined v-if="expand" />
@@ -47,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, computed, toRefs, onMounted } from 'vue';
+import { defineComponent, reactive, ref, computed, toRefs, onMounted, onBeforeUnmount } from 'vue';
 import { UpOutlined, DownOutlined } from '@ant-design/icons-vue';
 import { Form, FormItem, Row, Col, Button, Input, Select, SelectOption, DatePicker, MonthPicker, RangePicker } from 'ant-design-vue';
 
@@ -118,7 +119,8 @@ export default defineComponent({
         // 重置
         const onReset = () => {
             searchRef.value.resetFields();
-            console.log('state.form :>> ', state.form);
+            bus.$emit('searchData', state.form);
+            emit('update:form', state.form);
         };
 
         // 打开关闭更多搜索
@@ -134,6 +136,10 @@ export default defineComponent({
 
         onMounted(() => {
             onSearch();
+        });
+
+        onBeforeUnmount(() => {
+            bus.$off('searchData');
         });
 
         return {
