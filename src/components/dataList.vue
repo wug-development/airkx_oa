@@ -6,7 +6,7 @@
     </a-table>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted, onBeforeUnmount } from 'vue';
+import { defineComponent, reactive, toRefs, onBeforeMount, onBeforeUnmount } from 'vue';
 import { Table } from 'ant-design-vue';
 import bus from '../utils/bll/bus';
 type pageType = {
@@ -71,7 +71,7 @@ export default defineComponent({
             });
         };
 
-        onMounted(() => {
+        onBeforeMount(() => {
             bus.$on('searchData', (_params) => {
                 params = Object.assign(
                     {

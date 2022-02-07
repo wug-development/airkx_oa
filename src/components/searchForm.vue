@@ -34,7 +34,7 @@
                     <div class="btns">
                         <a-button type="primary" @click="onSearch"> 搜索 </a-button>
                         <a-button :style="{ marginLeft: '8px' }" @click="onReset"> 重置 </a-button>
-                        <slot name="btn"></slot>
+                        <slot name="btn" :data="form"></slot>
                         <a class="query-form-box-toggle" v-if="maxShow !== 0" @click="toggle">
                             {{ expand ? '收起' : '高级搜索' }}
                             <UpOutlined v-if="expand" />

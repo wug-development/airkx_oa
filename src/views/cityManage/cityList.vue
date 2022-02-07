@@ -37,7 +37,7 @@ export default defineComponent({
     setup() {
         const router = useRouter();
 
-        // 删除人员
+        // 删除
         const del = async (row: any) => {
             console.log('row :>> ', row.data.text.dnCityID);
             const res = await apiDel(row.data.text.dnCityID);

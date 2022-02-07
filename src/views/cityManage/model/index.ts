@@ -1,3 +1,4 @@
+import { validateRequired } from '@/utils/tool/validator';
 export const infoModel = [
     {
         name: 'dcCode',
@@ -174,6 +175,81 @@ export const listModel = [
         align: 'left',
         width: '100px',
         key: 'dcContinent',
+    },
+    {
+        title: '类型',
+        dataIndex: 'dnType',
+        align: 'center',
+        key: 'dnType',
+        customRender({ text }) {
+            return Number(text === 1) ? '国际' : '国内';
+        },
+    },
+    {
+        title: '操作',
+        key: 'operation',
+        fixed: 'right',
+        align: 'center',
+        width: 200,
+        slots: {
+            customRender: 'action',
+        },
+    },
+];
+
+export const insertModel = [
+    {
+        name: 'id',
+        label: '城市名称',
+        placeholder: '请输入搜索城市名称',
+        col: 24,
+        span: 8,
+        options: [],
+        rules: [
+            {
+                validator: validateRequired,
+                message: '请选择城市',
+                trigger: 'change',
+            },
+        ],
+    },
+];
+
+export const tableModel = [
+    {
+        title: '三字码',
+        dataIndex: 'dcCode',
+        key: 'dcCode',
+        width: '80px',
+        align: 'center',
+    },
+    {
+        title: '城市名称',
+        dataIndex: 'dcCityName',
+        key: 'dcCityName',
+        width: '200px',
+        align: 'left',
+    },
+    {
+        title: '英文名称',
+        dataIndex: 'dcEnCityName',
+        align: 'left',
+        key: 'dcEnCityName',
+        width: '200px',
+    },
+    {
+        title: '拼音',
+        dataIndex: 'dcPinyin',
+        align: 'left',
+        key: 'dcPinyin',
+        width: '200px',
+    },
+    {
+        title: '国家',
+        dataIndex: 'dcCountry',
+        align: 'left',
+        width: '150px',
+        key: 'dcCountry',
     },
     {
         title: '类型',
