@@ -12,10 +12,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, reactive, ref, onMounted } from 'vue';
 import DetailForm from '@/components/detailForm.vue';
 import { dataModel } from './models/departmentinfo';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { Button, FormItem } from 'ant-design-vue';
 import { apiSave } from '@/apis/department';
 
@@ -27,19 +27,34 @@ export default defineComponent({
     },
     setup() {
         const router = useRouter();
+        const route = useRoute();
         const refDetail = ref();
         const form = reactive({
+            departmentID: null,
             departmentName: '',
         });
+        const back = () => {
+            router.go(-1);
+        };
         const onSubmit = async () => {
             const isCheck = await refDetail.value.onSubmit();
             if (isCheck) {
                 const res = await apiSave(form);
+                console.log('res :>> ', res);
+                if (res) {
+                    back();
+                }
             }
         };
-        const back = () => {
-            router.go(-1);
-        };
+
+        onMounted(() => {
+            const { id, name } = route.query;
+            if (id && name) {
+                form.departmentID = id;
+                form.departmentName = name.toString();
+            }
+        });
+
         return {
             form,
             dataModel,

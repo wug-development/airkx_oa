@@ -60,7 +60,9 @@ export default defineComponent({
 
         // 表单内容
         const state = reactive({
-            form: {},
+            form: {
+                id: 0,
+            },
             addModel: insertModel,
         });
 

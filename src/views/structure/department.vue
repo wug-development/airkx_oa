@@ -1,82 +1,91 @@
 <template>
-  <div class="department-box">
-    <div class="list-header">
-      <a-button type="primary" @click="edit">添加部门</a-button>
+    <div class="department-box">
+        <div class="list-header">
+            <a-button type="primary" @click="edit">添加部门</a-button>
+        </div>
+        <DataList :dataApi="apiGetList" rowKey="departmentName" :detaModel="DataModel">
+            <template #action="{ data: { record } }">
+                <a-button type="primary" @click="edit(record)">编辑</a-button>
+                <a-popconfirm placement="left" ok-text="确定" cancel-text="取消" @confirm="del(record)">
+                    <template #title>
+                        <p>确定要删除该部门吗</p>
+                    </template>
+                    <a-button type="primary" danger>删除</a-button>
+                </a-popconfirm>
+            </template>
+        </DataList>
     </div>
-    <DataList :dataApi="apiGetList" rowKey="id" :detaModel="DataModel">
-      <template #action="record">
-        <a-button type="primary" @click="edit(record)">编辑</a-button>
-        <a-button type="primary" @click="del(record)" danger>删除</a-button>
-      </template>
-    </DataList>
-  </div>
 </template>
 
 <script lang="ts">
 import DataList from '@/components/dataList.vue';
 import DataModel from './models/departments';
 import { useRouter } from 'vue-router';
-import { confirm } from '@/utils/bll/bll';
-import { Button } from 'ant-design-vue';
-import { apiGetList } from '@/apis/department';
-import { defineComponent } from 'vue';
+import { Button, notification } from 'ant-design-vue';
+import { apiGetList, apiDel } from '@/apis/department';
+import { defineComponent, onMounted } from 'vue';
+import bus from '@/utils/bll/bus';
 
 export default defineComponent({
-  components: {
-    DataList,
-    Button,
-  },
-  setup() {
-    const router = useRouter();
+    components: {
+        DataList,
+        Button,
+    },
+    setup() {
+        const router = useRouter();
 
-    // 删除部门
-    const del = (row: any) => {
-      console.log('row :>> ', row);
-      confirm({
-        title: '确定要删除该部门吗?',
-        callback() {
-          console.log('OK');
-        },
-      });
-    };
+        // 删除部门
+        const del = async (row: any) => {
+            const res = await apiDel(row.departmentID);
+            if (res) {
+                notification.success({
+                    message: '删除成功',
+                });
+                bus.$emit('reloadData', '');
+            }
+        };
 
-    // 编辑部门
-    const edit = (row: any) => {
-      let name = undefined,
-        id = undefined;
-      if (row && row.data && row.data.record) {
-        name = row.data.record.name;
-        id = row.data.record.id;
-      }
-      router.push({
-        path: '/branchinfo',
-        query: {
-          name,
-          id,
-        },
-      });
-    };
+        // 编辑部门
+        const edit = (row: any) => {
+            let name = undefined,
+                id = undefined;
+            if (row) {
+                name = row.departmentName;
+                id = row.departmentID;
+            }
+            router.push({
+                path: '/branchinfo',
+                query: {
+                    name,
+                    id,
+                },
+            });
+        };
 
-    return {
-      DataModel,
-      apiGetList,
-      del,
-      edit,
-    };
-  },
+        onMounted(() => {
+            bus.$emit('searchData', '');
+        });
+
+        return {
+            DataModel,
+            apiGetList,
+            del,
+            edit,
+        };
+    },
 });
 </script>
 
 <style lang="scss" scoped>
 .department-box {
-  min-height: 100%;
-  .ant-btn {
-    margin: 0 5px;
-  }
-  .list-header {
-    padding: 25px;
-    background-color: #fff;
-    margin-bottom: 25px;
-  }
+    min-height: 100%;
+    .ant-btn {
+        margin: 0 5px;
+    }
+    .list-header {
+        padding: 25px;
+        background-color: #fff;
+        margin-bottom: 25px;
+    }
 }
 </style>
