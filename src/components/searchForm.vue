@@ -21,8 +21,7 @@
                             :inputReadOnly="true"
                             v-bind="item"
                         />
-                        <a-select v-else-if="item.type === 'select'" :placeholder="item.placeholder || ''" v-bind="item" v-model:value="form[item.name]">
-                            <a-select-option value="">{{ item.placeholder || '全部' }}</a-select-option>
+                        <a-select v-else-if="item.type === 'select'" :placeholder="item.placeholder || ''" v-bind="item" v-model:value="form[item.name]" allowClear>
                             <template v-for="({ value, label }, i) in item.options" :key="i">
                                 <a-select-option :value="value">{{ label }}</a-select-option>
                             </template>

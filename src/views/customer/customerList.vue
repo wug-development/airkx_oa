@@ -1,16 +1,17 @@
 <template>
     <div class="customlist-box">
-        <CSearchForm :dataModel="searchModel" :btnCol="8">
+        <CSearchForm :dataModel="searchModel" :btnCol="24">
             <template #btn>
                 <a-button type="primary" ghost @click="edit">添加</a-button>
             </template>
         </CSearchForm>
         <DataList :dataApi="apiGetList" :detaModel="listModel" rowKey="Row">
+            <!-- <template #labels="record">2222 </template> -->
             <template #action="record">
                 <a-button type="primary" @click="edit(record)">编辑</a-button>
                 <a-popconfirm placement="left" ok-text="确定" cancel-text="取消" @confirm="del(record)">
                     <template #title>
-                        <p>确定要删除该城市吗？</p>
+                        <p>确定要删除该客户吗？</p>
                     </template>
                     <a-button type="primary" danger>删除</a-button>
                 </a-popconfirm>
@@ -24,7 +25,7 @@ import CSearchForm from '@/components/searchForm.vue';
 import DataList from '@/components/dataList.vue';
 import { defineComponent } from 'vue';
 import { searchModel, listModel } from './model';
-import { apiGetList, apiDel } from '@/apis/city';
+import { apiGetList, apiDel } from '@/apis/customer';
 import { useRouter } from 'vue-router';
 import { message } from 'ant-design-vue';
 import bus from '@/utils/bll/bus';

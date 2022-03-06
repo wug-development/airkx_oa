@@ -1,86 +1,104 @@
+import moment from 'moment';
+const costomerTypes = [
+    { label: '散客', value: '散客' },
+    { label: '同业', value: '同业' },
+    { label: '旅行社', value: '旅行社' },
+];
 export const searchModel = [
     {
-        name: 'sellName',
+        name: 'sellname',
         label: '销售员名称',
         type: 'select',
         placeholder: '请选择',
         col: 24,
     },
     {
-        name: 'type',
+        name: 'ctype',
         label: '类型',
         type: 'select',
         placeholder: '请选择',
+        col: 24,
+        options: costomerTypes,
+    },
+    {
+        name: 'customername',
+        label: '客户名称',
+        placeholder: '请输入',
         col: 24,
     },
 ];
 
 export const listModel = [
     {
-        title: '编号',
-        dataIndex: 'dnCityID',
-        key: 'dnCityID',
-        rowKey: 'key',
-        width: '100px',
-        align: 'center',
-    },
-    {
         title: '类型',
-        dataIndex: 'dcCode',
-        key: 'dcCode',
-        width: '80px',
+        dataIndex: 'KHType',
+        key: 'KHType',
+        width: '120px',
         align: 'center',
-        customRender({ text }) {
-            return Number(text === 1) ? '国际' : '国内';
-        },
     },
     {
         title: '客户简称',
-        dataIndex: 'dcCityName',
-        key: 'dcCityName',
+        dataIndex: 'JCName',
+        key: 'JCName',
         width: '200px',
         align: 'left',
     },
     {
         title: '拼音首字母',
-        dataIndex: 'dcPinyin',
-        align: 'left',
-        key: 'dcPinyin',
-        width: '200px',
+        dataIndex: 'KHPY',
+        key: 'KHPY',
+        width: '120px',
     },
     {
         title: '业务联系人',
-        dataIndex: 'dcPinyin',
-        align: 'left',
-        key: 'dcPinyin',
+        dataIndex: 'KHLXR',
+        key: 'KHLXR',
         width: '200px',
     },
     {
         title: '联系电话',
-        dataIndex: 'dcAirPortName',
+        dataIndex: 'KHLXDH',
         align: 'left',
-        key: 'dcAirPortName',
-        width: '200px',
+        key: 'KHLXDH',
+        width: '180px',
+        ellipsis: true,
+    },
+    {
+        title: '传真',
+        dataIndex: 'KHFax',
+        align: 'left',
+        key: 'KHFax',
+        width: '180px',
     },
     {
         title: '销售员',
-        dataIndex: 'dcCountry',
-        align: 'left',
+        dataIndex: 'KHXSY',
+        align: 'center',
         width: '150px',
-        key: 'dcCountry',
+        key: 'KHXSY',
     },
     {
         title: '欠款',
-        dataIndex: 'dcContinent',
+        dataIndex: 'JCID',
         align: 'left',
         width: '100px',
-        key: 'dcContinent',
+        key: 'JCID',
+        // slots: {
+        //     customRender: 'labels',
+        // },
+        // customRender: ({ text }) => {
+        //     return `<div style="color:red">${text}</div>`;
+        // },
     },
     {
         title: '录入日期',
-        dataIndex: 'dnType',
+        dataIndex: 'AddTime',
         align: 'center',
-        key: 'dnType',
+        key: 'AddTime',
+        width: '150px',
+        customRender: ({ text }) => {
+            return moment(text).format('YYYY-MM-DD');
+        },
     },
     {
         title: '操作',

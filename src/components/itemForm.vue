@@ -27,7 +27,20 @@ import { ref, watch, watchEffect } from 'vue';
 import { FormItem, Select, SelectOption, RadioGroup, Radio, DatePicker, Input } from 'ant-design-vue';
 export default {
     components: { FormItem, Select, SelectOption, RadioGroup, Radio, DatePicker, Input },
-    props: ['item', 'value', 'disabled'],
+    props: {
+        item: {
+            type: Object,
+            default: () => ({}),
+        },
+        value: {
+            type: String,
+            default: '',
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+    },
     emits: ['update:value'],
     setup(props, { emit }) {
         const modelValue = ref();
