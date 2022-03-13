@@ -17,7 +17,7 @@ import DetailForm from '@/components/detailForm.vue';
 import { dataModel } from './models/jobinfo';
 import { useRouter, useRoute } from 'vue-router';
 import { Button, FormItem } from 'ant-design-vue';
-import { apiGetList } from '@/apis/department';
+import { apiGetDepartList } from '@/apis/department';
 import { apiSave } from '@/apis/job';
 
 export default defineComponent({
@@ -53,7 +53,7 @@ export default defineComponent({
         };
 
         onMounted(async () => {
-            const res = await apiGetList({});
+            const res = await apiGetDepartList({});
             if (res && res.data && res.data.length) {
                 const options = [];
                 res.data.forEach((item) => {

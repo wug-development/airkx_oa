@@ -3,7 +3,7 @@
         <div class="list-header">
             <a-button type="primary" @click="edit">添加职位</a-button>
         </div>
-        <DataList :dataApi="apiGetList" rowKey="jobID" :detaModel="DataModel">
+        <DataList :dataApi="apiGetJobList" rowKey="jobID" :detaModel="DataModel">
             <template #action="{ data: { record } }">
                 <a-button type="primary" @click="edit(record)">编辑</a-button>
                 <a-popconfirm placement="left" ok-text="确定" cancel-text="取消" @confirm="del(record)">
@@ -22,7 +22,7 @@ import DataList from '@/components/dataList.vue';
 import DataModel from './models/jobs';
 import { useRouter } from 'vue-router';
 import { Button, notification } from 'ant-design-vue';
-import { apiGetList, apiDel } from '@/apis/job';
+import { apiGetJobList, apiDel } from '@/apis/job';
 import { onMounted } from 'vue';
 import bus from '@/utils/bll/bus';
 
@@ -64,7 +64,7 @@ export default {
 
         return {
             DataModel,
-            apiGetList,
+            apiGetJobList,
             del,
             edit,
         };

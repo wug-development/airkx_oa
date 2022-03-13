@@ -12,7 +12,14 @@
         <a-radio-group v-else-if="item.type === 'radio'" :name="item.name" :disabled="disabled" v-model:value="modelValue" :defaultValue="item.defaultValue">
             <a-radio v-for="(option, i) in item.options" :value="option.value || option.label">{{ option.label }}</a-radio>
         </a-radio-group>
-        <a-date-picker v-else-if="item.type === 'date'" v-model:value="modelValue" :placeholder="item.placeholder || '请选择日期'" :disabled="disabled" size="large" />
+        <a-date-picker
+            v-else-if="item.type === 'date'"
+            v-model:value="modelValue"
+            :valueFormat="item.format || 'YYYY-MM-DD'"
+            :placeholder="item.placeholder || '请选择日期'"
+            :disabled="disabled"
+            size="large"
+        />
         <div v-else-if="item.type === 'text'">{{ modelValue }}</div>
         <div v-else-if="item.type === 'br'" class="item-br"></div>
         <template v-else-if="item.type === 'custom'">

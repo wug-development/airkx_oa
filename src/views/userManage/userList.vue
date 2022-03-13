@@ -5,11 +5,16 @@
                 <a-button type="primary" ghost @click="edit">添加</a-button>
             </template>
         </searchForm>
-        <DataList :dataApi="getSource" :detaModel="listModel" :scroll="{ x: 1400 }">
+        <DataList :dataApi="apiGetList" :detaModel="listModel" rowKey="Row" :scroll="{ x: 1400 }">
             <template #action="record">
                 <a-button type="primary" @click="edit(record)">编辑</a-button>
                 <a-button type="primary" @click="setting(record)">权限</a-button>
-                <a-button type="primary" @click="del(record)" danger>删除</a-button>
+                <a-popconfirm placement="left" ok-text="确定" cancel-text="取消" @confirm="del(record)">
+                    <template #title>
+                        <p>确定要删除该员工吗？</p>
+                    </template>
+                    <a-button type="primary" danger>删除</a-button>
+                </a-popconfirm>
             </template>
         </DataList>
     </div>
@@ -18,10 +23,11 @@
 <script lang="ts">
 import searchForm from '@/components/searchForm.vue';
 import DataList from '@/components/dataList.vue';
+import { apiGetList, apiChange } from '@/apis/user';
 import { searchModel, listModel } from './models/userlist';
 import { useRouter } from 'vue-router';
-import { confirm } from '@/utils/bll/bll';
-import { Button } from 'ant-design-vue';
+import { Button, message } from 'ant-design-vue';
+import bus from '@/utils/bll/bus';
 export default {
     components: {
         searchForm,
@@ -30,51 +36,28 @@ export default {
     },
     setup() {
         const router = useRouter();
-        // 获取数据接口
-        const getSource = () => {
-            return new Promise((resolve, reject) => {
-                resolve([
-                    {
-                        id: '1',
-                        key: '1',
-                        name: '武广',
-                        sex: '男',
-                        departmentName: '技术部',
-                        job: '前端开发',
-                        tel: '13810173310',
-                        phone: '73310321',
-                        idcardno: '138282912723282349',
-                        joindate: '2021-09-09',
-                        edu: '本科',
-                        wages: '100000',
-                    },
-                ]);
-            });
-        };
 
         // 删除人员
-        const del = (row: any) => {
+        const del = async (row: any) => {
             console.log('row :>> ', row);
-            confirm({
-                title: '确定要删除该部门吗?',
-                callback: () => {
-                    console.log('object :>> 确定');
-                },
+            const { userID } = row.data.text;
+            const res = await apiChange({
+                id: userID,
+                state: 1,
             });
+            message.success('删除成功');
+            bus.$emit('reloadData', '');
         };
 
         // 编辑人员
         const edit = (row: any) => {
-            let name = undefined,
-                id = undefined;
+            let id = undefined;
             if (row && row.data && row.data.record) {
-                name = row.data.record.name;
-                id = row.data.record.id;
+                id = row.data.record.userID;
             }
             router.push({
                 path: '/userinfo',
                 query: {
-                    name,
                     id,
                 },
             });
@@ -100,7 +83,7 @@ export default {
         return {
             searchModel,
             listModel,
-            getSource,
+            apiGetList,
             edit,
             del,
             setting,

@@ -2,7 +2,7 @@
 import $http from '@/config/request';
 
 // 获取列表
-export const apiGetList = (params) => {
+export const apiGetJobList = (params) => {
     return $http.get('/api/job/getlist', params);
 };
 
