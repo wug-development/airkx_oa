@@ -1,13 +1,13 @@
 import Layout from '../views/layout.vue';
-const Users = () => import(/* webpackChunkName: "userList" */ '../views/personnel/userList.vue');
-const UserEdit = () => import(/* webpackChunkName: "UserEdit" */ '../views/personnel/userEdit.vue');
-const Wages = () => import(/* webpackChunkName: "wages" */ '../views/personnel/wages.vue');
-const Permissions = () => import(/* webpackChunkName: "permissions" */ '../views/personnel/permissions.vue');
+const Users = () => import(/* webpackChunkName: "userList" */ '../views/userManage/userList.vue');
+const UserEdit = () => import(/* webpackChunkName: "UserEdit" */ '../views/userManage/userEdit.vue');
+const Wages = () => import(/* webpackChunkName: "wages" */ '../views/userManage/wages.vue');
+const Permissions = () => import(/* webpackChunkName: "permissions" */ '../views/userManage/permissions.vue');
 
 export default {
-    path: '/personnel',
+    path: '/usermanage',
     redirect: '/users',
-    name: 'personnel',
+    name: 'usermanage',
     component: Layout,
     meta: {
         title: '人员管理',

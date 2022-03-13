@@ -40,7 +40,6 @@ export default defineComponent({
 
         // 删除
         const del = async (row: any) => {
-            console.log('row :>> ', row.data.text.JCID);
             await apiDel(row.data.text.JCID);
             message.success('删除成功');
             bus.$emit('reloadData', '');
@@ -50,10 +49,8 @@ export default defineComponent({
         const edit = (row: any) => {
             let id = undefined;
             if (row && row.data && row.data.record) {
-                console.log('row.data.record :>> ', row.data.record);
                 id = row.data.record.JCID;
             }
-            console.log('id :>> ', id);
             router.push({
                 path: `/customerinfo`,
                 query: { id },
