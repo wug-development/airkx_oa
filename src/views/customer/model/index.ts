@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { validateRequired } from '@/utils/tool/validator';
 const costomerTypes = [
     { label: '散客', value: '散客' },
     { label: '同业', value: '同业' },
@@ -109,5 +110,127 @@ export const listModel = [
         slots: {
             customRender: 'action',
         },
+    },
+];
+
+export const infoModel = [
+    {
+        name: 'KHType',
+        label: '客户类型',
+        type: 'select',
+        col: 12,
+        options: costomerTypes,
+        rules: [
+            {
+                required: true,
+                message: '请选择客户类型',
+                trigger: 'blur',
+            },
+        ],
+    },
+    {
+        name: 'KHProvince',
+        label: '所在地区',
+        type: 'select',
+        col: 12,
+        options: [],
+    },
+    {
+        name: 'JCName',
+        label: '客户简称',
+        col: 12,
+        rules: [
+            {
+                required: true,
+                message: '请输入客户简称',
+                trigger: 'blur',
+            },
+        ],
+    },
+    {
+        name: 'KHPY',
+        label: '拼音首字母',
+        col: 12,
+    },
+    {
+        name: 'KHGSQC',
+        label: '公司全称',
+        col: 12,
+    },
+    {
+        name: 'KHFax',
+        label: '传真号码',
+        col: 12,
+    },
+    {
+        name: 'KHBGDZ',
+        label: '详细地址',
+        maxlength: 150,
+        col: 12,
+    },
+    {
+        name: 'BZ',
+        label: '备注',
+        col: 12,
+    },
+    {
+        name: 'KHLXR',
+        label: '业务联系人',
+        col: 12,
+    },
+    {
+        name: 'KHLXDH',
+        label: '业务联系电话',
+        col: 12,
+    },
+    {
+        name: 'YWSJ',
+        label: '业务联系手机',
+        col: 12,
+    },
+    {
+        name: 'YWQQ',
+        label: '业务联系QQ',
+        col: 12,
+    },
+    {
+        name: 'CWLXR',
+        label: '财务联系人',
+        col: 12,
+    },
+    {
+        name: 'CWDH',
+        label: '财务联系电话',
+        col: 12,
+    },
+    {
+        name: 'CWSJ',
+        label: '财务联系手机',
+        col: 12,
+    },
+    {
+        name: 'ZYFZR',
+        label: '主要负责人',
+        col: 12,
+    },
+    {
+        name: 'FZRSJ',
+        label: '主要负责手机',
+        col: 12,
+    },
+    {
+        name: 'KHSYR',
+        label: '返现受益人',
+        col: 12,
+    },
+    {
+        name: 'KHYHZH',
+        label: '受益人卡号',
+        col: 12,
+    },
+    {
+        name: 'KHSYRDH',
+        label: '受益人电话',
+        col: 12,
     },
 ];

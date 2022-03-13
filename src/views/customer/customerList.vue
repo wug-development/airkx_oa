@@ -40,9 +40,8 @@ export default defineComponent({
 
         // 删除
         const del = async (row: any) => {
-            console.log('row :>> ', row.data.text.dnCityID);
-            const res = await apiDel(row.data.text.dnCityID);
-            console.log('res :>> ', res);
+            console.log('row :>> ', row.data.text.JCID);
+            await apiDel(row.data.text.JCID);
             message.success('删除成功');
             bus.$emit('reloadData', '');
         };
@@ -51,10 +50,13 @@ export default defineComponent({
         const edit = (row: any) => {
             let id = undefined;
             if (row && row.data && row.data.record) {
-                id = row.data.record.id;
+                console.log('row.data.record :>> ', row.data.record);
+                id = row.data.record.JCID;
             }
+            console.log('id :>> ', id);
             router.push({
-                path: `/cityinfo?id=${id}`,
+                path: `/customerinfo`,
+                query: { id },
             });
         };
         return {

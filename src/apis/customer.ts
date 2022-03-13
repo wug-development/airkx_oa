@@ -14,3 +14,8 @@ export const apiSave = (data) => {
 export const apiDel = (params) => {
     return $http.get(`/api/customer/del?id=${params}`);
 };
+
+// 查询
+export const apiQuery = (params) => {
+    return $http.get(`/api/customer/query?id=${params}`);
+};
