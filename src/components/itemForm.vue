@@ -2,7 +2,7 @@
     <a-form-item
         :label="item.label"
         :labelCol="item.labelCol || { span: 4, offset: 0 }"
-        :wrapperCol="item.wrapperCol || { span: 12, offset: 0 }"
+        :wrapperCol="item.wrapperCol || { span: 16, offset: 0 }"
         :rules="item.rules"
         :name="item.parentName || item.name"
     >
@@ -25,6 +25,7 @@
         <template v-else-if="item.type === 'custom'">
             <slot name="item" :item="item"></slot>
         </template>
+        <a-textarea v-else-if="item.type === 'textarea'" v-model:value="modelValue" showCount :maxlength="item.maxlength || 500" :disabled="disabled" size="large" allowClear />
         <a-input v-else v-model:value="modelValue" :maxlength="item.maxlength || 50" :disabled="disabled" size="large" allowClear />
     </a-form-item>
 </template>

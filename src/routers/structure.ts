@@ -3,17 +3,27 @@ const Department = () => import(/* webpackChunkName: "department" */ '../views/s
 const DepartmentInfo = () => import(/* webpackChunkName: "departmentInfo" */ '../views/structure/departmentInfo.vue');
 const JobList = () => import(/* webpackChunkName: "jobList" */ '../views/structure/jobList.vue');
 const JobInfo = () => import(/* webpackChunkName: "jobInfo" */ '../views/structure/jobInfo.vue');
+const Structure = () => import(/* webpackChunkName: "jobInfo" */ '../views/structure/index.vue');
 export default {
     path: '/structure',
-    redirect: '/branchs',
+    redirect: '/structure',
     name: 'structure',
     meta: {
         title: '公司架构',
         icon: 'structure',
-        hasChildren: true,
+        hasChildren: false,
     },
     component: Layout,
     children: [
+        {
+            path: '/structure',
+            name: 'structure',
+            meta: {
+                title: '部门管理',
+                hasChildren: false,
+            },
+            component: Structure,
+        },
         {
             path: '/branchs',
             name: 'branchs',
