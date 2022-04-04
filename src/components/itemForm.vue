@@ -9,6 +9,18 @@
         <a-select v-if="item.type === 'select'" :placeholder="'请选择'" v-model:value="modelValue" @change="onChange" :disabled="disabled" size="large" allowClear>
             <a-select-option v-for="(option, i) in item.options" :value="option.value || option.label">{{ option.label }}</a-select-option>
         </a-select>
+        <a-tree-select
+            v-else-if="item.type === 'tree'"
+            tree-data-simple-mode
+            placeholder="请选择"
+            :tree-data="item.treeData"
+            v-model:value="modelValue"
+            :disabled="disabled"
+            size="large"
+            labelInValue
+            :load-data="item.onLoadData"
+            allowClear
+        ></a-tree-select>
         <a-radio-group v-else-if="item.type === 'radio'" :name="item.name" :disabled="disabled" v-model:value="modelValue" :defaultValue="item.defaultValue">
             <a-radio v-for="(option, i) in item.options" :value="option.value || option.label">{{ option.label }}</a-radio>
         </a-radio-group>

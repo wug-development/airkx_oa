@@ -4,8 +4,8 @@
             <a-button type="primary" @click="onAdd">添加顶级架构</a-button>
         </div>
         <a-table :columns="columns" :data-source="list" :pagination="false">
-            <template #remark="{ recode }">
-                <div>111{{ record.content }}</div>
+            <template #remark="{ record }">
+                <div>{{ record.content }}</div>
             </template>
             <template #action="{ record }">
                 <a-button type="primary" @click="onAdd(record)">添加下级</a-button>

@@ -6,6 +6,11 @@ export const apiGetStructureList = () => {
     return $http.get('/api/structure/getlist');
 };
 
+// 获取列表
+export const apiGetStructure = (pid = '') => {
+    return $http.get('/api/structure/getTree?parentID=' + pid);
+};
+
 // 保存
 export const apiSave = (data) => {
     return $http.post('/api/structure/save', data);

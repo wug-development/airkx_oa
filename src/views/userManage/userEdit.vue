@@ -1,6 +1,9 @@
 <template>
     <div class="edituser-box">
         <DetailForm ref="refDetail" title="人员信息" :formModel="dataModel" :form="form">
+            <template #item>
+                <a-cascader v-model:value="form.depart" @change="onSelectChange" :defaultValue="defaultValue" :options="treeData" placeholder="请选择" size="large" change-on-select />
+            </template>
             <template #default>
                 <a-col :span="24">
                     <a-form-item :wrapper-col="{ span: 20, offset: 3 }">
@@ -16,13 +19,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRefs, watchEffect } from 'vue';
+import { defineComponent, reactive, ref, toRefs } from 'vue';
 import DetailForm from '@/components/detailForm.vue';
 import { dataModel } from './models/userinfo';
 import { useRouter, useRoute } from 'vue-router';
 import { Col, FormItem, Button, message } from 'ant-design-vue';
-import { apiGetDepartList } from '@/apis/department';
-import { apiGetJobList } from '@/apis/job';
+import { apiGetStructureList } from '@/apis/structure';
+import { getTree } from '@/utils/tool/utils';
 import { apiQuery, apiSave } from '@/apis/user';
 
 export default defineComponent({
@@ -36,55 +39,76 @@ export default defineComponent({
         const router = useRouter();
         const route = useRoute();
         const refDetail = ref();
-        const depart = ref(0);
         const state = reactive({
-            form: {},
-            dataModel: dataModel(depart),
+            form: {
+                departID: '',
+                depart: [],
+                department: {
+                    label: '',
+                    value: '',
+                },
+            },
+            treeData: [],
+            defaultValue: [],
+            dataModel: dataModel(),
         });
 
         const id = route.query.id;
         if (id) {
             apiQuery(id).then((res) => {
-                state.form = res[0];
+                const info = res[0];
+                console.log('info :>> ', info);
+                state.form = info;
+                if (info.departmentID) {
+                    state.defaultValue = info.departmentID.split(',');
+                    state.form.depart = info.departmentID.split(',');
+                    state.form.department = {
+                        label: info.departmentName,
+                        value: info.departmentID,
+                    };
+                } else {
+                    state.form.department = {
+                        label: '',
+                        value: '',
+                    };
+                }
+                console.log('state.form :>> ', state.form);
             });
         }
-        apiGetDepartList().then((res) => {
-            if (res && res.data && res.data.length) {
-                const options = [];
-                res.data.forEach((item) => {
-                    options.push({
-                        value: item.departmentName,
-                        label: item.departmentName,
-                    });
-                });
-                state.dataModel[2].options = options;
-            }
-        });
+        const getJson = (obj) => {
+            return Object.assign(
+                {
+                    value: obj.structureID,
+                    label: obj.structureName,
+                    key: obj.structureID,
+                    name: obj.structureName,
+                    children: [],
+                },
+                obj
+            );
+        };
 
-        watchEffect(() => {
-            apiGetJobList({
-                departmentName: depart.value,
-            }).then((res) => {
-                if (res && res.data && res.data.length) {
-                    const options = [];
-                    res.data.forEach((item) => {
-                        options.push({
-                            value: item.jobName,
-                            label: item.jobName,
-                        });
-                    });
-                    state.dataModel[3].options = options;
+        let departData = [];
+        const getInfo = async () => {
+            apiGetStructureList().then((res) => {
+                if (res && res.data.length) {
+                    departData = res.data;
+                    const tree = getTree(res.data, 'parentID', getJson);
+                    state.treeData = tree;
                 }
             });
-        });
+        };
+        getInfo();
 
         const back = () => {
             router.go(-1);
         };
 
         const onSubmit = async () => {
-            const isCheck = await refDetail.value.onSubmit();
-            const res = await apiSave(state.form);
+            await refDetail.value.onSubmit();
+            state.form.departID = state.form.depart[state.form.depart.length - 1];
+            console.log('state.form :>> ', JSON.stringify(state.form));
+            await apiSave(state.form);
             message.success('保存成功');
             back();
         };
@@ -98,10 +122,24 @@ export default defineComponent({
             });
         };
 
+        const onSelectChange = (v) => {
+            const labels = [];
+            v.forEach((item) => {
+                departData.forEach((d) => {
+                    if (d.structureID === item) {
+                        labels.push(d.structureName);
+                    }
+                });
+            });
+            state.form.department.label = labels.join('/');
+            state.form.department.value = v.join(',');
+        };
+
         return {
             ...toRefs(state),
             onSubmit,
             refDetail,
+            onSelectChange,
             back,
             toPage,
         };

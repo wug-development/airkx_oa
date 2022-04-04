@@ -37,14 +37,7 @@ export const listModel = [
         title: '部门',
         key: '1',
         dataIndex: 'departmentName',
-        width: '130px',
-        align: 'center',
-    },
-    {
-        title: '职位',
-        key: '1',
-        dataIndex: 'jobName',
-        width: '150px',
+        width: '300px',
         align: 'center',
     },
     {

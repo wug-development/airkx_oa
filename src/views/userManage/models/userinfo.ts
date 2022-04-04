@@ -1,4 +1,6 @@
-export const dataModel = (departID) => [
+import { getStructure } from '@/bll/structure';
+
+export const dataModel = () => [
     {
         name: 'username',
         label: '姓名',
@@ -29,36 +31,18 @@ export const dataModel = (departID) => [
         ],
     },
     {
-        name: 'departmentName',
+        name: 'depart',
         label: '部门名称',
-        type: 'select',
+        type: 'custom',
         rules: [
             {
                 required: true,
-                message: '请选择部门名称',
+                type: 'array',
+                message: '请选择部门',
                 trigger: ['change', 'blur'],
             },
         ],
         col: 12,
-        options: [],
-        onChange: (v) => {
-            console.log('v :>> ', v);
-            departID.value = 10;
-        },
-    },
-    {
-        name: 'jobName',
-        label: '职位名称',
-        type: 'select',
-        rules: [
-            {
-                required: true,
-                message: '请输入职位名称',
-                trigger: ['change', 'blur'],
-            },
-        ],
-        col: 12,
-        options: [],
     },
     {
         name: 'idcardno',
