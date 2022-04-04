@@ -27,7 +27,7 @@
                 </template>
             </a-row>
             <slot></slot>
-		</a-form>
+        </a-form>
         <template #subtitle>
             <slot name="subtitle"></slot>
         </template>
@@ -35,75 +35,78 @@
 </template>
 
 <script lang="ts">
-import Pannel from '@/components/pannel.vue'
-import ItemForm from '@/components/itemForm.vue'
-import { Form, Row, Col } from 'ant-design-vue'
-import { ref } from 'vue'
+import Pannel from '@/components/pannel.vue';
+import ItemForm from '@/components/itemForm.vue';
+import { Form, Row, Col } from 'ant-design-vue';
+import { ref } from 'vue';
 export default {
     props: {
         title: {
             type: String,
-            default: ''
+            default: '',
         },
         formModel: {
             type: Array,
-            default: () => ([])
+            default: () => [],
         },
         form: {
             type: Object,
-            default: () => {}
+            default: () => {},
         },
         layout: {
             type: String,
-            default: 'horizontal'
+            default: 'horizontal',
         },
         labelCol: {
             type: Object,
             default: () => {
-                return { span: 4 }
-            }
+                return { span: 4 };
+            },
         },
         wrapperCol: {
             type: Object,
             default: () => {
-                return { span: 14 }
-            }
+                return { span: 14 };
+            },
         },
         disabled: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
     components: {
         Pannel,
         ItemForm,
         Form,
         Row,
-        Col
+        Col,
     },
-    setup () {
-        const formRef = ref()
+    setup() {
+        const formRef = ref();
         const onSubmit = async () => {
             return await new Promise((resolve, reject) => {
-                formRef.value.validate().then(() => {
-                    console.log('111 :>> ', 111);
-                    resolve(true)
-                }).catch((error: any) => {
-                    console.log('error', error);
-                });
-            })
-        }
+                formRef.value
+                    .validate()
+                    .then(() => {
+                        console.log('111 :>> ', 111);
+                        resolve(true);
+                    })
+                    .catch((error: any) => {
+                        console.log('error', error);
+                    });
+            });
+        };
 
         return {
             onSubmit,
-            formRef
-        }
-    }
-}
+            formRef,
+        };
+    },
+};
 </script>
 
 <style lang="scss" scoped>
-::v-deep(.ant-form){
+::v-deep(.ant-form) {
     .ant-form-item {
         margin-bottom: 32px;
     }
@@ -124,7 +127,7 @@ export default {
     // .ant-select-selection-item:nth-child(1){
     //     color: #111;
     // }
-    .ant-calendar-picker{
+    .ant-calendar-picker {
         width: 100%;
     }
 }
