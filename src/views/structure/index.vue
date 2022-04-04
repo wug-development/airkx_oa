@@ -3,19 +3,27 @@
         <div class="list-header">
             <a-button type="primary" @click="onAdd">添加顶级架构</a-button>
         </div>
-        <a-table :columns="columns" :data-source="list" :pagination="false">
+        <a-table :columns="columns" :data-source="list" :pagination="false" :expandRowByClick="true" @expandedRowsChange="onChange">
             <template #remark="{ record }">
-                <div>{{ record.content }}</div>
+                <div class="list-content">{{ record.content }}</div>
+            </template>
+            <template #name="{ record }">
+                <span class="list-name">
+                    <span>{{ record.name }}</span>
+                    <a-tag v-if="record.ulabel" class="list-tag" color="processing">{{ record.ulabel }}</a-tag>
+                </span>
             </template>
             <template #action="{ record }">
-                <a-button type="primary" @click="onAdd(record)">添加下级</a-button>
-                <a-button type="primary" @click="onEdit(record)">编辑</a-button>
-                <a-popconfirm placement="left" ok-text="确定" cancel-text="取消" @confirm="onDel(record)">
-                    <template #title>
-                        <p>确定要删除该数据吗？</p>
-                    </template>
-                    <a-button type="primary" danger>删除</a-button>
-                </a-popconfirm>
+                <div v-if="record.type !== 2" @click.stop="() => {}">
+                    <a-button type="primary" @click="onAdd(record)">添加下级</a-button>
+                    <a-button type="primary" @click="onEdit(record)">编辑</a-button>
+                    <a-popconfirm placement="left" ok-text="确定" cancel-text="取消" @confirm="onDel(record)">
+                        <template #title>
+                            <p>确定要删除该数据吗？</p>
+                        </template>
+                        <a-button type="primary" danger>删除</a-button>
+                    </a-popconfirm>
+                </div>
             </template>
         </a-table>
     </div>
@@ -27,7 +35,7 @@ import { columns, data } from './models/index';
 import { getTree } from '@/utils/tool/utils';
 import { reactive, toRefs, ref } from 'vue';
 import { message } from 'ant-design-vue';
-import { apiGetStructureList, apiDel } from '@/apis/structure';
+import { apiGetStructureList, apiDel, apiStructureTree } from '@/apis/structure';
 import Info from './components/structureInfo.vue';
 export default {
     components: {
@@ -47,24 +55,45 @@ export default {
                     key: obj.structureID,
                     name: obj.structureName,
                     content: obj.structureRemark,
+                    type: 1,
                     children: [],
                 },
                 obj
             );
         };
+        const getPersons = (arr, pid) => {
+            const list = [];
+            arr.forEach((item) => {
+                list.push({
+                    key: item.userID,
+                    name: item.nickname,
+                    type: 2,
+                    ulabel: item.ulabel,
+                    parentID: pid,
+                    content: '',
+                });
+            });
+            return list;
+        };
 
-        const initLoad = async () => {
-            const res = await apiGetStructureList();
-            if (res && res.data.length) {
-                const tree = getTree(res.data, 'parentID', getJson);
+        let treeData = [];
+        const initLoad = async (pid) => {
+            const res = await apiStructureTree(pid);
+            if (res && res.data.structure) {
+                let person = [];
+                if (res.data.person) {
+                    person = getPersons(res.data.person, pid);
+                }
+                treeData = [...treeData, ...res.data.structure, ...person];
+                const tree = getTree(treeData, 'parentID', getJson);
                 state.list = tree;
             }
         };
-        initLoad();
+        initLoad('');
 
         const onReload = () => {
             isShowInfo.value = false;
-            initLoad();
+            initLoad(state.item.parentID);
         };
 
         const onAdd = (row) => {
@@ -78,11 +107,26 @@ export default {
             isShowInfo.value = true;
         };
 
+        let treePrantID = [];
+        const onChange = (e) => {
+            console.log('e :>> ', e);
+            if (e && e.length) {
+                const id = e[e.length - 1];
+                if (!treePrantID.includes(id)) {
+                    treePrantID.push(id);
+                    initLoad(id);
+                }
+            }
+        };
+
         const onDel = async (row) => {
             const res = await apiDel(row.key);
             if (res) {
                 message.success('删除成功');
-                initLoad();
+                treeData = [];
+                treePrantID = [];
+                state.list = [];
+                initLoad('');
             }
         };
 
@@ -92,10 +136,21 @@ export default {
             onReload,
             onAdd,
             onEdit,
+            onChange,
             isShowInfo,
         };
     },
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.list-content {
+    color: #999;
+}
+.list-name {
+    color: #333;
+}
+.list-tag {
+    margin-left: 10px;
+}
+</style>

@@ -7,6 +7,11 @@ export const apiGetStructureList = () => {
 };
 
 // 获取列表
+export const apiStructureTree = (pid = '') => {
+    return $http.get('/api/structure/getTreeList?parentID=' + pid);
+};
+
+// 获取列表
 export const apiGetStructure = (pid = '') => {
     return $http.get('/api/structure/getTree?parentID=' + pid);
 };

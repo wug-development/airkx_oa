@@ -4,12 +4,18 @@ export const columns = [
         dataIndex: 'name',
         key: 'name',
         with: '40%',
+        slots: {
+            customRender: 'name',
+        },
     },
     {
         title: '备注',
         dataIndex: 'content',
         key: 'content',
         width: '30%',
+        slots: {
+            customRender: 'remark',
+        },
     },
     {
         title: '操作',

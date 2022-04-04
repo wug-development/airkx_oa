@@ -75,6 +75,12 @@ export const dataModel = () => [
         label: '分机号',
     },
     {
+        name: 'ulabel',
+        col: 12,
+        label: '标签',
+        maxlength: 18,
+    },
+    {
         name: 'wagecardno',
         col: 12,
         label: '工资卡号',

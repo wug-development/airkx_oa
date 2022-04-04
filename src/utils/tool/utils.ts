@@ -33,22 +33,29 @@ export const throttling = (fn: Function, wait = 200) => {
 };
 
 export const getTree = (list, keyName, getJson) => {
+    const maps = {};
     const fn = (obj, arr) => {
         const list = [];
         arr.forEach((item) => {
             if (obj.key === item[keyName]) {
-                const json = getJson(item);
-                list.push(json);
-                fn(json, arr);
+                if (item.type === 2 && !maps[item.key]) {
+                    maps[item.key] = item;
+                    list.push(item);
+                } else if (!maps[item.structureID]) {
+                    maps[item.structureID] = item;
+                    const json = getJson(item);
+                    list.push(json);
+                    fn(json, arr);
+                }
             }
         });
         obj.children = list;
-        obj.name += `（${list.length}）`;
     };
 
     const arr = [];
     list.forEach((item) => {
-        if (item[keyName] === '') {
+        if (item[keyName] === '' && !maps[item.key]) {
+            maps[item.key] = item;
             const json = getJson(item);
             arr.push(json);
             fn(json, list);
