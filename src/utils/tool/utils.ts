@@ -63,3 +63,36 @@ export const getTree = (list, keyName, getJson) => {
     });
     return arr;
 };
+
+/**
+ * json 转 select 的options
+ *
+ */
+export const jsonToArray = (obj) => {
+    const arr = [];
+    for (let m in obj) {
+        arr.push({
+            label: obj[m],
+            value: m,
+        });
+    }
+    return arr;
+};
+
+/**
+ * json 转 select 的options
+ *
+ */
+export const arrayToOptions = (data, valueKey, labelKey) => {
+    const arr = [];
+    data.forEach((item) => {
+        arr.push({
+            label: item[labelKey],
+            value: JSON.stringify({
+                id: item[valueKey],
+                name: item[labelKey],
+            }),
+        });
+    });
+    return arr;
+};

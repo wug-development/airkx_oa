@@ -13,6 +13,8 @@ import sets from './set';
 import airCompany from './airCompany';
 import sysWatchs from './sysWatchs';
 import payments from './payments';
+import wages from './wages';
+import mys from './my';
 const Editpwd = () => import(/* webpackChunkName: "editpwd" */ '../views/editpwd.vue');
 const Home = () => import(/* webpackChunkName: "home" */ '../views/main/home.vue');
 const routes = [
@@ -42,6 +44,10 @@ const routes = [
     structure,
     // 人员管理
     personnel,
+    // 工资管理
+    wages,
+    // 我的
+    mys,
     // 客户管理
     customer,
     // 出票点管理

@@ -1,3 +1,5 @@
+import { jsonToArray } from '@/utils/tool/utils';
+import { isInteger } from '@/utils/tool/validator';
 export const dataModelBefore = [
     {
         name: 'wagesBefore',
@@ -44,7 +46,7 @@ export const dataModel = [
     },
     {
         name: 'bonus',
-        label: '奖金',
+        label: '全勤奖金',
         col: 12,
     },
     {
@@ -54,23 +56,53 @@ export const dataModel = [
     },
 ];
 
+export const orderTypes = {
+    1: '国际订单',
+    2: '国内订单',
+    3: '火车票订单',
+};
+
 export const orderTypeModel = {
     name: 'orderType',
     type: 'select',
     label: '提成类型',
     col: 24,
-    options: [
-        {
-            label: '国际订单',
-            value: 1,
-        },
-        {
-            label: '国际订单',
-            value: 2,
-        },
-        {
-            label: '火车票订单',
-            value: 3,
-        },
-    ],
+    options: jsonToArray(orderTypes),
 };
+
+export const takeItem = {
+    name: '',
+    type: 1,
+    percentage: 0,
+};
+
+export const takeModal = [
+    {
+        name: 'name',
+        label: '员工',
+        type: 'select',
+        mode: 'tags',
+        options: [],
+        rules: [
+            {
+                required: true,
+                message: '请选择员工',
+                type: 'array',
+                trigger: ['change', 'blur'],
+            },
+        ],
+    },
+    {
+        name: 'take',
+        label: '提成%',
+        placeholder: '请输入整数提成',
+        rules: [
+            {
+                required: true,
+                validator: isInteger,
+                message: '请输入整数提成',
+                trigger: 'blur',
+            },
+        ],
+    },
+];

@@ -31,7 +31,7 @@
                 <a-breadcrumb class="ant-layout-right-header-breadcrumb">
                     <template v-for="item in breadcrumb">
                         <template v-if="item.name !== 'Home'">
-                            <a-breadcrumb-item>
+                            <a-breadcrumb-item :key="item.name">
                                 <router-link :to="item.path">{{ item.meta.title }}</router-link>
                             </a-breadcrumb-item>
                         </template>
@@ -40,7 +40,9 @@
                 <a-dropdown class="ant-layout-right-header-dropdown">
                     <a class="ant-dropdown-link" @click.prevent>周科 <DownOutlined /></a>
                     <template #overlay>
-                        <a-menu>
+                        <a-menu style="right: 10px">
+                            <a-menu-item key="2" @click="toPage({ path: 'timesheet' })">我的考勤</a-menu-item>
+                            <a-menu-item key="3" @click="toPage({ path: 'mywages' })">我的工资</a-menu-item>
                             <a-menu-item key="0" @click="toPage({ path: 'editpwd' })">修改密码</a-menu-item>
                             <a-menu-divider />
                             <a-menu-item key="1" @click="loginOut">退出登录</a-menu-item>

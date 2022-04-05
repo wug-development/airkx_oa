@@ -158,19 +158,17 @@ export function isInteger(rule: any, value: any, callback: any) {
     if (!value) {
         return Promise.reject('输入不可以为空');
     }
-    setTimeout(() => {
-        if (!Number(value)) {
+    if (!Number(value)) {
+        return Promise.reject('请输入正整数');
+    } else {
+        const re = /^[0-9]*[1-9][0-9]*$/;
+        const rsCheck = re.test(value);
+        if (!rsCheck) {
             return Promise.reject('请输入正整数');
         } else {
-            const re = /^[0-9]*[1-9][0-9]*$/;
-            const rsCheck = re.test(value);
-            if (!rsCheck) {
-                return Promise.reject('请输入正整数');
-            } else {
-                return Promise.resolve();
-            }
+            return Promise.resolve();
         }
-    }, 0);
+    }
 }
 //  验证是否整数,非必填
 export function isIntegerNotMust(rule: any, value: any, callback: any) {
