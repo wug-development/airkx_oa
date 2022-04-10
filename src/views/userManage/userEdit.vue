@@ -2,7 +2,7 @@
     <div class="edituser-box">
         <DetailForm ref="refDetail" title="人员信息" :formModel="dataModel" :form="form">
             <template #item>
-                <a-cascader v-model:value="form.depart" @change="onSelectChange" :defaultValue="defaultValue" :options="treeData" placeholder="请选择" size="large" change-on-select />
+                <a-cascader v-model:value="form.depart" @change="onSelectChange" :options="treeData" placeholder="请选择" size="large" change-on-select />
             </template>
             <template #default>
                 <a-col :span="24">
@@ -43,13 +43,14 @@ export default defineComponent({
             form: {
                 departID: '',
                 depart: [],
+                joindate: '',
                 department: {
                     label: '',
                     value: '',
                 },
             },
             treeData: [],
-            defaultValue: [],
+            defaultValue: '',
             dataModel: dataModel(),
         });
 

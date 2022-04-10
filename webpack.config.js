@@ -30,9 +30,9 @@ module.exports = (env, { mode }) => {
         mode, // 模式 
         entry: './src/main.ts', // 打包入口地址
         output: {
-            filename: 'js/[name].js',
+            filename: 'js/[name].[hash:8].js',
             publicPath: "http://test.airkx.cn/",
-            chunkFilename:'js/[name].[hash:8].js',
+            chunkFilename: 'js/[name].[hash:8].js',
             path: resolve('dist')
         },
         resolve: {
@@ -51,7 +51,7 @@ module.exports = (env, { mode }) => {
         // resolveLoader: {
         //     modules: ['node_modules', resolve('loader')]
         // },
-        
+
         cache: {
             type: 'filesystem',
         },

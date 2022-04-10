@@ -34,8 +34,8 @@ export default defineComponent({
             default: '提成',
         },
         modalType: {
-            type: Number,
-            default: 0,
+            type: String,
+            default: '0',
         },
     },
     setup(props, { emit }) {
@@ -44,7 +44,7 @@ export default defineComponent({
         const state = reactive({
             takeModal,
             form: {
-                type: 0,
+                type: '0',
             },
         });
 
@@ -63,7 +63,7 @@ export default defineComponent({
             visible.value = props.isShow;
             if (props.isShow) {
                 state.form = {
-                    type: 0,
+                    type: '0',
                 };
             }
             state.form.type = props.modalType;

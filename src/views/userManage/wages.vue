@@ -116,7 +116,7 @@ export default defineComponent({
 
         const isShowLayer = ref(false);
         const modalTitle = ref('');
-        const modalType = ref(0);
+        const modalType = ref('0');
         const repeatValite = (arr, user) => {
             const index = arr.findIndex((item) => {
                 return item.id === user.id;
@@ -165,6 +165,7 @@ export default defineComponent({
             back,
             isShowLayer,
             modalTitle,
+            modalType,
             onShowModal,
             onCloseTakeItem,
             onSubmitTake,

@@ -30,8 +30,9 @@
             :valueFormat="item.format || 'YYYY-MM-DD'"
             :placeholder="item.placeholder || '请选择日期'"
             :disabled="disabled"
+            :locale="locale"
             size="large"
-        />
+        ></a-date-picker>
         <div v-else-if="item.type === 'text'">{{ modelValue }}</div>
         <div v-else-if="item.type === 'br'" class="item-br"></div>
         <template v-else-if="item.type === 'custom'">
@@ -43,6 +44,7 @@
 </template>
 
 <script lang="ts">
+import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
 import { ref, watch, watchEffect } from 'vue';
 import { FormItem, Select, SelectOption, RadioGroup, Radio, DatePicker, Input } from 'ant-design-vue';
 export default {
@@ -53,7 +55,7 @@ export default {
             default: () => ({}),
         },
         value: {
-            type: String,
+            type: [String, Array],
             default: '',
         },
         disabled: {
@@ -85,6 +87,7 @@ export default {
 
         return {
             modelValue,
+            locale,
             onChange,
         };
     },
