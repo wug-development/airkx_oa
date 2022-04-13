@@ -96,3 +96,7 @@ export const arrayToOptions = (data, valueKey, labelKey) => {
     });
     return arr;
 };
+
+export const isLogin = () => {
+    return localStorage.getItem('token');
+};

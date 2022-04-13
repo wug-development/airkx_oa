@@ -3,10 +3,10 @@ import qs from 'qs/lib';
 
 // 获取个人工资列表
 // export const apiWages = (data) => {
-//     return $http.get('/api/wages/userWages', data);
+//     return $http.get('/wages/userWages', data);
 // };
 
 // 获取个人工资列表
 export const apiWages = (data) => {
-    return $http.get('/api/wages/getWageList?userid=' + data);
+    return $http.get('/wages/getWageList?userid=' + data);
 };

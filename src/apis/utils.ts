@@ -6,7 +6,7 @@ import { baseApiURL } from '@/config/request';
 
 // 上传文件
 export const apiUploadFile = () => {
-    return $http.post('/api/upload/save');
+    return $http.post('/upload/save');
 };
 
 export const apiUploadUri = baseApiURL + 'api/upload/save';

@@ -1,11 +1,11 @@
-import $http from '@/config/request'
+import $http from '@/config/request';
 
 export const apiSavePermission = (data) => {
-    return $http.post('/api/permission/save', data)
+    return $http.post('/permission/save', data);
 };
 
 export const apiGetPermission = (params) => {
-    return $http.get('/api/permission/get', {
-        params
-    })
+    return $http.get('/permission/get', {
+        params,
+    });
 };

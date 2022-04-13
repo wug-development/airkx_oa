@@ -52,7 +52,6 @@ export default {
 
         // 登录事件
         const onLogin = debounce(() => {
-            console.log(1111);
             if (state.form.uname === '') {
                 message.warning('请输入账号');
             } else if (state.form.upass === '') {
@@ -64,10 +63,11 @@ export default {
                     uname,
                     pwd: upass,
                 })
-                    .then((res) => {
+                    .then((res: any) => {
                         console.log('res :>> ', res);
                         if (res.id) {
                             localStorage.setItem('user', JSON.stringify(res));
+                            localStorage.setItem('token', res.token);
                             router.push({
                                 path: '/',
                             });
