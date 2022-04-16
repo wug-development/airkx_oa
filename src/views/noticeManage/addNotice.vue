@@ -77,7 +77,7 @@ export default defineComponent({
         //         console.log('uploadres', res);
         //     });
         // };
-        const refDetail = ref('');
+        const refDetail = shallowRef();
         const onSave = async () => {
             await refDetail.value.onSubmit().then(async () => {
                 const res: any = await apiSaveNotice(form);
