@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= htmlWebpackPlugin.options.title %></title>
+        <% htmlWebpackPlugin.options.cdn.css.forEach(function(item){%>
+        <link rel="stylesheet" href="<%=item %>" />
+        <%}) %>
+    </head>
+    <body>
+        <div id="app"></div>
+        <% htmlWebpackPlugin.options.cdn.js.forEach(function(item){%>
+        <script defer="defer" type="text/javascript" src="<%=item %>"></script>
+        <%}) %>
+    </body>
+</html>

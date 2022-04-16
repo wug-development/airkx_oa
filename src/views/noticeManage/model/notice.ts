@@ -1,6 +1,6 @@
 export const infoNotice = [
     {
-        name: 'title',
+        name: 'noticeTitle',
         label: '标题',
         col: 24,
         rules: [
@@ -12,17 +12,17 @@ export const infoNotice = [
         ],
     },
     {
-        name: 'airCode',
+        name: 'AirkxID',
         label: '航空公司',
         col: 24,
     },
     {
-        name: 'content',
+        name: 'noticeContent',
         label: '内容',
         type: 'custom',
     },
     {
-        name: 'path',
+        name: 'noticeAnnexPath',
         label: '附件',
         type: 'custom',
     },
@@ -39,17 +39,17 @@ export const searchModel = [
 export const listModel = [
     {
         title: '航空公司',
-        dataIndex: 'airCode',
-        key: 'airCode',
+        dataIndex: 'AirkxName',
+        key: 'AirkxName',
         rowKey: 'key',
         width: '100px',
         align: 'center',
     },
     {
         title: '标题',
-        dataIndex: 'content',
+        dataIndex: 'noticeTitle',
         align: 'left',
-        key: 'content',
+        key: 'noticeTitle',
     },
     {
         title: '发布日期',

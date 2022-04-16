@@ -1,9 +1,9 @@
 export default {
-  pages: {
-    index: {
-      template: './public/index.html',
-      // entry: '',
+    pages: {
+        index: {
+            template: './public/index.html',
+            // entry: '',
+        },
     },
-  },
-  pageTitle: '标题',
+    pageTitle: '标题',
 }

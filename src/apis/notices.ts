@@ -1,11 +1,9 @@
 import $http from '@/config/request';
 
-export const apiSavenNotice = (data) => {
+export const apiSaveNotice = (data) => {
     return $http.post('/notice/save', data);
 };
 
 export const apiGetNotice = (params) => {
-    return $http.get('/notice/get', {
-        params,
-    });
+    return $http.post('/notice/getList', params);
 };

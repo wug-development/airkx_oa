@@ -27,12 +27,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, reactive, ref, toRefs } from 'vue';
 import { message } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
 import SysCard from '@/components/sysCard.vue';
 import { isLogin, debounce } from '@/utils/tool/utils';
 import { apiGetIsClock, apiPunchClock } from '@/apis/clock';
+import { apiGetNotice } from '@/apis/notices';
 export default defineComponent({
     components: {
         SysCard,
@@ -47,6 +48,12 @@ export default defineComponent({
                 },
             });
         };
+
+        const state = reactive({
+            businessList: [], // 业务公共
+            compNoticeList: [], // 公司通知
+        });
+
         const visible = ref(false);
         const tip = ref('');
         if (!isLogin()) {
@@ -58,6 +65,20 @@ export default defineComponent({
                     tip.value = res.msg;
                 }
             });
+            apiGetNotice({
+                page: 1,
+                pageNum: 20,
+                type: 1,
+            }).then((res) => {
+                state.businessList = res.data;
+            });
+            apiGetNotice({
+                page: 1,
+                pageNum: 20,
+                type: 2,
+            }).then((res) => {
+                state.compNoticeList = res.data;
+            });
         }
         const onPunchClock = debounce(async () => {
             visible.value = false;
@@ -65,31 +86,11 @@ export default defineComponent({
             message.success('打卡成功');
         }, 200);
 
-        // 业务公共
-        const businessList = reactive([]);
-        // 公司通知
-        const compNoticeList = reactive([]);
-
-        const getList = () => {
-            businessList.push({
-                content: '广州发布运价提示广州发布运价提示',
-                creatTime: '2021-12-30',
-            });
-            compNoticeList.push({
-                content: '广州发布运价提示广州发布运价提示',
-                creatTime: '2021-12-30',
-            });
-        };
-        for (let i = 0; i < 20; i++) {
-            getList();
-        }
-
         return {
             toPage,
             visible,
             tip,
-            businessList,
-            compNoticeList,
+            ...toRefs(state),
             onPunchClock,
         };
     },
