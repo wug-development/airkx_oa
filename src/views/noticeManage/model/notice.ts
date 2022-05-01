@@ -1,3 +1,4 @@
+import { formatDate } from '@/utils/tool/utils';
 export const infoNotice = [
     {
         name: 'noticeTitle',
@@ -11,11 +12,11 @@ export const infoNotice = [
             },
         ],
     },
-    {
-        name: 'AirkxID',
-        label: '航空公司',
-        col: 24,
-    },
+    // {
+    //     name: 'AirkxName',
+    //     label: '航空公司',
+    //     col: 24,
+    // },
     {
         name: 'noticeContent',
         label: '内容',
@@ -30,21 +31,21 @@ export const infoNotice = [
 
 export const searchModel = [
     {
-        name: 'airCode',
-        label: '航空公司',
+        name: 'title',
+        label: '通知标题',
         col: 24,
     },
 ];
 
 export const listModel = [
-    {
-        title: '航空公司',
-        dataIndex: 'AirkxName',
-        key: 'AirkxName',
-        rowKey: 'key',
-        width: '100px',
-        align: 'center',
-    },
+    // {
+    //     title: '航空公司',
+    //     dataIndex: 'AirkxName',
+    //     key: 'AirkxName',
+    //     rowKey: 'key',
+    //     width: '100px',
+    //     align: 'center',
+    // },
     {
         title: '标题',
         dataIndex: 'noticeTitle',
@@ -52,10 +53,22 @@ export const listModel = [
         key: 'noticeTitle',
     },
     {
+        title: '类型',
+        dataIndex: 'type',
+        align: 'left',
+        key: 'type',
+        customRender: ({ text }) => {
+            return Number(text) === 1 ? '业务通告' : '公司通知';
+        },
+    },
+    {
         title: '发布日期',
         dataIndex: 'createTime',
         align: 'center',
         key: 'createTime',
+        customRender: ({ text }) => {
+            return formatDate(text);
+        },
     },
     {
         title: '操作',

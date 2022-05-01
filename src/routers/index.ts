@@ -15,31 +15,10 @@ import sysWatchs from './sysWatchs';
 import payments from './payments';
 import wages from './wages';
 import mys from './my';
+import home from './home';
 const Editpwd = () => import(/* webpackChunkName: "editpwd" */ '../views/editpwd.vue');
-const Home = () => import(/* webpackChunkName: "home" */ '../views/main/home.vue');
 const routes = [
-    {
-        path: '/',
-        name: 'index',
-        component: Layout,
-        meta: {
-            title: '首页',
-            icon: 'home',
-            hidden: false,
-            hasChildren: false,
-        },
-        children: [
-            {
-                path: '/',
-                name: 'Home',
-                meta: {
-                    title: '首页',
-                    hasChildren: false,
-                },
-                component: Home,
-            },
-        ],
-    },
+    home,
     // 公司架构
     structure,
     // 人员管理

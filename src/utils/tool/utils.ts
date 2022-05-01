@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 /**
  * 防抖
  * params fn 回调方法
@@ -99,4 +101,8 @@ export const arrayToOptions = (data, valueKey, labelKey) => {
 
 export const isLogin = () => {
     return localStorage.getItem('token');
+};
+
+export const formatDate = (date, fmt = 'YYYY-MM-DD HH:mm:ss') => {
+    return moment(date).format(fmt);
 };

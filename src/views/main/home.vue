@@ -1,24 +1,8 @@
 <template>
     <div class="home-box">
         <div class="home-box-msgs">
-            <a-card>
-                <template #title>业务通告 <a @click="toPage('noticeList', 1)">more</a></template>
-                <template #extra><a @click="toPage('sendNotice', 1)">发布</a></template>
-                <div class="home-box-msgs-item" v-for="item in businessList" :key="item.id">
-                    <div class="home-box-msgs-item-sign">EK</div>
-                    <div class="home-box-msgs-item-content" :title="item.content">{{ item.content }}</div>
-                    <div class="home-box-msgs-item-date">2016-11-12</div>
-                </div>
-            </a-card>
-            <a-card>
-                <template #title>公司通知 <a @click="toPage('noticeList', 2)">more</a></template>
-                <template #extra><a @click="toPage('sendNotice', 2)">发布</a></template>
-                <div class="home-box-msgs-item" v-for="item in compNoticeList" :key="item.id">
-                    <div class="home-box-msgs-item-sign"></div>
-                    <div class="home-box-msgs-item-content" :title="item.content">{{ item.content }}</div>
-                    <div class="home-box-msgs-item-date">2016-11-12</div>
-                </div>
-            </a-card>
+            <NoticeCard :type="1" title="业务公告"></NoticeCard>
+            <NoticeCard :type="2" title="公司通知"></NoticeCard>
         </div>
         <a-modal v-model:visible="visible" title="打卡提醒" ok-text="打卡" cancel-text="取消" @ok="onPunchClock">
             <p>{{ tip }}</p>
@@ -27,16 +11,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRefs } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { message } from 'ant-design-vue';
+import { SearchOutlined, DeleteOutlined } from '@ant-design/icons-vue';
 import { useRouter } from 'vue-router';
-import SysCard from '@/components/sysCard.vue';
+import NoticeCard from './components/NoticeCard.vue';
 import { isLogin, debounce } from '@/utils/tool/utils';
 import { apiGetIsClock, apiPunchClock } from '@/apis/clock';
-import { apiGetNotice } from '@/apis/notices';
 export default defineComponent({
     components: {
-        SysCard,
+        NoticeCard,
+        SearchOutlined,
+        DeleteOutlined,
     },
     setup() {
         const router = useRouter();
@@ -49,11 +35,6 @@ export default defineComponent({
             });
         };
 
-        const state = reactive({
-            businessList: [], // 业务公共
-            compNoticeList: [], // 公司通知
-        });
-
         const visible = ref(false);
         const tip = ref('');
         if (!isLogin()) {
@@ -64,20 +45,6 @@ export default defineComponent({
                     visible.value = true;
                     tip.value = res.msg;
                 }
-            });
-            apiGetNotice({
-                page: 1,
-                pageNum: 20,
-                type: 1,
-            }).then((res) => {
-                state.businessList = res.data;
-            });
-            apiGetNotice({
-                page: 1,
-                pageNum: 20,
-                type: 2,
-            }).then((res) => {
-                state.compNoticeList = res.data;
             });
         }
         const onPunchClock = debounce(async () => {
@@ -90,7 +57,6 @@ export default defineComponent({
             toPage,
             visible,
             tip,
-            ...toRefs(state),
             onPunchClock,
         };
     },
@@ -103,13 +69,30 @@ export default defineComponent({
     background-color: #fff;
     &-msgs {
         display: flex;
+        cursor: pointer;
         .ant-card {
             width: 50%;
+            ::v-deep .ant-card-body {
+                padding: 24px 0;
+            }
         }
         &-item {
             display: flex;
-            height: 30px;
-            line-height: 30px;
+            height: 40px;
+            line-height: 40px;
+            position: relative;
+            padding: 0 24px;
+            .btn-del {
+                position: absolute;
+                right: 5px;
+                display: none;
+            }
+            &:hover {
+                background-color: #f1f1f1;
+                .btn-del {
+                    display: block;
+                }
+            }
             &-sign {
                 font-size: 28px;
                 margin-right: 5px;
@@ -128,6 +111,23 @@ export default defineComponent({
                 width: 80px;
                 text-align: right;
             }
+        }
+    }
+    &-search {
+        width: 200px;
+        margin-left: 20px;
+        border-radius: 50px;
+        background-color: rgba(255, 255, 255, 0.3);
+        border: 0;
+        ::v-deep .ant-input {
+            background-color: rgba(255, 255, 255, 0) !important;
+            color: #fff;
+        }
+    }
+    .btn-fabu {
+        color: #fff;
+        &:hover {
+            color: #1890ff;
         }
     }
 }

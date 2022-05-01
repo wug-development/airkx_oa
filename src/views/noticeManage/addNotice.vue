@@ -3,11 +3,13 @@
         <DetailForm ref="refDetail" title="添加通知" :formModel="infoNotice" :form="form">
             <template #item="row">
                 <template v-if="row.item.name === 'noticeContent'">
-                    <div id="div_editor" class="addnotice-box-editor"></div>
-                    <Toolbar class="addnotice-box-etool" editorId="div_editor" :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" />
-                    <Editor class="addnotice-box-ebox" editorId="div_editor" v-model="form.noticeContent" :defaultConfig="editorConfig" :mode="mode" @onCreated="editorCreated" />
+                    <div id="div_editor" class="addnotice-box-editor">
+                        <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" />
+                        <Editor style="height: 500px; overflow-y: hidden" v-model="form['noticeContent']" :defaultConfig="editorConfig" :mode="mode" @onCreated="editorCreated" />
+                    </div>
                 </template>
                 <template v-else>
+                    <input type="file" @change="onUpload" />
                     <a-upload :action="apiUploadUri" v-model:file-list="fileList">
                         <a-button>
                             <upload-outlined></upload-outlined>
@@ -32,13 +34,13 @@
 <script lang="ts">
 import '@wangeditor/editor/dist/css/style.css';
 import DetailForm from '@/components/detailForm.vue';
-import { defineComponent, reactive, shallowRef, ref, onMounted, onBeforeUnmount } from 'vue';
+import { defineComponent, reactive, shallowRef, toRefs, onMounted, onBeforeUnmount } from 'vue';
 import { infoNotice } from './model/notice';
-import { Editor, Toolbar } from '@/components/cEditor';
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import { message } from 'ant-design-vue';
 import { apiUploadUri, apiUploadFile } from '@/apis/utils';
-import { apiSaveNotice } from '@/apis/notices';
-import { useRouter } from 'vue-router';
+import { apiSaveNotice, apiNoticeInfo } from '@/apis/notices';
+import { useRouter, useRoute } from 'vue-router';
 import { UploadOutlined } from '@ant-design/icons-vue';
 export default defineComponent({
     components: {
@@ -49,16 +51,33 @@ export default defineComponent({
     },
     setup() {
         const router = useRouter();
-        const form = reactive({
-            noticeContent: '',
+        const route = useRoute();
+        const state = reactive({
+            infoNotice,
+            defaultContent: [],
+            form: {
+                noticeContent: '',
+                type: 1,
+                noticeID: undefined,
+            },
         });
         const fileList = reactive([]);
 
         // 编辑器实例，必须用 shallowRef
         const editorRef = shallowRef();
 
-        // 内容 HTML
-        onMounted(() => {});
+        onMounted(async () => {
+            const { type, id } = route.query;
+            if (type) {
+                state.form.type = Number(type) || 1;
+            }
+            if (id) {
+                state.form.noticeID = id;
+                const res = await apiNoticeInfo(id);
+                state.form = res;
+                state.defaultContent = res.noticeContent;
+            }
+        });
         const toolbarConfig = {};
         const editorConfig = { placeholder: '请输入内容...' };
 
@@ -67,20 +86,28 @@ export default defineComponent({
         };
         // 组件销毁时，也及时销毁编辑器
         onBeforeUnmount(() => {
+            state.infoNotice = [];
             const editor = editorRef.value;
             if (editor == null) return;
             editor.destroy();
         });
+        const onChange = (v) => {
+            state.form.noticeContent = v.getHtml();
+        };
 
-        // const onUpload = () => {
-        //     apiUploadFile().then((res) => {
-        //         console.log('uploadres', res);
-        //     });
-        // };
+        const onUpload = (e) => {
+            const f = new FormData();
+            e.target.files.forEach((file) => {
+                f.append('files', file, file.name);
+            });
+            apiUploadFile(f).then((res) => {
+                console.log('uploadres', res);
+            });
+        };
         const refDetail = shallowRef();
         const onSave = async () => {
             await refDetail.value.onSubmit().then(async () => {
-                const res: any = await apiSaveNotice(form);
+                const res: any = await apiSaveNotice(state.form);
                 message.success('保存成功');
                 onCancel();
             });
@@ -91,8 +118,7 @@ export default defineComponent({
         };
 
         return {
-            form,
-            infoNotice,
+            ...toRefs(state),
             editorRef,
             fileList,
             apiUploadUri,
@@ -103,7 +129,8 @@ export default defineComponent({
             editorConfig,
             toolbarConfig,
             mode: 'default',
-            // onUpload,
+            onChange,
+            onUpload,
         };
     },
 });
@@ -120,6 +147,9 @@ export default defineComponent({
     &-etool {
         border: 1px solid #ccc;
         border-bottom: 0 !important;
+    }
+    &-editor {
+        border: 1px solid #ccc;
     }
 }
 </style>
