@@ -4,6 +4,7 @@ import Login from '../views/login.vue';
 import store from '../store/index';
 import structure from './structure';
 import personnel from './personnel';
+import personal from './personal';
 import customer from './customer';
 import ticketStation from './ticketStation';
 import stats from './stats';
@@ -19,6 +20,7 @@ import home from './home';
 const Editpwd = () => import(/* webpackChunkName: "editpwd" */ '../views/editpwd.vue');
 const routes = [
     home,
+    personal,
     // 公司架构
     structure,
     // 人员管理

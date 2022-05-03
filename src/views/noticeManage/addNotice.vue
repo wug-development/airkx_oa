@@ -96,10 +96,12 @@ export default defineComponent({
         };
 
         const onUpload = (e) => {
+            console.log('e.target.files :>> ', e.target.files);
             const f = new FormData();
-            e.target.files.forEach((file) => {
-                f.append('files', file, file.name);
-            });
+            const files = e.target.files;
+            for (let i = 0; i < files.length; i++) {
+                f.append('files', files[i], files[i].name);
+            }
             apiUploadFile(f).then((res) => {
                 console.log('uploadres', res);
             });

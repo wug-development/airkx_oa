@@ -36,6 +36,11 @@ export const apiQuery = (params) => {
     return $http.get(`/user/query?id=${params}`);
 };
 
+// 个人信息
+export const apiPersonalInfo = () => {
+    return $http.get(`/user/info`);
+};
+
 // 获取公网IP
 export const apiGetIP = () => {
     return $http.get(`https://apis.map.qq.com/ws/location/v1/ip?key=XSWBZ-2BIW5-SZOIF-QLW4C-OETC5-5FBX6`);

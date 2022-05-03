@@ -40,12 +40,12 @@ export default defineComponent({
         if (!isLogin()) {
             toPage('login', 1);
         } else {
-            apiGetIsClock().then((res: any) => {
-                if (+res.type === 0) {
-                    visible.value = true;
-                    tip.value = res.msg;
-                }
-            });
+            // apiGetIsClock().then((res: any) => {
+            //     if (+res.type === 0) {
+            //         visible.value = true;
+            //         tip.value = res.msg;
+            //     }
+            // });
         }
         const onPunchClock = debounce(async () => {
             visible.value = false;
@@ -72,7 +72,7 @@ export default defineComponent({
         cursor: pointer;
         .ant-card {
             width: 50%;
-            ::v-deep .ant-card-body {
+            ::v-deep(.ant-card-body) {
                 padding: 24px 0;
             }
         }
@@ -119,7 +119,7 @@ export default defineComponent({
         border-radius: 50px;
         background-color: rgba(255, 255, 255, 0.3);
         border: 0;
-        ::v-deep .ant-input {
+        ::v-deep(.ant-input) {
             background-color: rgba(255, 255, 255, 0) !important;
             color: #fff;
         }

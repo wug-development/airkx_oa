@@ -119,6 +119,7 @@ export default defineComponent({
                 path,
                 query: {
                     id: state.form['userID'],
+                    name: state.form['username'],
                 },
             });
         };

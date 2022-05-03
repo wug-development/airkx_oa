@@ -1,26 +1,28 @@
 import { jsonToArray } from '@/utils/tool/utils';
 import { isInteger } from '@/utils/tool/validator';
+import { orderTypes } from '@/config/appsetting';
 export const dataModelBefore = [
     {
-        name: 'wagesBefore',
+        name: 'probation_base_wages',
         label: '基本工资',
         col: 12,
     },
     {
-        name: 'subsidyBefore',
+        name: 'probation_subsidy',
         label: '补助',
         col: 12,
     },
     {
-        name: 'beginDate',
+        name: 'begin_date',
         label: '启用时间',
         col: 12,
+        type: 'date',
     },
 ];
 
 export const dataModel = [
     {
-        name: 'wages',
+        name: 'base_wages',
         label: '基本工资',
         col: 12,
     },
@@ -30,7 +32,7 @@ export const dataModel = [
         col: 12,
     },
     {
-        name: 'safe',
+        name: 'insurance',
         label: '保险',
         col: 12,
     },
@@ -50,17 +52,12 @@ export const dataModel = [
         col: 12,
     },
     {
-        name: 'enableDate',
+        name: 'enable_time',
         label: '启用时间',
         col: 12,
+        type: 'date',
     },
 ];
-
-export const orderTypes = {
-    1: '国际订单',
-    2: '国内订单',
-    3: '火车票订单',
-};
 
 export const orderTypeModel = {
     name: 'orderType',
