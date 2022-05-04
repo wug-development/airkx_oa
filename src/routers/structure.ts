@@ -3,13 +3,13 @@ const Department = () => import(/* webpackChunkName: "department" */ '../views/s
 const DepartmentInfo = () => import(/* webpackChunkName: "departmentInfo" */ '../views/structure/departmentInfo.vue');
 const JobList = () => import(/* webpackChunkName: "jobList" */ '../views/structure/jobList.vue');
 const JobInfo = () => import(/* webpackChunkName: "jobInfo" */ '../views/structure/jobInfo.vue');
-const Structure = () => import(/* webpackChunkName: "jobInfo" */ '../views/structure/index.vue');
+const Structure = () => import(/* webpackChunkName: "structure" */ '../views/structure/index.vue');
 export default {
     path: '/structure',
     redirect: '/structure',
     name: 'structure',
     meta: {
-        title: '公司架构',
+        title: '人员管理',
         icon: 'structure',
         hasChildren: false,
     },

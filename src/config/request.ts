@@ -1,5 +1,6 @@
 import Axios, { AxiosRequestConfig } from 'axios';
 import { message } from 'ant-design-vue';
+import { debounce } from '@/utils/tool/utils';
 let baseURL: string = '';
 if (import.meta && import.meta.env && import.meta.env.VITE_BASE_URL) {
     baseURL = String(import.meta.env.VITE_BASE_URL);
@@ -75,8 +76,10 @@ instance.interceptors.response.use(
                     }
                 } else {
                     message.warning(response.data.msg);
-                    localStorage.removeItem('token');
-                    window.location.href = '/';
+                    debounce(function () {
+                        localStorage.removeItem('token');
+                        window.location.href = '/';
+                    });
                 }
             } else {
                 message.warning(response.data.msg);

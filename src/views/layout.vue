@@ -38,7 +38,7 @@
                     </template>
                 </a-breadcrumb>
                 <a-dropdown class="ant-layout-right-header-dropdown">
-                    <a class="ant-dropdown-link" @click.prevent>周科 <DownOutlined /></a>
+                    <a class="ant-dropdown-link" @click.prevent>{{ user.nickname }} <DownOutlined /></a>
                     <template #overlay>
                         <a-menu style="right: 10px">
                             <a-menu-item key="2" @click="toPage({ path: 'timesheet' })">我的考勤</a-menu-item>
@@ -58,10 +58,11 @@
     <div></div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, computed, reactive, toRefs } from 'vue';
+import { defineComponent, ref, computed, reactive, toRefs, onBeforeMount } from 'vue';
 import store from '../store/index';
 import { useRouter, _RouteRecordBase } from 'vue-router';
 import { MenuUnfoldOutlined, MenuFoldOutlined, DownOutlined } from '@ant-design/icons-vue';
+import { localStore } from '@/utils/tool/utils';
 
 export default defineComponent({
     components: {
@@ -90,6 +91,17 @@ export default defineComponent({
             });
         };
 
+        const state = reactive({
+            user: {},
+        });
+
+        onBeforeMount(() => {
+            const user = localStore.get('user');
+            if (user) {
+                state.user = user;
+            }
+        });
+
         // 退出登录
         const loginOut = () => {
             localStorage.removeItem('user');
@@ -101,7 +113,7 @@ export default defineComponent({
         return {
             selectedKeys: ref<string[]>(['1']),
             collapsed: ref<boolean>(false),
-            // ...toRefs(state),
+            ...toRefs(state),
             filterMenu,
             toPage,
             menuData,

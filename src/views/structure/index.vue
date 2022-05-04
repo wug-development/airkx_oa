@@ -15,7 +15,8 @@
             </template>
             <template #action="{ record }">
                 <div v-if="record.type !== 2" @click.stop="() => {}">
-                    <a-button type="primary" @click="onAdd(record)">添加下级</a-button>
+                    <a-button type="primary" v-if="record.structureLevel < 2" @click="onAdd(record)">添加下级</a-button>
+                    <a-button class="ant-btn-success" v-else @click="onAddPerson(context)">添加人员</a-button>
                     <a-button type="primary" @click="onEdit(record)">编辑</a-button>
                     <a-popconfirm placement="left" ok-text="确定" cancel-text="取消" @confirm="onDel(record)">
                         <template #title>
@@ -35,6 +36,7 @@ import { columns, data } from './models/index';
 import { getTree } from '@/utils/tool/utils';
 import { reactive, toRefs, ref } from 'vue';
 import { message } from 'ant-design-vue';
+import { useRouter } from 'vue-router';
 import { apiGetStructureList, apiDel, apiStructureTree } from '@/apis/structure';
 import Info from './components/structureInfo.vue';
 export default {
@@ -42,6 +44,7 @@ export default {
         Info,
     },
     setup() {
+        const router = useRouter();
         const state = reactive({
             columns,
             list: [],
@@ -97,8 +100,10 @@ export default {
         };
 
         const onAdd = (row) => {
+            console.log('row :>> ', row);
             state.item = {
                 parentID: row.key,
+                structureLevel: row.structureLevel + 1,
             };
             isShowInfo.value = true;
         };
@@ -130,6 +135,15 @@ export default {
             }
         };
 
+        const onAddPerson = (record) => {
+            router.push({
+                path: `/userinfo`,
+                query: {
+                    sid: record.structureID,
+                },
+            });
+        };
+
         return {
             ...toRefs(state),
             onDel,
@@ -138,6 +152,7 @@ export default {
             onEdit,
             onChange,
             isShowInfo,
+            onAddPerson,
         };
     },
 };

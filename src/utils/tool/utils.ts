@@ -106,3 +106,16 @@ export const isLogin = () => {
 export const formatDate = (date, fmt = 'YYYY-MM-DD HH:mm:ss') => {
     return moment(date).format(fmt);
 };
+
+export const localStore = {
+    get(key) {
+        const res = localStorage.getItem(key);
+        return res && JSON.parse(res);
+    },
+    set(key, data) {
+        localStorage.setItem(key, JSON.stringify(data));
+    },
+    remove(key) {
+        localStorage.removeItem(key);
+    },
+};
