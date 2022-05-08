@@ -10,7 +10,7 @@ export default {
     name: 'structure',
     meta: {
         title: '人员管理',
-        icon: 'structure',
+        icon: 'TeamOutlined',
         hasChildren: false,
     },
     component: Layout,

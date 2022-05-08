@@ -8,7 +8,7 @@ export default {
     component: Layout,
     meta: {
         title: '出票点管理',
-        icon: 'ticket',
+        icon: 'PrinterOutlined',
         hasChildren: false,
     },
     children: [

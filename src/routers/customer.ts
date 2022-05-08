@@ -8,7 +8,7 @@ export default {
     component: Layout,
     meta: {
         title: '客户管理',
-        icon: 'customer',
+        icon: 'SolutionOutlined',
         hasChildren: false,
     },
     children: [

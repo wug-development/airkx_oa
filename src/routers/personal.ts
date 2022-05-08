@@ -9,7 +9,7 @@ export default {
     component: Layout,
     meta: {
         title: '个人事务',
-        icon: 'personnel',
+        icon: 'UserOutlined',
         hasChildren: true,
     },
     children: [

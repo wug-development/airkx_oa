@@ -8,7 +8,7 @@ export default {
     component: Layout,
     meta: {
         title: '航空公司管理',
-        icon: 'airCompanys',
+        icon: 'RocketOutlined',
         hasChildren: true,
     },
     children: [

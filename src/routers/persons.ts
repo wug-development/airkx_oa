@@ -8,7 +8,7 @@ export default {
     component: Layout,
     meta: {
         title: '乘机人管理',
-        icon: 'persons',
+        icon: 'UsergroupAddOutlined',
         hasChildren: true,
     },
     children: [

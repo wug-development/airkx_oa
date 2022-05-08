@@ -9,13 +9,17 @@
                             <template v-if="item.meta.hasChildren">
                                 <a-sub-menu :key="index">
                                     <template #title>
-                                        <span class="menu-icon" :class="'menu-icon-' + item.meta.icon">{{ item.meta.title }}</span>
+                                        <component :is="item.meta.icon" :style="{ fontSize: '16px' }"></component>
+                                        <span>{{ item.meta.title }}</span>
+                                        <!-- <span class="menu-icon" :class="'menu-icon-' + item.meta.icon">{{ item.meta.title }}</span> -->
                                     </template>
                                     <a-menu-item v-for="(sub, j) in filterMenu(item.children)" @click="toPage(sub)" :key="index + '-' + j">{{ sub.meta.title }}</a-menu-item>
                                 </a-sub-menu>
                             </template>
                             <a-menu-item v-else :key="index" @click="toPage(item)">
-                                <span class="menu-icon" :class="'menu-icon-' + item.meta.icon">{{ item.meta.title }}</span>
+                                <!-- <span class="menu-icon" :class="'menu-icon-' + item.meta.icon">{{ item.meta.title }}</span> -->
+                                <component :is="item.meta.icon" :style="{ fontSize: '16px' }"></component>
+                                <span>{{ item.meta.title }}</span>
                             </a-menu-item>
                         </template>
                     </template>

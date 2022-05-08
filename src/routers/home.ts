@@ -8,7 +8,7 @@ export default {
     component: Layout,
     meta: {
         title: '首页',
-        icon: 'home',
+        icon: 'HomeOutlined',
         hidden: false,
         hasChildren: false,
     },

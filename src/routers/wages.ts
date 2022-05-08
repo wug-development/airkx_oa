@@ -8,7 +8,7 @@ export default {
     component: Layout,
     meta: {
         title: '工资管理',
-        icon: 'wage',
+        icon: 'AccountBookOutlined',
         hasChildren: false,
     },
     children: [

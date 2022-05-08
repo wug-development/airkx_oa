@@ -75,11 +75,11 @@ instance.interceptors.response.use(
                         onRefreshed(token);
                     }
                 } else {
-                    message.warning(response.data.msg);
                     debounce(function () {
+                        message.warning(response.data.msg);
                         localStorage.removeItem('token');
                         window.location.href = '/';
-                    });
+                    })();
                 }
             } else {
                 message.warning(response.data.msg);
