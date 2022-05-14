@@ -7,9 +7,10 @@
             <template #remark="{ record }">
                 <div class="list-content">{{ record.content }}</div>
             </template>
-            <template #name="{ record }">
+            <template #name="{ record, index }">
                 <span class="list-name">
                     <span>{{ record.name }}</span>
+                    <span>（{{ personNum[index].num }}）</span>
                     <a-tag v-if="record.ulabel" class="list-tag" color="processing">{{ record.ulabel }}</a-tag>
                 </span>
             </template>
@@ -49,6 +50,7 @@ export default {
             columns,
             list: [],
             item: {},
+            personNum: [],
         });
         const isShowInfo = ref(false);
 
@@ -90,6 +92,9 @@ export default {
                 treeData = [...treeData, ...res.data.structure, ...person];
                 const tree = getTree(treeData, 'parentID', getJson);
                 state.list = tree;
+            }
+            if (res && res.data.personNum) {
+                state.personNum = res.data.personNum;
             }
         };
         initLoad('');
