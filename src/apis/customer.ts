@@ -2,7 +2,7 @@ import $http from '@/config/request';
 
 // 获取列表
 export const apiGetList = (data) => {
-    return $http.post('/customer/getlist', data);
+    return $http.post('/customer/getCompanyList', data);
 };
 
 // 保存
