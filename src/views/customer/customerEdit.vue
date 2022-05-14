@@ -54,12 +54,12 @@ export default defineComponent({
             onCancel();
         };
 
-        infoModel[1].options = cityData.provinces.province.map((item) => {
-            return {
-                label: item.ssqname,
-                value: item.ssqname,
-            };
-        });
+        // infoModel[1].options = cityData.provinces.province.map((item) => {
+        //     return {
+        //         label: item.ssqname,
+        //         value: item.ssqname,
+        //     };
+        // });
 
         return {
             ...toRefs(state),

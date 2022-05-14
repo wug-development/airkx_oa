@@ -10,7 +10,7 @@
             <template #name="{ record, index }">
                 <span class="list-name">
                     <span>{{ record.name }}</span>
-                    <span>（{{ personNum[index].num }}）</span>
+                    <span v-if="record.personNum">（{{ personNum[index].num }}）</span>
                 </span>
             </template>
             <template #action="{ record }">
@@ -41,12 +41,13 @@
 </template>
 
 <script lang="ts">
-import { columns, data } from './models/index';
+import { columns } from './models/index';
 import { getTree } from '@/utils/tool/utils';
 import { reactive, toRefs, ref } from 'vue';
 import { message } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
-import { apiGetStructureList, apiDel, apiStructureTree } from '@/apis/structure';
+import { apiChange } from '@/apis/user';
+import { apiDel, apiStructureTree } from '@/apis/structure';
 import Info from './components/structureInfo.vue';
 export default {
     components: {
@@ -57,7 +58,10 @@ export default {
         const state = reactive({
             columns,
             list: [],
-            item: {},
+            item: {
+                parentID: '',
+                structureLevel: 0
+            },
             personNum: [],
         });
         const isShowInfo = ref(false);
@@ -112,7 +116,7 @@ export default {
             initLoad(state.item.parentID);
         };
 
-        const onAdd = (row) => {
+        const onAdd = (row: any) => {
             console.log('row :>> ', row);
             state.item = {
                 parentID: row.key,
@@ -136,7 +140,6 @@ export default {
 
         let treePrantID = [];
         const onChange = (e) => {
-            console.log('e :>> ', e);
             if (e && e.length) {
                 const id = e[e.length - 1];
                 if (!treePrantID.includes(id)) {
@@ -157,7 +160,10 @@ export default {
             }
         };
         const onDelPerson = async (row) => {
-            const res = await apiDel(row.key);
+            const res = await apiChange({
+                id: row.key,
+                state: 1,
+            });
             if (res) {
                 message.success('删除成功');
                 treeData = [];

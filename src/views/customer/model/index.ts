@@ -126,7 +126,7 @@ export const infoModel = [
         name: 'dcCompanyEmail',
         label: '企业邮箱',
         maxlength: 150,
-        col: 12,
+        col: 8,
     },
     {
         name: 'dcQQWechat',

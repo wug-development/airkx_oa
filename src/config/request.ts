@@ -52,7 +52,6 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use(
     (response) => {
         return new Promise(async (resolve, reject) => {
-            console.log('response :>> ', response);
             if (response.data.status === 1) {
                 resolve(response.data.data);
             } else if (response.data.status === 405) {
