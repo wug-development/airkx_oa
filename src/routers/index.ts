@@ -31,7 +31,7 @@ import trainTickets from './trainTickets';
 // import sysWatchs from './sysWatchs';
 // import payments from './payments';
 // import mys from './my';
-// import personnel from './personnel';
+import personnel from './personnel';
 const Editpwd = () => import(/* webpackChunkName: "editpwd" */ '../views/editpwd.vue');
 const routes = [
     home,
@@ -78,6 +78,7 @@ const routes = [
     safes,
     // 火车票管理
     trainTickets,
+    // personnel,
     // // 我的
     // mys,
     // // 统计管理

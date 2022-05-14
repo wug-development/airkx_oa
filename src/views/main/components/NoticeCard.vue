@@ -183,7 +183,7 @@ export default defineComponent({
             white-space: nowrap;
         }
         &-date {
-            width: 80px;
+            width: 100px;
             text-align: right;
         }
     }

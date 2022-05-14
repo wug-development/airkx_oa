@@ -11,17 +11,25 @@
                 <span class="list-name">
                     <span>{{ record.name }}</span>
                     <span>（{{ personNum[index].num }}）</span>
-                    <a-tag v-if="record.ulabel" class="list-tag" color="processing">{{ record.ulabel }}</a-tag>
                 </span>
             </template>
             <template #action="{ record }">
                 <div v-if="record.type !== 2" @click.stop="() => {}">
                     <a-button type="primary" v-if="record.structureLevel < 2" @click="onAdd(record)">添加下级</a-button>
-                    <a-button class="ant-btn-success" v-else @click="onAddPerson(context)">添加人员</a-button>
+                    <a-button class="ant-btn-success" v-else @click="onAddPerson(record)">添加人员</a-button>
                     <a-button type="primary" @click="onEdit(record)">编辑</a-button>
                     <a-popconfirm placement="left" ok-text="确定" cancel-text="取消" @confirm="onDel(record)">
                         <template #title>
                             <p>确定要删除该数据吗？</p>
+                        </template>
+                        <a-button type="primary" danger>删除</a-button>
+                    </a-popconfirm>
+                </div>
+                <div v-else>
+                    <a-button type="primary" @click="onEditPerson(record)">编辑</a-button>
+                    <a-popconfirm placement="left" ok-text="确定" cancel-text="取消" @confirm="onDelPerson(record)">
+                        <template #title>
+                            <p>确定要删除该人员吗？</p>
                         </template>
                         <a-button type="primary" danger>删除</a-button>
                     </a-popconfirm>
@@ -116,6 +124,15 @@ export default {
             state.item = row;
             isShowInfo.value = true;
         };
+        const onEditPerson = (row) => {
+            router.push({
+                path: `/userinfo`,
+                query: {
+                    id: row.key,
+                },
+            });
+        };
+
 
         let treePrantID = [];
         const onChange = (e) => {
@@ -139,22 +156,31 @@ export default {
                 initLoad('');
             }
         };
+        const onDelPerson = async (row) => {
+            const res = await apiDel(row.key);
+            if (res) {
+                message.success('删除成功');
+                treeData = [];
+                treePrantID = [];
+                state.list = [];
+                initLoad('');
+            }
+        };
 
         const onAddPerson = (record) => {
             router.push({
-                path: `/userinfo`,
-                query: {
-                    sid: record.structureID,
-                },
+                path: `/userinfo`
             });
         };
 
         return {
             ...toRefs(state),
             onDel,
+            onDelPerson,
             onReload,
             onAdd,
             onEdit,
+            onEditPerson,
             onChange,
             isShowInfo,
             onAddPerson,

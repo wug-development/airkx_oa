@@ -4,6 +4,7 @@ const DepartmentInfo = () => import(/* webpackChunkName: "departmentInfo" */ '..
 const JobList = () => import(/* webpackChunkName: "jobList" */ '../views/structure/jobList.vue');
 const JobInfo = () => import(/* webpackChunkName: "jobInfo" */ '../views/structure/jobInfo.vue');
 const Structure = () => import(/* webpackChunkName: "structure" */ '../views/structure/index.vue');
+const UserEdit = () => import(/* webpackChunkName: "UserEdit" */ '../views/userManage/userEdit.vue');
 export default {
     path: '/structure',
     redirect: '/structure',
@@ -23,6 +24,15 @@ export default {
                 hasChildren: false,
             },
             component: Structure,
+        },
+        {
+            path: '/userinfo',
+            name: '人员信息',
+            meta: {
+                title: '人员信息',
+                hasChildren: false,
+            },
+            component: UserEdit,
         },
         {
             path: '/branchs',
