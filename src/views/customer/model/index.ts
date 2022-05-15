@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { validateRequired } from '@/utils/tool/validator';
+import { businessType } from '@/config/appsetting';
 const costomerTypes = [
     { label: '散客', value: '散客' },
     { label: '同业', value: '同业' },
@@ -78,11 +79,20 @@ export const listModel = [
     },
 ];
 
+const col = 8;
+const maxCol = 24;
+const getTypes = () => {
+    const arr = [];
+    for (let key in businessType) {
+        arr.push(businessType[key])
+    }
+    return arr;
+};
 export const infoModel = [
     {
         name: 'dcShortName',
         label: '客户简称',
-        col: 12,
+        col,
         maxlength: 50,
         rules: [
             {
@@ -96,68 +106,68 @@ export const infoModel = [
         name: 'dcFirstLetter',
         label: '拼音首字母',
         maxlength: 50,
-        col: 12,
+        col,
     },
     {
         name: 'dcFullName',
         label: '公司全称',
         maxlength: 100,
-        col: 12,
+        col,
     },
     {
         name: 'dcPassword',
         label: '登录密码',
         maxlength: 50,
-        col: 12,
+        col,
     },
     {
         name: 'dcContractName',
         label: '合同联系人',
         maxlength: 50,
-        col: 12,
+        col,
     },
     {
         name: 'dcContractPhone',
         label: '联系人电话',
         maxlength: 50,
-        col: 12,
+        col,
     },
     {
         name: 'dcCompanyEmail',
         label: '企业邮箱',
         maxlength: 150,
-        col: 8,
+        col,
     },
     {
         name: 'dcQQWechat',
         label: 'QQ/微信',
         maxlength: 50,
-        col: 12,
+        col,
     },
     {
         name: 'dcCompanyType',
         label: '企业类型',
         maxlength: 50,
-        col: 12,
+        col,
     },
     {
         name: 'dcBusinessLinkName',
         label: '业务对接人',
         maxlength: 50,
-        col: 12,
+        col,
     },
     {
         name: 'dcBusinessLinkPhone',
         label: '对接人电话',
         maxlength: 50,
-        col: 12,
+        col,
     },
     {
         name: 'dcContactDate',
         label: '合同期限',
-        type: 'date',
+        type: 'date-range',
         maxlength: 50,
-        col: 12,
+        col,
         options: ['dcContactStartDate', 'dcContactEndDate'],
     },
     {
@@ -165,56 +175,61 @@ export const infoModel = [
         label: '销售员',
         type: 'select',
         maxlength: 50,
-        col: 12,
+        options: [],
+        col,
     },
     {
         name: 'dcBusinessPerson',
         label: '业务员',
         type: 'select',
         maxlength: 50,
-        col: 12,
+        options: [],
+        col,
     },
     {
         name: 'dtCheckOutDate',
         label: '结账日期',
         type: 'date',
         maxlength: 20,
-        col: 12,
+        col,
     },
     {
         name: 'dnCreditLine',
         label: '信用额度',
         maxlength: 50,
-        col: 12,
+        col,
     },
     {
         name: 'dcBusinesslicense',
         label: '营业执照',
         maxlength: 50,
-        col: 12,
+        type: 'custom',
+        col: maxCol,
     },
     {
-        name: 'dcScopeOfServices',
+        name: 'dcServices',
         label: '服务费设定',
         maxlength: 50,
-        col: 12,
+        type: 'checkbox',
+        col: maxCol,
+        options: getTypes()
     },
     {
         name: 'dcBusinessAddress',
         label: '办公地址',
         maxlength: 120,
-        col: 24,
+        col: maxCol,
     },
     {
         name: 'dcInvoiceInfo',
         label: '开发票信息',
         maxlength: 200,
-        col: 24,
+        col: maxCol,
     },
     {
         name: 'dcOther',
         label: '备注',
         maxlength: 200,
-        col: 24,
+        col: maxCol,
     },
 ];

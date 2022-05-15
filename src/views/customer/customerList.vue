@@ -1,6 +1,6 @@
 <template>
     <div class="customlist-box">
-        <CSearchForm :dataModel="searchModel" :btnCol="24">
+        <CSearchForm :dataModel="searchModel" :btnCol="8">
             <template #btn>
                 <a-button type="primary" ghost @click="edit">添加</a-button>
             </template>
@@ -40,7 +40,7 @@ export default defineComponent({
 
         // 删除
         const del = async (row: any) => {
-            await apiDel(row.data.text.JCID);
+            await apiDel(row.data.text.dcCompanyID);
             message.success('删除成功');
             bus.$emit('reloadData', '');
         };
@@ -49,7 +49,7 @@ export default defineComponent({
         const edit = (row: any) => {
             let id = undefined;
             if (row && row.data && row.data.record) {
-                id = row.data.record.JCID;
+                id = row.data.record.dcCompanyID;
             }
             router.push({
                 path: `/customerinfo`,

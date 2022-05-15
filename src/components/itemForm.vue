@@ -33,13 +33,22 @@
             :locale="locale"
             size="large"
         ></a-date-picker>
+        <a-range-picker
+            v-else-if="item.type === 'date-range'"
+            v-model:value="modelValue"
+            :valueFormat="item.format || 'YYYY-MM-DD'"
+            :disabled="disabled"
+            :locale="locale"
+            size="large"
+        />
+        <a-checkbox-group v-else-if="item.type === 'checkbox'" v-model:value="modelValue" :options="item.options" />
         <div v-else-if="item.type === 'text'">{{ modelValue }}</div>
         <div v-else-if="item.type === 'br'" class="item-br"></div>
         <template v-else-if="item.type === 'custom'">
             <slot name="item" :item="item"></slot>
         </template>
-        <a-textarea v-else-if="item.type === 'textarea'" v-model:value="modelValue" showCount :maxlength="item.maxlength || 500" :disabled="disabled" size="large" allowClear />
-        <a-input v-else v-model:value="modelValue" :placeholder="item.placeholder || '请输入'" :maxlength="item.maxlength || 50" :disabled="disabled" size="large" allowClear />
+        <a-textarea v-else-if="item.type === 'textarea'" v-model:value.trim="modelValue" showCount :maxlength="item.maxlength || 500" :disabled="disabled" size="large" allowClear />
+        <a-input v-else v-model:value.trim="modelValue" :placeholder="item.placeholder || '请输入'" :maxlength="item.maxlength || 50" :disabled="disabled" size="large" allowClear />
     </a-form-item>
 </template>
 

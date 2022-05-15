@@ -52,10 +52,10 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use(
     (response) => {
         return new Promise(async (resolve, reject) => {
-            if (response.data.status === 1) {
-                resolve(response.data.data);
-            } else if (response.data.status === 405) {
+            if (response.data.status === 405) {
                 resolve(response.data);
+            } else if (response.data.status === 1) {
+                resolve(response.data.data);
             } else if (response.data.status === 401) {
                 if (response.data.expired) {
                     pendingRequest.push(async (token) => {

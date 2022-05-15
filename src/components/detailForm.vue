@@ -7,7 +7,7 @@
                         <template v-for="sub of item.children">
                             <!-- :name="[item.name, sub.name]" -->
                             <a-col :span="item.col || 24">
-                                <ItemForm :item="sub" v-model:value="form[item.name][sub.name]" :disabled="disabled || sub.disabled">
+                                <ItemForm :item="sub" v-model:value="form[item.name][sub.name]" :labelCol="sub.labelCol" :disabled="disabled || sub.disabled">
                                     <template #item="item">
                                         <slot :item="item"></slot>
                                     </template>
@@ -17,7 +17,7 @@
                     </template>
                     <template v-else>
                         <a-col :span="item.col || 24">
-                            <ItemForm :item="item" v-model:value="form[item.name]" :disabled="disabled || item.disabled">
+                            <ItemForm :item="item" v-model:value="form[item.name]" :labelCol="item.labelCol" :disabled="disabled || item.disabled">
                                 <template #item="item">
                                     <slot name="item" :item="item.item"></slot>
                                 </template>
@@ -88,7 +88,6 @@ export default {
                 formRef.value
                     .validate()
                     .then(() => {
-                        console.log('111 :>> ', 111);
                         resolve(true);
                     })
                     .catch((error: any) => {

@@ -7,15 +7,15 @@ export const apiGetList = (data) => {
 
 // 保存
 export const apiSave = (data) => {
-    return $http.post('/customer/save', data);
+    return $http.post('/customer/saveCompany', data);
 };
 
 // 删除
 export const apiDel = (params) => {
-    return $http.get(`/customer/del?id=${params}`);
+    return $http.get(`/customer/delCompany?id=${params}`);
 };
 
 // 查询
 export const apiQuery = (params) => {
-    return $http.get(`/customer/query?id=${params}`);
+    return $http.get(`/customer/queryCompany?id=${params}`);
 };
