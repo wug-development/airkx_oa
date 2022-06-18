@@ -32,7 +32,9 @@ export class Request {
   baseURL: string = '/api'
   loadingFn: Function
   loadingConfig: loadingConfigType
-  constructor() {
+  hasParent: boolean = false
+  constructor(hasParent = false) {
+    this.hasParent = hasParent;
     this.requestConfig();
     this.instance = axios.create(this.axiosRequestConfig)
     this.interceptorsRequest()
@@ -97,8 +99,6 @@ export class Request {
       timeout: 30000,
       withCredentials: false,
       responseType: 'json',
-      // xsrfCookieName: 'XSRF-TOKEN',
-      // xsrfHeaderName: 'X-XSRF-TOKEN',
       maxRedirects: 5,
       maxContentLength: 2000,
       validateStatus: (status: string | number): boolean => {
@@ -131,7 +131,11 @@ export class Request {
       delete this.pending[this.getPendingUrl(response.config) || '']
       if (this.successCode.includes(response.status)) {
         if (this.successCode.includes(response.data.code)) {
-          return Promise.resolve(response.data.data)
+          if (this.hasParent) {
+            return Promise.resolve(response.data)
+          } else {
+            return Promise.resolve(response.data.data)
+          }
         } else {
           message.error(response.data.msg)
           return Promise.reject(new Error(response.data))

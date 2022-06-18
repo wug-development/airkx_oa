@@ -1,5 +1,5 @@
 <template>
-    <a-table :columns="detaModel" :data-source="dataList" :pagination="pagination" @change="onChange" :rowKey="rowKey" :scroll="scroll">
+    <a-table :columns="detaModel" :data-source="dataList" :pagination="pagination" @change="onChange" :rowKey="(record, index) => index" :scroll="scroll">
         <template #action="record">
             <slot name="action" :data="record"></slot>
         </template>
