@@ -3,6 +3,7 @@ const Customerlist = () => import(/* webpackChunkName: "customerList" */ '../vie
 const Customerinfo = () => import(/* webpackChunkName: "customerEdit" */ '../views/customer/customerEdit.vue');
 const PCustomerList = () => import(/* webpackChunkName: "PCustomerList" */ '../views/customer/pcustomerList.vue');
 const CustomerTransfer = () => import(/* webpackChunkName: "customerTransfer" */ '../views/customer/customerTransfer.vue');
+const BusinessBill = () => import(/* webpackChunkName: "businessBill" */ '../views/customer/businessBill.vue');
 export default {
     path: '/customer',
     redirect: '/customerlist',
@@ -49,6 +50,15 @@ export default {
                 hasChildren: false,
             },
             component: CustomerTransfer,
+        },
+        {
+            path: '/businessBill',
+            name: 'businessBill',
+            meta: {
+                title: '资金流水',
+                hasChildren: false,
+            },
+            component: BusinessBill,
         },
     ],
 };

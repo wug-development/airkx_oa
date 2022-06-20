@@ -1,6 +1,9 @@
 <template>
     <div class="custominfo-box">
         <DetailForm ref="refDetail" title="客户信息" :labelCol="{ flex: '0 0 88px' }" :formModel="infoModel" :form="form">
+            <template #subtitle>
+                <NavTabs></NavTabs>
+            </template>
             <template #item="item">
                 <div v-if="item.item.name === 'dcBusinesslicense'">
                     <a-upload
@@ -38,6 +41,7 @@ import { apiSave, apiQuery } from '@/apis/customer';
 import { apiUploadUri } from '@/apis/utils';
 import { message } from 'ant-design-vue';
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue';
+import NavTabs from './components/nav-tabs.vue';
 
 interface formItem {
     dcContactDate?: String[],
@@ -51,6 +55,7 @@ interface dataForm {
 export default defineComponent({
     components: {
         DetailForm,
+        NavTabs,
         PlusOutlined,
         LoadingOutlined
     },
