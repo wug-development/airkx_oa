@@ -2,7 +2,7 @@
     <div class="custominfo-box">
         <DetailForm ref="refDetail" title="客户信息" :labelCol="{ flex: '0 0 88px' }" :formModel="infoModel" :form="form">
             <template #subtitle>
-                <NavTabs></NavTabs>
+                <NavTabs v-if="isShowTab"></NavTabs>
             </template>
             <template #item="item">
                 <div v-if="item.item.name === 'dcBusinesslicense'">
@@ -35,13 +35,13 @@
 <script lang="ts">
 import DetailForm from '@/components/detailForm.vue';
 import { defineComponent, reactive, ref, shallowRef, toRefs } from 'vue';
-import { infoModel } from './model/index';
+import { infoModel } from '../model/index';
 import { useRouter, useRoute } from 'vue-router';
 import { apiSave, apiQuery } from '@/apis/customer';
 import { apiUploadUri } from '@/apis/utils';
 import { message } from 'ant-design-vue';
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue';
-import NavTabs from './components/nav-tabs.vue';
+import NavTabs from '../components/nav-tabs.vue';
 
 interface formItem {
     dcContactDate?: String[],
@@ -71,10 +71,13 @@ export default defineComponent({
         });
         const fileList = ref([]);
         const refDetail = shallowRef();
+        const isShowTab = ref(false);
 
         const id = route.query.id;
-
+        console.log('id :>> ', id);
         if (id) {
+            isShowTab.value = true;
+            console.log('eee :>> ', 222);
             apiQuery(id).then((res) => {
                 state.form = res;
                 if (res['dcScopeOfServices']) {
@@ -165,6 +168,7 @@ export default defineComponent({
             ...toRefs(state),
             infoModel,
             refDetail,
+            isShowTab,
             onSave,
             onCancel,
             loading,

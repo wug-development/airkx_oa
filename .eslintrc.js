@@ -160,7 +160,7 @@ module.exports = {
         // 禁用不必要的嵌套块
         'no-lone-blocks': 2,
         // 不允许空格和 tab 混合缩进
-        'no-mixed-spaces-and-tabs': 4,
+        'no-mixed-spaces-and-tabs': 2,
         // 禁止使用多个空格
         'no-multi-spaces': 2,
         // 禁止使用多行字符串，在 JavaScript 中，可以在新行之前使用斜线创建多行字符串

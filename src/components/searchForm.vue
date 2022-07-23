@@ -4,12 +4,13 @@
             <a-row :gutter="24">
                 <a-col v-for="(item, i) in dataModel" :key="i" :span="item.span || 8" :style="{ display: i < count ? 'block' : 'none' }">
                     <a-form-item :label="item.label" :rules="item.rules" :name="item.name">
-                        <a-date-picker v-if="item.type === 'date'" v-model:value="form[item.name]" @change="item.onChange || (() => {})" :inputReadOnly="true" v-bind="item" />
+                        <a-date-picker v-if="item.type === 'date'" :locale="locale" v-model:value="form[item.name]" @change="item.onChange || (() => {})" :inputReadOnly="true" v-bind="item" />
                         <a-month-picker
                             v-else-if="item.type === 'month'"
                             v-model:value="form[item.name]"
                             @change="item.onChange || (() => {})"
                             placeholder="请选择年月"
+                            :locale="locale"
                             :inputReadOnly="true"
                             v-bind="item"
                         />
@@ -18,6 +19,7 @@
                             v-model:value="form[item.name]"
                             @change="item.onChange || (() => {})"
                             :placeholder="['开始日期', '截止日期']"
+                            :locale="locale"
                             :inputReadOnly="true"
                             v-bind="item"
                         />
@@ -26,7 +28,7 @@
                                 <a-select-option :value="value">{{ label }}</a-select-option>
                             </template>
                         </a-select>
-                        <a-input v-else :placeholder="item.placeholder || ''" :allowClear="typeof item.allowClear === 'boolean' ? item.allowClear : true" v-model:value="form[item.name]" />
+                        <a-input v-else :placeholder="item.placeholder || ''" :maxlength="item.maxLength" :allowClear="typeof item.allowClear === 'boolean' ? item.allowClear : true" v-model:value="form[item.name]" />
                     </a-form-item>
                 </a-col>
                 <a-col :span="btnCol" :style="{ textAlign: 'right' }">
@@ -47,6 +49,7 @@
 </template>
 
 <script lang="ts">
+import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
 import { defineComponent, reactive, ref, computed, toRefs, onMounted, onBeforeUnmount } from 'vue';
 import { UpOutlined, DownOutlined } from '@ant-design/icons-vue';
 import { Form, FormItem, Row, Col, Button, Input, Select, SelectOption, DatePicker, MonthPicker, RangePicker } from 'ant-design-vue';
@@ -149,6 +152,7 @@ export default defineComponent({
             searchRef,
             toggle,
             count,
+            locale,
         };
     },
 });
