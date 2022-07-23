@@ -1,8 +1,8 @@
 <template>
     <div class="custominfo-box">
-        <DetailForm ref="refDetail" title="客户信息" :labelCol="{ flex: '0 0 88px' }" :formModel="infoModel" :form="form">
+        <DetailForm ref="refDetail" title="开发票" :labelCol="{ flex: '0 0 88px' }" :formModel="infoModel" :form="form">
             <template #subtitle>
-                <NavTabs current="info"></NavTabs>
+                <NavTabs current="ticker"></NavTabs>
             </template>
             <template #item="item">
                 <div v-if="item.item.name === 'dcBusinesslicense'">
@@ -25,22 +25,28 @@
                 </div>
             </template>
             <div class="info-box--btn">
-                <a-button type="primary" @click="onSave">保 存</a-button>
-                <a-button @click="onCancel">取 消</a-button>
+                <a-button type="primary" @click="onSave">确认提交</a-button>
             </div>
         </DetailForm>
+
+        <Pannel :padding="'0'" title="发票纪录">
+          <DataList :dataApi="apiGetList" :detaModel="listModel" :showPage="false" rowKey="Row"></DataList>
+        </Pannel>
     </div>
 </template>
 
 <script lang="ts">
 import DetailForm from '@/components/detailForm.vue';
+import Pannel from '@/components/pannel.vue';
+import DataList from '@/components/dataList.vue';
 import { defineComponent, reactive, ref, shallowRef, toRefs } from 'vue';
-import { infoModel } from '../model/index';
+import { infoModel, listModel } from '../model/drawBill';
 import { useRouter, useRoute } from 'vue-router';
 import { apiSave, apiQuery } from '@/apis/customer';
 import { apiUploadUri } from '@/apis/utils';
 import { message } from 'ant-design-vue';
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue';
+import { apiGetList } from '@/apis/customerbill';
 import NavTabs from '../components/nav-tabs.vue';
 
 interface formItem {
@@ -57,7 +63,9 @@ export default defineComponent({
         DetailForm,
         NavTabs,
         PlusOutlined,
-        LoadingOutlined
+        LoadingOutlined,
+        Pannel,
+        DataList
     },
     setup() {
         const router = useRouter();
@@ -71,9 +79,13 @@ export default defineComponent({
         });
         const fileList = ref([]);
         const refDetail = shallowRef();
+        const isShowTab = ref(false);
 
         const id = route.query.id;
+        console.log('id :>> ', id);
         if (id) {
+            isShowTab.value = true;
+            console.log('eee :>> ', 222);
             apiQuery(id).then((res) => {
                 state.form = res;
                 if (res['dcScopeOfServices']) {
@@ -163,7 +175,9 @@ export default defineComponent({
         return {
             ...toRefs(state),
             infoModel,
+            listModel,
             refDetail,
+            isShowTab,
             onSave,
             onCancel,
             loading,
@@ -171,6 +185,7 @@ export default defineComponent({
             handleChange,
             fileList,
             apiUploadUri,
+            apiGetList,
         };
     },
 });

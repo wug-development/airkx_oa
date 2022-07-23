@@ -31,7 +31,7 @@
                         <a-input v-else :placeholder="item.placeholder || ''" :maxlength="item.maxLength" :allowClear="typeof item.allowClear === 'boolean' ? item.allowClear : true" v-model:value="form[item.name]" />
                     </a-form-item>
                 </a-col>
-                <a-col :span="btnCol" :style="{ textAlign: 'right' }">
+                <a-col :span="btnCol" :style="{ textAlign }">
                     <div class="btns">
                         <a-button type="primary" @click="onSearch"> 搜索 </a-button>
                         <a-button :style="{ marginLeft: '8px' }" @click="onReset"> 重置 </a-button>
@@ -88,6 +88,10 @@ export default defineComponent({
         initData: {
             type: Object,
             default: () => {},
+        },
+        textAlign: {
+            type: String,
+            default: 'right',
         },
     },
     emits: ['update:form'],

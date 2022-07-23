@@ -1,10 +1,9 @@
 <template>
   <div class="bb-box">
-    <Pannel :padding="'0'" title="资金流水">
+    <Pannel :padding="'0'" title="订单列表">
       <template #subtitle>
         <div class="bb-box--tabs">
-          <NavTabs current="liushui"></NavTabs>
-          <div class="bb-box--tabs--tx" @click="toPage">提现</div>
+          <NavTabs current="order"></NavTabs>
         </div>
       </template>
       <DataList :dataApi="apiGetList" :detaModel="listModel" rowKey="Row">
@@ -24,11 +23,10 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useRouter } from 'vue-router';
 import NavTabs from '../components/nav-tabs.vue';
 import DataList from '@/components/dataList.vue';
 import Pannel from '@/components/pannel.vue';
-import { listModel } from '../model/bill';
+import { listModel } from '../model/orderList';
 import { apiGetList, apiDel } from '@/apis/customerbill';
 export default defineComponent({
   components: {
@@ -37,19 +35,10 @@ export default defineComponent({
     Pannel
   },
   setup() {
-    const router = useRouter();
-    const toPage = () => {
-      //Withdrawal
-      router.push({
-        path: '/withdrawal'
-      })
-    };
-
     return {
       listModel,
       apiGetList,
-      apiDel,
-      toPage
+      apiDel
     }
   }
 })
